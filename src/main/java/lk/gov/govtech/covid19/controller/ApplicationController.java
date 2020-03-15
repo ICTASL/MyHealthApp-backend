@@ -33,7 +33,6 @@ public class ApplicationController {
             return ResponseEntity.ok().body(response);
         }
 
-
     }
 
     @GetMapping(path = "/message/latest", produces = "application/json")
