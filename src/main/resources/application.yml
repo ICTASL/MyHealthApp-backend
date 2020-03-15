@@ -1,0 +1,13 @@
+server:
+    port: 8000
+
+spring:
+    application:
+        name: payment-adapter
+    datasource:
+        url: jdbc:mysql://127.0.0.1:3306/covid19_db
+        username: root
+        password: root
+        driver-class: com.mysql.cj.jdbc.Driver
+    pid:
+        file: application.pid
