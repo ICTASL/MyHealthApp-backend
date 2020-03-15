@@ -39,6 +39,8 @@ public class ApplicationService {
                     }
                     break;
                 default:
+                    response.setMessage(notification.getMessageEn());
+                    break;
             }
 
             response.setId(notification.getId());
