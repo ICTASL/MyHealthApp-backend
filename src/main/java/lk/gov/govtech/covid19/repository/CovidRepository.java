@@ -27,10 +27,16 @@ public class CovidRepository {
     }
 
     public NotificationEntity getNotificationById(String messageId) {
-        List<NotificationEntity> notificationList = jdbcTemplate.query("SELECT * FROM hpb_notification where " +
+        List<NotificationEntity> notificationList = jdbcTemplate.query("SELECT * FROM notification where " +
                 "id = ?", new Object[]{messageId}, new NotificationEntityRowMapper());
 
         return notificationList.isEmpty() ? null : notificationList.get(0);
+    }
+
+    public Integer getLastNotificationId(){
+        List<Integer> idList = jdbcTemplate.query("select id from notification ORDER BY id DESC LIMIT 1", (rs, rowNum) -> rs.getInt("id"));
+
+        return idList.isEmpty() ? 0 : idList.get(0);
     }
 
 }

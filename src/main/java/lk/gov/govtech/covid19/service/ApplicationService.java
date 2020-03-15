@@ -51,4 +51,8 @@ public class ApplicationService {
         }
         return response;
     }
+
+    public Integer getLastNotificationId(){
+        return repository.getLastNotificationId();
+    }
 }

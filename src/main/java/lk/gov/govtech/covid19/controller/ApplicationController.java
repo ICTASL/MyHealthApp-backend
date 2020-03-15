@@ -30,8 +30,15 @@ public class ApplicationController {
         if (response == null) {
             return ResponseEntity.notFound().build();
         } else {
-            return ResponseEntity.accepted().body(response);
+            return ResponseEntity.ok().body(response);
         }
+
+    }
+
+    @GetMapping(path = "/message/latest", produces = "application/json")
+    public ResponseEntity getLastMessageId() {
+
+        return ResponseEntity.ok().body(applicationService.getLastNotificationId());
 
     }
 }
