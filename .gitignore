@@ -32,3 +32,4 @@ build/
 
 *.log
 target
+/bin/
