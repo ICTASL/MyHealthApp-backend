@@ -11,3 +11,14 @@ spring:
         driver-class: com.mysql.cj.jdbc.Driver
     pid:
         file: application.pid
+
+firebase: 
+    configurations:
+        path: credentials/covid-19-lk-dev-firebase-adminsdk.json
+    notifications:
+       topic: 'common'
+       title: 'Common topic - Hello'
+       message: 'Sending test message'
+       token: ''
+       payloadMessageId: '123'
+       payloadData: 'Hello. This is payload content.'

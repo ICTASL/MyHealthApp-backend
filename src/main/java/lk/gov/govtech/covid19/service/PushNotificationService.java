@@ -16,66 +16,75 @@ import java.util.concurrent.ExecutionException;
 @Service
 public class PushNotificationService {
 
-    @Value("#{${app.notifications-defaults}}")
-    private Map<String, String> defaults;
+	@Value("${firebase.notifications.topic}")
+	private String topic;
 
-    private Logger logger = LoggerFactory.getLogger(PushNotificationService.class);
-    private FCMService fcmService;
+	@Value("${firebase.notifications.title}")
+	private String title;
 
-    public PushNotificationService(FCMService fcmService) {
-        this.fcmService = fcmService;
-    }
+	@Value("${firebase.notifications.message}")
+	private String message;
 
-    @Scheduled(initialDelay = 60000, fixedDelay = 60000)
-    public void sendSamplePushNotification() {
-        try {
-            fcmService.sendMessageWithoutData(getSamplePushNotificationRequest());
-        } catch (InterruptedException | ExecutionException e) {
-            logger.error(e.getMessage());
-        }
-    }
+	@Value("${firebase.notifications.token}")
+	private String token;
 
-    public void sendPushNotification(PushNotificationRequest request) {
-        try {
-            fcmService.sendMessage(getSamplePayloadData(), request);
-        } catch (InterruptedException | ExecutionException e) {
-            logger.error(e.getMessage());
-        }
-    }
+	@Value("${firebase.notifications.payloadMessageId}")
+	private String payloadMessageId;
 
-    public void sendPushNotificationWithoutData(PushNotificationRequest request) {
-        try {
-            fcmService.sendMessageWithoutData(request);
-        } catch (InterruptedException | ExecutionException e) {
-            logger.error(e.getMessage());
-        }
-    }
+	@Value("${firebase.notifications.payloadData}")
+	private String payloadData;
 
+	private Logger logger = LoggerFactory.getLogger(PushNotificationService.class);
+	private FCMService fcmService;
 
-    public void sendPushNotificationToToken(PushNotificationRequest request) {
-        try {
-            fcmService.sendMessageToToken(request);
-        } catch (InterruptedException | ExecutionException e) {
-            logger.error(e.getMessage());
-        }
-    }
+	public PushNotificationService(FCMService fcmService) {
+		this.fcmService = fcmService;
+	}
 
+	@Scheduled(initialDelay = 60000, fixedDelay = 60000)
+	public void sendSamplePushNotification() {
+		try {
+			fcmService.sendMessageWithoutData(getSamplePushNotificationRequest());
+		} catch (InterruptedException | ExecutionException e) {
+			logger.error(e.getMessage());
+		}
+	}
 
-    private Map<String, String> getSamplePayloadData() {
-        Map<String, String> pushData = new HashMap<>();
-        pushData.put("messageId", defaults.get("payloadMessageId"));
-        logger.info("payloadMessageId:" + defaults.get("payloadMessageId"));
-        pushData.put("text", defaults.get("payloadData") + " " + LocalDateTime.now());
-        return pushData;
-    }
+	public void sendPushNotification(PushNotificationRequest request) {
+		try {
+			fcmService.sendMessage(getSamplePayloadData(), request);
+		} catch (InterruptedException | ExecutionException e) {
+			logger.error(e.getMessage());
+		}
+	}
 
+	public void sendPushNotificationWithoutData(PushNotificationRequest request) {
+		try {
+			fcmService.sendMessageWithoutData(request);
+		} catch (InterruptedException | ExecutionException e) {
+			logger.error(e.getMessage());
+		}
+	}
 
-    private PushNotificationRequest getSamplePushNotificationRequest() {
-        PushNotificationRequest request = new PushNotificationRequest(defaults.get("title"),
-                defaults.get("message"),
-                defaults.get("topic"));
-        return request;
-    }
+	public void sendPushNotificationToToken(PushNotificationRequest request) {
+		try {
+			fcmService.sendMessageToToken(request);
+		} catch (InterruptedException | ExecutionException e) {
+			logger.error(e.getMessage());
+		}
+	}
 
+	private Map<String, String> getSamplePayloadData() {
+		Map<String, String> pushData = new HashMap<>();
+		pushData.put("messageId", payloadMessageId);
+		logger.info("payloadMessageId:" + payloadMessageId);
+		pushData.put("text", payloadData + " " + LocalDateTime.now());
+		return pushData;
+	}
+
+	private PushNotificationRequest getSamplePushNotificationRequest() {
+		PushNotificationRequest request = new PushNotificationRequest(title, message, topic);
+		return request;
+	}
 
 }

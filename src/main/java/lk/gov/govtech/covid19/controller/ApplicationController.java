@@ -33,6 +33,5 @@ public class ApplicationController {
             return ResponseEntity.accepted().body(response);
         }
 
-
     }
 }
