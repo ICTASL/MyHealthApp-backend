@@ -2,9 +2,9 @@ CREATE DATABASE IF NOT EXISTS covid19_db;
 
 use covid19_db;
 
---insert create statements below as needed
+#insert create statements below as needed
 
-CREATE TABLE `hpb_notification` (
+CREATE TABLE `notification` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(100) NULL,
   `subtitle` VARCHAR(100) NULL,
