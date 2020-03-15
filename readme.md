@@ -1,13 +1,13 @@
-#COVID-19 Backend Services
+# COVID-19 Backend Services
 
-##How to run
+## How to run
 - install mysql server
 - execute `covid19.sql` on server
 - build project using `mvn clean install`
 - run using: `mvn spring-boot:run`
 
-###APIs 
-GET http://localhost:8000/taskforce/message/\<messageId>/\<lang>
+### APIs 
+GET ``http://localhost:8000/taskforce/message/<messageId>/<lang>``
 
 options for lang: en, si, ta
 
