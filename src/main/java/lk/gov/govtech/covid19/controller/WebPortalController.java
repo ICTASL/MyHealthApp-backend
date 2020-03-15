@@ -10,11 +10,21 @@ import org.springframework.web.bind.annotation.RestController;
  * Controller class for all health promotion bureau related APIs. i.e: from web portal
  */
 @RestController
-@RequestMapping(value = Constants.NEWS_API_CONTEXT)
-public class NewsNotificationController {
+@RequestMapping(value = Constants.PORTAL_API_CONTEXT)
+public class WebPortalController {
 
     @RequestMapping(method = RequestMethod.GET)
-    public String index(Model model) {
+    public String login(Model model) {
+        return "login";
+    }
+
+    @RequestMapping(path = Constants.NEWS_API_CONTEXT, method = RequestMethod.GET)
+    public String news(Model model) {
         return "newsPortal";
+    }
+
+    @RequestMapping(path = Constants.CASE_API_CONTEXT, method = RequestMethod.GET)
+    public String cases(Model model) {
+        return "casePortal";
     }
 }
