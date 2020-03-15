@@ -1,13 +1,10 @@
 package lk.gov.govtech.covid19.controller;
 
-import lk.gov.govtech.covid19.config.DHISConfiguration;
 import lk.gov.govtech.covid19.dto.Enrollment;
 import lk.gov.govtech.covid19.dto.EntityInstance;
 import lk.gov.govtech.covid19.dto.Events;
 import lk.gov.govtech.covid19.util.Constants;
 import lk.gov.govtech.covid19.service.DHIS2Service;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -26,12 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DHISController {
 
     @Autowired
-    private DHISConfiguration dhisConfiguration;
-
-    @Autowired
     private DHIS2Service dhis2Service;
-
-    private final static Logger LOGGER = LoggerFactory.getLogger(DHISController.class);
 
     @PostMapping(path = "/entity-instances", consumes = "application/json", produces = "application/json")
     public ResponseEntity createEntityInstance(@RequestBody EntityInstance entityInstance) {
