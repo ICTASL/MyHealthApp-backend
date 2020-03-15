@@ -33,4 +33,10 @@ public class CovidRepository {
         return notificationList.isEmpty() ? null : notificationList.get(0);
     }
 
+    public Integer getLastNotificationId(){
+        List<Integer> idList = jdbcTemplate.query("select id from hpb_notification ORDER BY id DESC LIMIT 1", (rs, rowNum) -> rs.getInt("id"));
+
+        return idList.isEmpty() ? 0 : idList.get(0);
+    }
+
 }
