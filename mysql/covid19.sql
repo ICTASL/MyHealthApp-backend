@@ -13,7 +13,8 @@ CREATE TABLE `hpb_notification` (
   `message_si` VARCHAR(500) NULL,
   `message_ta` VARCHAR(500) NULL,
   `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`));
+  PRIMARY KEY (`id`))
+  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `epid_case` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -22,7 +23,8 @@ CREATE TABLE `epid_case` (
   `message_si` VARCHAR(500) NULL,
   `message_ta` VARCHAR(500) NULL,
   `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`));
+  PRIMARY KEY (`id`))
+  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `epid_location` (
   `id` INT NOT NULL AUTO_INCREMENT,
