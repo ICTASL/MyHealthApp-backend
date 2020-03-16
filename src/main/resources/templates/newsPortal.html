@@ -84,132 +84,105 @@
     </div>
     <!--Tabs Wrapper-->
     <div x-data="{ tab: 'english' }">
-        <!-- Tabs Section-->
-        <div class="mt-10">
-            <ul class="tabs flex justify-between bg-gray-200 p-1 rounded">
-                <li class="flex-1 mr-2">
-                    <button href="#english" :class="{ 'active-tabs': tab === 'english' }" @click="tab = 'english'" class="tabs-current w-full text-center block  text-blue-500 rounded py-2 px-4" >English</button>
-                </li>
-                <li class="flex-1 mr-2">
-                    <button href="#sinhala"  :class="{ 'active-tabs': tab === 'sinhala' }" @click="tab = 'sinhala'" class=" w-full  text-center block  rounded hover:border-gray-200 text-blue-500 py-2 px-4">Sinhala</button>
-                </li>
-                <li class="flex-1 mr-2">
-                    <button href="#tamil" :class="{ 'active-tabs': tab === 'tamil' }"  @click="tab = 'tamil'" class="w-full  text-center block  rounded hover:border-gray-200 text-blue-500 py-2 px-4">Tamil</button>
-                </li>
-            </ul>
-        </div>
+
         <!--Tabs Section Ends here-->
-
+        <form action="" method="post">
         <!--English Tab-->
-        <div x-show="tab === 'english'" class="w-full mt-5">
+        <div class="w-full mt-5">
             <div class="border box-border rounded shadow-md pt-2">
                 <h2 class= "bg-white mt-2 px-8 text-left text-2xl leading-9 font-extrabold text-gray-900">
-                    Send News
+                    General
                 </h2>
-                <form action="">
                     <div class="flex mt-2  py-4 flex-col w-full bg-gray-200 px-4">
                         <!--Title Input-->
                         <div class="mt-2">
                             <label class="px-4 text-xl text-gray-800 w-full " for="title">Title</label>
                             <div class="px-4">
-                                <input class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" type="text" placeholder="Title" id="title">
+                                <input class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
+                                       type="text" placeholder="Title" id="title">
                             </div>
                         </div>
 
-                        <!--Description Input-->
-                        <div class="mt-8">
-                            <label class="px-4 text-xl text-gray-800 w-full" for="description">Description</label>
-                            <div class="px-4">
-                                <textarea rows="10" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" type="text" placeholder="Title" id="description"></textarea>
-                            </div>
-                        </div>
-
-                        <!--Submit Button-->
-                        <div class="mt-8 flex justify-end px-4">
-                            <button type="submit"class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-                                Add News
-                            </button>
-                        </div>
-
-                    </div>
-                </form>
-            </div>
-        </div>
-        <!--English Tab Ends Here-->
-
-        <!--Sinhala Tab-->
-        <div x-show="tab === 'sinhala'" class="w-full mt-5">
-            <div class="border box-border rounded shadow-md pt-2">
-                <h2 class= "bg-white mt-2 px-8 text-left text-2xl leading-9 font-extrabold text-gray-900">
-                    Send News
-                </h2>
-                <form action="">
-                    <div class="flex mt-2  py-4 flex-col w-full bg-gray-200 px-4">
-                        <!--Title Input-->
+                        <!--SubTitle Input-->
                         <div class="mt-2">
-                            <label class="px-4 text-xl text-gray-800 w-full " for="title">Title</label>
+                            <label class="px-4 text-xl text-gray-800 w-full " for="sub_title">SubTitle</label>
                             <div class="px-4">
-                                <input class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" type="text" placeholder="Title" id="title">
+                                <input
+                                        class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
+                                        type="text" placeholder="Sub title" id="sub_title">
                             </div>
                         </div>
 
-                        <!--Description Input-->
-                        <div class="mt-8">
-                            <label class="px-4 text-xl text-gray-800 w-full" for="description">Description</label>
-                            <div class="px-4">
-                                <textarea rows="10" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" type="text" placeholder="Title" id="description"></textarea>
-                            </div>
-                        </div>
-
-                        <!--Submit Button-->
-                        <div class="mt-8 flex justify-end px-4">
-                            <button type="submit"class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-                                Add News
-                            </button>
-                        </div>
-
-                    </div>
-                </form>
-            </div>
-        </div>
-        <!--Sinhala Tab Ends Here-->
-
-        <!--Tamil Tab-->
-        <div x-show="tab === 'tamil'" class="w-full mt-5">
-            <div class="border box-border rounded shadow-md pt-2">
-                <h2 class= "bg-white mt-2 px-8 text-left text-2xl leading-9 font-extrabold text-gray-900">
-                    Send News
-                </h2>
-                <form action="">
-                    <div class="flex mt-2  py-4 flex-col w-full bg-gray-200 px-4">
-                        <!--Title Input-->
+                        <!--SubTitle Input-->
                         <div class="mt-2">
-                            <label class="px-4 text-xl text-gray-800 w-full " for="title">Title</label>
+                            <label class="px-4 text-xl text-gray-800 w-full " for="source">Source</label>
                             <div class="px-4">
-                                <input class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" type="text" placeholder="Title" id="title">
+                                <input class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
+                                       type="text" placeholder="Source" id="source">
                             </div>
                         </div>
-
-                        <!--Description Input-->
-                        <div class="mt-8">
-                            <label class="px-4 text-xl text-gray-800 w-full" for="description">Description</label>
-                            <div class="px-4">
-                                <textarea rows="10" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" type="text" placeholder="Title" id="description"></textarea>
-                            </div>
-                        </div>
-
-                        <!--Submit Button-->
-                        <div class="mt-8 flex justify-end px-4">
-                            <button type="submit"class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-                                Add News
-                            </button>
-                        </div>
-
                     </div>
-                </form>
             </div>
+            <div class="border box-border rounded shadow-md pt-2 mt-8">
+                <h2 class= "bg-white mt-2 px-8 text-left text-2xl leading-9 font-extrabold text-gray-900">
+                    English News
+                </h2>
+                <div class="flex mt-2  py-4 flex-col w-full bg-gray-200 px-4">
+                    <!--Description Input-->
+                    <div class="mt-8">
+                        <label class="px-4 text-xl text-gray-800 w-full" for="description">Description</label>
+                        <div class="px-4">
+                                <textarea rows="10" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
+                                          type="text" placeholder="description" id="description"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border box-border rounded shadow-md pt-2 mt-8">
+                <h2 class= "bg-white mt-2 px-8 text-left text-2xl leading-9 font-extrabold text-gray-900">
+                    Sinhala News
+                </h2>
+                <div class="flex mt-2  py-4 flex-col w-full bg-gray-200 px-4">
+                    <!--Description Input-->
+                    <div class="mt-8">
+                        <label class="px-4 text-xl text-gray-800 w-full" for="description">Description</label>
+                        <div class="px-4">
+                                <textarea rows="10" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
+                                          type="text" placeholder="description" id="description"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="border box-border rounded shadow-md pt-2 mt-8">
+                <h2 class= "bg-white mt-2 px-8 text-left text-2xl leading-9 font-extrabold text-gray-900">
+                    Tamil News
+                </h2>
+                <div class="flex mt-2  py-4 flex-col w-full bg-gray-200 px-4">
+                    <!--Description Input-->
+                    <div class="mt-8">
+                        <label class="px-4 text-xl text-gray-800 w-full" for="description">Description</label>
+                        <div class="px-4">
+                                <textarea rows="10" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
+                                          type="text" placeholder="description" id="description"></textarea>
+                        </div>
+                    </div>
+                    <!--Submit Button-->
+                    <div class="mt-8 flex justify-end px-4">
+                        <button type="submit"class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                            Add News
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+
         </div>
-        <!--Tamil Tab Ends Here-->
+
+        </form>
     </div>
 
 
