@@ -116,7 +116,7 @@ public class DHIS2Service {
 
     public DHISResponse getEntityAttributes() {
 
-        GetMethod getRequest = new GetMethod(dhisConfiguration.getUrl() + "/trackedEntityAttributes");
+        GetMethod getRequest = new GetMethod(dhisConfiguration.getUrl() + "/trackedEntityAttributes?paging=false");
         DHISResponse dhisResponse = new DHISResponse();
 
         try {

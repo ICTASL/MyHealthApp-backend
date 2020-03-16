@@ -7,4 +7,24 @@ public class FieldIdHolder {
 
     public String portOfEntrySurveillance;
     
+    public String tePassportNumber;
+    public String teNationality;
+    public String teInitials;
+    public String teSurname;
+    public String teMiddleName;
+    public String teGivenName;
+    public String teIdCardNumber;
+    public String teDateOfBirth;
+    public String teGender;
+    public String teEmailAddress;
+    public String tefaceImage;
+    public String tepassportDataPage;
+    public String teFullAddress;
+    public String teAddressLine1;
+    public String teAddressLine2;
+    public String teCity;
+    public String tePostalCode;
+    public String teStateProvince;
+    public String teCountry;
+    
 }
