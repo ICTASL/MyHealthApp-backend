@@ -49,11 +49,27 @@ public class CovidRepository {
         return idList.isEmpty() ? 0 : idList.get(0);
     }
 
-    public void addAlertNotification(AlertNotificationRequest notification) {
+    public int addAlertNotification(AlertNotificationRequest notification) {
 
         jdbcTemplate.update("INSERT INTO `notification` (`title`, `subtitle`, `source`, `message_en`, `message_si`, `message_ta`) VALUES (?,?,?,?,?,?)",
                 notification.getTitle(), notification.getSubtitle(), notification.getSource(),
                 notification.getMessageEn(), notification.getMessageSi(), notification.getMessageTa());
+
+        KeyHolder holder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO `notification` (`title`, `subtitle`, `source`, `message_en`, `message_si`, `message_ta`) VALUES (?,?,?,?,?,?)",
+                    Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, notification.getTitle());
+            ps.setString(2, notification.getSubtitle());
+            ps.setString(3, notification.getSource());
+            ps.setString(4, notification.getMessageEn());
+            ps.setString(5, notification.getMessageSi());
+            ps.setString(6, notification.getMessageTa());
+
+            return ps;
+        }, holder);
+
+        return holder.getKey().intValue();
     }
 
     public void addCaseNotification(CaseNotificationRequest request) {

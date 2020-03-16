@@ -21,7 +21,7 @@ firebase:
     configurations:
         path: credentials/covid-19-lk-dev-firebase-adminsdk.json
     notifications:
-       topic: 'common'
+       topic: 'mobile_message'
        title: 'Common topic - Hello'
        message: 'Sending test message'
        token: ''
