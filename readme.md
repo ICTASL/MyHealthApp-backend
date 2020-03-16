@@ -7,16 +7,21 @@
 - run using: `mvn spring-boot:run`
 
 ### APIs 
-GET ``http://localhost:8000/application/message/<messageId>/<lang>``
+----
+#### Get Alert by Id
+
+GET ``http://localhost:8000/application/alert/<alertId>/<lang>``
 
 options for lang: en, si, ta
 
 ----
-GET ``http://localhost:8000/application/message/latest``
+#### Get Latest Alert Id
+GET ``http://localhost:8000/application/alert/latest``
 
 returns integer as response
 
 ----
+#### Add New Alert
 
 ```
 POST http://localhost:8000/notification/alert/add 
@@ -32,7 +37,20 @@ POST http://localhost:8000/notification/alert/add
 ```
 
 ----
+#### Get Case By Id
 
+GET ``http://localhost:8000/application/case/<caseId>/<lang>``
+
+options for lang: en, si, ta
+
+----
+#### Get Latest Case Id
+GET ``http://localhost:8000/application/case/latest``
+
+returns integer as response
+
+----
+#### Add new Case
 ```
 POST http://localhost:8000/notification/case/add
 
@@ -43,13 +61,17 @@ POST http://localhost:8000/notification/case/add
          "date":"2020/02/02",
          "from":"2020/02/02 00:00:00",
          "to":"2020/02/02 11:59:59",
-         "location":"Colombo Municipal Council"
+         "address":"Colombo Municipal Council",
+         "longitude":"1234",
+         "latitude":"4321"
       },
       {
          "date":"2020/03/02",
          "from":"2020/03/02 13:00:00",
          "to":"2020/03/02 15:45:00",
-         "location":"Galadari Hotel"
+         "address":"Galadari Hotel",
+         "longitude":"1234",
+         "latitude":"4321"
       }
    ],
    "message_en":"Person confirmed with COVID-19",
