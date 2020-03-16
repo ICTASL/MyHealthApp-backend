@@ -2,6 +2,7 @@ package lk.gov.govtech.covid19.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lk.gov.govtech.covid19.config.DHISConfiguration;
+import lk.gov.govtech.covid19.dto.DHISResponse;
 import lk.gov.govtech.covid19.dto.Enrollment;
 import lk.gov.govtech.covid19.dto.EntityInstance;
 import lk.gov.govtech.covid19.dto.Events;
@@ -25,13 +26,15 @@ import java.util.Base64;
 public class DHIS2Service {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(DHIS2Service.class);
+    private final static int INTERNAL_ERROR_CODE = 500;
+
     @Autowired
     private DHISConfiguration dhisConfiguration;
 
-    public String getEntityTypes() {
+    public DHISResponse getEntityTypes() {
 
         GetMethod getRequest = new GetMethod(dhisConfiguration.getUrl() + "/trackedEntityTypes");
-        String entityTypes = "";
+        DHISResponse dhisResponse = new DHISResponse();
         try {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Invoke getting entity types");
@@ -39,16 +42,16 @@ public class DHIS2Service {
             HttpClient httpClient = getHttpClient();
             setAuthorizationHeader(getRequest);
             int response = httpClient.executeMethod(getRequest);
-            if (response == HttpStatus.SC_OK) {
-                entityTypes = new String(getRequest.getResponseBody());
-            }
+            dhisResponse.setStatus(response);
+            dhisResponse.setResponse(new String(getRequest.getResponseBody()));
         } catch (IOException e) {
             LOGGER.error("Error while getting entity types information", e);
-            entityTypes = e.getLocalizedMessage();
+            dhisResponse.setStatus(INTERNAL_ERROR_CODE);
+            dhisResponse.setResponse(e.getLocalizedMessage());
         } finally {
             getRequest.releaseConnection();
         }
-        return entityTypes;
+        return dhisResponse;
     }
 
     public String getEntityAttributes() {

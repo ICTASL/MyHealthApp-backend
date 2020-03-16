@@ -1,5 +1,6 @@
 package lk.gov.govtech.covid19.controller;
 
+import lk.gov.govtech.covid19.dto.DHISResponse;
 import lk.gov.govtech.covid19.dto.Enrollment;
 import lk.gov.govtech.covid19.dto.EntityInstance;
 import lk.gov.govtech.covid19.dto.Events;
@@ -49,12 +50,8 @@ public class DHISController {
     @GetMapping(path = "/entity-types", produces = "application/json")
     public ResponseEntity getEntityType() {
 
-        String entityTypes = dhis2Service.getEntityTypes();
-        if (StringUtils.isEmpty(entityTypes)) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok().body(entityTypes);
-        }
+        DHISResponse entityTypes = dhis2Service.getEntityTypes();
+        return ResponseEntity.status(entityTypes.getStatus()).body(entityTypes.getResponse());
     }
 
     @GetMapping(path = "/organization-units", produces = "application/json")
