@@ -7,7 +7,7 @@ import lombok.Data;
  */
 
 @Data
-public class NotificationEntity {
+public class AlertNotificationEntity {
     private String id;
     private String title;
     private String subtitle;

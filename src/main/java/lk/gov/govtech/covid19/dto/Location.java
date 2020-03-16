@@ -10,5 +10,7 @@ public class Location {
     private String date;
     private String from;
     private String to;
-    private String location;
+    private String address;
+    private String longitude;
+    private String latitude;
 }

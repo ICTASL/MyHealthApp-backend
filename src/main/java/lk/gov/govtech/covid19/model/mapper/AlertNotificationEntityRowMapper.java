@@ -1,15 +1,15 @@
 package lk.gov.govtech.covid19.model.mapper;
 
-import lk.gov.govtech.covid19.model.NotificationEntity;
+import lk.gov.govtech.covid19.model.AlertNotificationEntity;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class NotificationEntityRowMapper implements RowMapper<NotificationEntity> {
+public class AlertNotificationEntityRowMapper implements RowMapper<AlertNotificationEntity> {
     @Override
-    public NotificationEntity mapRow(ResultSet rs, int i) throws SQLException {
-        NotificationEntity entity = new NotificationEntity();
+    public AlertNotificationEntity mapRow(ResultSet rs, int i) throws SQLException {
+        AlertNotificationEntity entity = new AlertNotificationEntity();
         entity.setId(rs.getString("id"));
         entity.setTitle(rs.getString("title"));
         entity.setSubtitle(rs.getString("subtitle"));

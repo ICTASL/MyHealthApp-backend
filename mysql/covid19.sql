@@ -32,7 +32,9 @@ CREATE TABLE `epid_location` (
   `date` DATE NULL,
   `from` DATETIME NULL,
   `to` DATETIME NULL,
-  `location` VARCHAR(100) NULL,
+  `address` VARCHAR(100) NULL,
+  `longitude` VARCHAR(45) NULL,
+  `latitude` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_epid_location_1_idx` (`case_id` ASC),
   CONSTRAINT `fk_epid_location_1`
