@@ -10,7 +10,9 @@ import lk.gov.govtech.covid19.dto.EntityInstance;
 import lk.gov.govtech.covid19.dto.Events;
 import lk.gov.govtech.covid19.dto.FlightInformation;
 import lk.gov.govtech.covid19.dto.FlightPassengerInformation;
+import lk.gov.govtech.covid19.dto.IdDisplayAttribute;
 import lk.gov.govtech.covid19.dto.PassengerInformation;
+import lk.gov.govtech.covid19.dto.ProgramsResponse;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethodBase;
@@ -30,14 +32,16 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.annotation.PostConstruct;
 
 @Service
 public class DHIS2Service {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(DHIS2Service.class);
-    private final static int INTERNAL_ERROR_CODE = 500;
-    private final static int OK_CODE = 200;
 
     @Autowired
     private DHISConfiguration dhisConfiguration;
@@ -45,6 +49,47 @@ public class DHIS2Service {
     private Gson gson = new Gson();
     private SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private FieldIdHolder fieldIds = new FieldIdHolder();
+    
+    @PostConstruct
+    private void init() throws Exception {
+        this.initPrograms();
+    }
+    
+    private void initPrograms() throws Exception {
+        ProgramsResponse resp = this.getPrograms();
+        Map<String, String> idMap = this.generateReverseMap(resp.getPrograms());
+        this.fieldIds.portOfEntrySurveillance = idMap.get(DHIS2Constants.DISP_PORT_OF_ENTRY_SURVEILLANCE);
+        if (this.fieldIds.portOfEntrySurveillance == null) {
+            throw new Exception("'Port of Entry Surveillance' program does not exist");
+        }
+    }
+    
+    private Map<String, String> generateReverseMap(List<IdDisplayAttribute> attrs) {
+        Map<String, String> result = new HashMap<String, String>();
+        for (IdDisplayAttribute attr : attrs) {
+            result.put(attr.getDisplayName(), attr.getId());
+        }
+        return result;
+    }
+    
+    private ProgramsResponse getPrograms() throws Exception {
+        GetMethod getRequest = new GetMethod(this.dhisConfiguration.getUrl() + "/programs?paging=false");
+        try {
+            HttpClient httpClient = getHttpClient();
+            setAuthorizationHeader(getRequest);
+            int response = httpClient.executeMethod(getRequest);
+            String content = getRequest.getResponseBodyAsString();
+            if (response != DHIS2Constants.OK_CODE) {
+                throw new Exception("Error in retrieving programs: " + content);
+            }
+            return this.gson.fromJson(content, ProgramsResponse.class);
+        } catch (IOException e) {
+            throw new Exception("Error in retrieving programs", e);
+        } finally {
+            getRequest.releaseConnection();
+        }
+    }
 
     public DHISResponse getEntityTypes() {
 
@@ -61,7 +106,7 @@ public class DHIS2Service {
             dhisResponse.setResponse(new String(getRequest.getResponseBody()));
         } catch (IOException e) {
             LOGGER.error("Error while getting entity types information", e);
-            dhisResponse.setStatus(INTERNAL_ERROR_CODE);
+            dhisResponse.setStatus(DHIS2Constants.INTERNAL_ERROR_CODE);
             dhisResponse.setResponse(e.getLocalizedMessage());
         } finally {
             getRequest.releaseConnection();
@@ -85,7 +130,7 @@ public class DHIS2Service {
             dhisResponse.setResponse(getRequest.getResponseBodyAsString());
         } catch (IOException e) {
             LOGGER.error("Error while getting entity attributes information", e);
-            dhisResponse.setStatus(INTERNAL_ERROR_CODE);
+            dhisResponse.setStatus(DHIS2Constants.INTERNAL_ERROR_CODE);
             dhisResponse.setResponse(e.getLocalizedMessage());
         } finally {
             getRequest.releaseConnection();
@@ -109,7 +154,7 @@ public class DHIS2Service {
             dhisResponse.setResponse(getRequest.getResponseBodyAsString());
         } catch (IOException e) {
             LOGGER.error("Error while getting organization units information", e);
-            dhisResponse.setStatus(INTERNAL_ERROR_CODE);
+            dhisResponse.setStatus(DHIS2Constants.INTERNAL_ERROR_CODE);
             dhisResponse.setResponse(e.getLocalizedMessage());
         } finally {
             getRequest.releaseConnection();
@@ -135,7 +180,7 @@ public class DHIS2Service {
             dhisResponse.setResponse(postRequest.getResponseBodyAsString());
         } catch (IOException e) {
             LOGGER.error("Error while creating entity instance", e);
-            dhisResponse.setStatus(INTERNAL_ERROR_CODE);
+            dhisResponse.setStatus(DHIS2Constants.INTERNAL_ERROR_CODE);
             dhisResponse.setResponse(e.getLocalizedMessage());
         } finally {
             postRequest.releaseConnection();
@@ -160,7 +205,7 @@ public class DHIS2Service {
             dhisResponse.setResponse(postRequest.getResponseBodyAsString());
         } catch (IOException e) {
             LOGGER.error("Error while enrolling", e);
-            dhisResponse.setStatus(INTERNAL_ERROR_CODE);
+            dhisResponse.setStatus(DHIS2Constants.INTERNAL_ERROR_CODE);
             dhisResponse.setResponse(e.getLocalizedMessage());
         } finally {
             postRequest.releaseConnection();
@@ -185,7 +230,7 @@ public class DHIS2Service {
             dhisResponse.setResponse(postRequest.getResponseBodyAsString());
         } catch (IOException e) {
             LOGGER.error("Error while creating event", e);
-            dhisResponse.setStatus(INTERNAL_ERROR_CODE);
+            dhisResponse.setStatus(DHIS2Constants.INTERNAL_ERROR_CODE);
             dhisResponse.setResponse(e.getLocalizedMessage());
         } finally {
             postRequest.releaseConnection();
@@ -224,7 +269,7 @@ public class DHIS2Service {
             HttpClient httpClient = getHttpClient();
             int response = httpClient.executeMethod(getRequest);
             String content = getRequest.getResponseBodyAsString();
-            if (response != OK_CODE) {
+            if (response != DHIS2Constants.OK_CODE) {
                 throw new Exception("Error in looking up passenger list from InfoBorder service: " + content);
             }
             return Arrays.asList(this.gson.fromJson(content, FlightPassengerInformation[].class));
@@ -291,12 +336,12 @@ public class DHIS2Service {
             this.saveFlightPassengerInformation(Arrays.asList(fpInfo));
             List<FlightPassengerInformation> passengersInFlight = this.getInfoBorderPassengerList(flightNo, date);
             this.saveFlightPassengerInformation(passengersInFlight);
-            result.setStatus(OK_CODE);
+            result.setStatus(DHIS2Constants.OK_CODE);
         } catch (Exception e) {
             this.clearoutImages(fpInfo);
             String message = "Error in pushing flight passenger info: " + fpInfo;
             LOGGER.error(message, e);
-            result.setStatus(INTERNAL_ERROR_CODE);
+            result.setStatus(DHIS2Constants.INTERNAL_ERROR_CODE);
             result.setResponse(message + " - " + e.getMessage());
         }
         return result;
