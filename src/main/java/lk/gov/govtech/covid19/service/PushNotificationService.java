@@ -1,7 +1,7 @@
 package lk.gov.govtech.covid19.service;
 
 import lk.gov.govtech.covid19.firebase.FCMService;
-import lk.gov.govtech.covid19.model.PushNotificationRequest;
+import lk.gov.govtech.covid19.dto.PushNotificationRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

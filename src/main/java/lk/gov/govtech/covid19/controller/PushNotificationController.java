@@ -1,7 +1,7 @@
 package lk.gov.govtech.covid19.controller;
 
-import lk.gov.govtech.covid19.model.PushNotificationRequest;
-import lk.gov.govtech.covid19.model.PushNotificationResponse;
+import lk.gov.govtech.covid19.dto.PushNotificationRequest;
+import lk.gov.govtech.covid19.dto.PushNotificationResponse;
 import lk.gov.govtech.covid19.service.PushNotificationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

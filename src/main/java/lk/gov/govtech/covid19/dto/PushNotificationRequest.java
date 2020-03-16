@@ -1,4 +1,4 @@
-package lk.gov.govtech.covid19.model;
+package lk.gov.govtech.covid19.dto;
 
 public class PushNotificationRequest {
 
