@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
 <head lang="en">
     <meta charset="UTF-8"/>
+    <title>News Portal</title>
     <meta name="viewport" content="width=device-width">
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <link th:href="@{/main.css}" rel="stylesheet">
-
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.0.1/dist/alpine.js" defer></script>
-
 </head>
 
 
 <body class="bg-gray-50">
-<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.0.1/dist/alpine.js" defer></script>
+
 
 <!--Navigation Wrapper-->
 <nav x-data="{ open: true }" class="bg-gray-800">
@@ -175,10 +174,8 @@
                 </div>
             </div>
         </form>
-    </div>
-
-
 </div>
+
 <!--Main Wrapper Ends Here-->
 </body>
 </html>
