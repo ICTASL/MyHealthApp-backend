@@ -44,6 +44,7 @@ public class DHIS2Service {
             }
         } catch (IOException e) {
             LOGGER.error("Error while getting entity types information", e);
+            entityTypes = e.getLocalizedMessage();
         } finally {
             getRequest.releaseConnection();
         }
@@ -67,6 +68,7 @@ public class DHIS2Service {
             }
         } catch (IOException e) {
             LOGGER.error("Error while getting entity attributes information", e);
+            entityAttributes = e.getLocalizedMessage();
         } finally {
             getRequest.releaseConnection();
         }
@@ -90,6 +92,7 @@ public class DHIS2Service {
             }
         } catch (IOException e) {
             LOGGER.error("Error while getting organization units information", e);
+            organizationUnits = e.getLocalizedMessage();
         } finally {
             getRequest.releaseConnection();
         }
@@ -115,6 +118,7 @@ public class DHIS2Service {
             }
         } catch (IOException e) {
             LOGGER.error("Error while creating entity instance", e);
+            respStr = e.getLocalizedMessage();
         } finally {
             postRequest.releaseConnection();
         }
@@ -139,6 +143,7 @@ public class DHIS2Service {
             }
         } catch (IOException e) {
             LOGGER.error("Error while enrolling", e);
+            respStr = e.getLocalizedMessage();
         } finally {
             postRequest.releaseConnection();
         }
@@ -163,6 +168,7 @@ public class DHIS2Service {
             }
         } catch (IOException e) {
             LOGGER.error("Error while creating event", e);
+            respStr = e.getLocalizedMessage();
         } finally {
             postRequest.releaseConnection();
         }
