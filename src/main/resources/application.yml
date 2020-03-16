@@ -13,6 +13,7 @@ spring:
         url: http://43.224.124.234:7080/api
         username: dev
         password: Dev1234#
+        infoBorderUrl: http://localhost:8080
     pid:
         file: application.pid
 

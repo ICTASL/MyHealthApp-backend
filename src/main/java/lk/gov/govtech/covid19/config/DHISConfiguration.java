@@ -14,6 +14,7 @@ public class DHISConfiguration {
     private String url;
     private String username;
     private String password;
+    private String infoBorderUrl;
 
     public String getUrl() {
 

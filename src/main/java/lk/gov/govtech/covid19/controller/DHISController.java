@@ -4,6 +4,7 @@ import lk.gov.govtech.covid19.dto.DHISResponse;
 import lk.gov.govtech.covid19.dto.Enrollment;
 import lk.gov.govtech.covid19.dto.EntityInstance;
 import lk.gov.govtech.covid19.dto.Events;
+import lk.gov.govtech.covid19.dto.FlightPassengerInformation;
 import lk.gov.govtech.covid19.util.Constants;
 import lk.gov.govtech.covid19.service.DHIS2Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,12 @@ public class DHISController {
     public ResponseEntity getEntityAttributes() {
 
         DHISResponse response = dhis2Service.getEntityAttributes();
+        return ResponseEntity.status(response.getStatus()).body(response.getResponse());
+    }
+    
+    @PostMapping(path = "/passenger-information", produces = "application/json")
+    public ResponseEntity pushPassengerInformation(@RequestBody FlightPassengerInformation fpInfo) {
+        DHISResponse response = dhis2Service.pushFlightPassengerInformation(fpInfo);
         return ResponseEntity.status(response.getStatus()).body(response.getResponse());
     }
 
