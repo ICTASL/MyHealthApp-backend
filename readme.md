@@ -31,6 +31,33 @@ POST http://localhost:8000/notification/alert/add
 }
 ```
 
+----
+
+```
+POST http://localhost:8000/notification/case/add
+
+{
+   "caseNumber":"DHIS/WP/COL/1234",
+   "locations":[
+      {
+         "date":"2020/02/02",
+         "from":"2020/02/02 00:00:00",
+         "to":"2020/02/02 11:59:59",
+         "location":"Colombo Municipal Council"
+      },
+      {
+         "date":"2020/03/02",
+         "from":"2020/03/02 13:00:00",
+         "to":"2020/03/02 15:45:00",
+         "location":"Galadari Hotel"
+      }
+   ],
+   "message_en":"Person confirmed with COVID-19",
+   "message_si":"COVID-19 සමඟ තහවුරු කළ පුද්ගලයා",
+   "message_ta":"COVID-19 உடன் நபர் உறுதிப்படுத்தப்பட்டார்"
+}
+```
+
 ### FCM-Backend
 
 ## Get started

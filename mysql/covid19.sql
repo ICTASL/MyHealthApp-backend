@@ -28,11 +28,11 @@ CREATE TABLE `epid_case` (
 
 CREATE TABLE `epid_location` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `date` DATETIME NULL,
+  `case_id` INT NULL,
+  `date` DATE NULL,
   `from` DATETIME NULL,
   `to` DATETIME NULL,
   `location` VARCHAR(100) NULL,
-  `case_id` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_epid_location_1_idx` (`case_id` ASC),
   CONSTRAINT `fk_epid_location_1`

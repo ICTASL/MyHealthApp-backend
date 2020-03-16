@@ -33,3 +33,4 @@ build/
 *.log
 target
 /bin/
+*.pid

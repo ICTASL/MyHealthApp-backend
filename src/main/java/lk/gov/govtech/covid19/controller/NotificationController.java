@@ -1,6 +1,7 @@
 package lk.gov.govtech.covid19.controller;
 
 import lk.gov.govtech.covid19.dto.AlertNotificationRequest;
+import lk.gov.govtech.covid19.dto.CaseNotificationRequest;
 import lk.gov.govtech.covid19.service.NotificationService;
 import lk.gov.govtech.covid19.util.Constants;
 import lombok.extern.slf4j.Slf4j;
@@ -26,5 +27,14 @@ public class NotificationController {
 
         return ResponseEntity.accepted().build();
     }
+
+    @PostMapping(path = "/case/add", consumes = "application/json", produces = "application/json")
+    public ResponseEntity addNewCase(@RequestBody CaseNotificationRequest request){
+
+        notificationService.addCaseNotification(request);
+
+        return ResponseEntity.accepted().build();
+    }
+
 
 }

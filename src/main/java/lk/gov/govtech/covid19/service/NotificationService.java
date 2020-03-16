@@ -1,6 +1,7 @@
 package lk.gov.govtech.covid19.service;
 
 import lk.gov.govtech.covid19.dto.AlertNotificationRequest;
+import lk.gov.govtech.covid19.dto.CaseNotificationRequest;
 import lk.gov.govtech.covid19.repository.CovidRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,10 @@ public class NotificationService {
 
         repository.addAlertNotification(request);
 
+    }
+
+    public void addCaseNotification(CaseNotificationRequest request){
+        repository.addCaseNotification(request);
     }
 
 }
