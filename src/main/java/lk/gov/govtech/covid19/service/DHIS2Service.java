@@ -37,6 +37,7 @@ public class DHIS2Service {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(DHIS2Service.class);
     private final static int INTERNAL_ERROR_CODE = 500;
+    private final static int OK_CODE = 200;
 
     @Autowired
     private DHISConfiguration dhisConfiguration;
@@ -215,12 +216,15 @@ public class DHIS2Service {
     
     private List<FlightPassengerInformation> getInfoBorderPassengerList(String flightNo, 
                                                                         String date) throws Exception {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Invoke getInfoBorderPassengerList");
+        }
         GetMethod getRequest = new GetMethod(this.dhisConfiguration.getInfoBorderUrl() + "/" + flightNo + "/" + date);
         try {
             HttpClient httpClient = getHttpClient();
             int response = httpClient.executeMethod(getRequest);
             String content = getRequest.getResponseBodyAsString();
-            if (response != 200) {
+            if (response != OK_CODE) {
                 throw new Exception("Error in looking up passenger list from InfoBorder service: " + content);
             }
             return Arrays.asList(this.gson.fromJson(content, FlightPassengerInformation[].class));
@@ -276,6 +280,9 @@ public class DHIS2Service {
     }
     
     public DHISResponse pushFlightPassengerInformation(FlightPassengerInformation fpInfo) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Invoke pushFlightPassengerInformation");
+        }
         DHISResponse result = new DHISResponse();
         try {
             FlightInformation flightInfo = this.extractFlightInformation(fpInfo);
@@ -284,7 +291,7 @@ public class DHIS2Service {
             this.saveFlightPassengerInformation(Arrays.asList(fpInfo));
             List<FlightPassengerInformation> passengersInFlight = this.getInfoBorderPassengerList(flightNo, date);
             this.saveFlightPassengerInformation(passengersInFlight);
-            result.setStatus(200);
+            result.setStatus(OK_CODE);
         } catch (Exception e) {
             this.clearoutImages(fpInfo);
             String message = "Error in pushing flight passenger info: " + fpInfo;
