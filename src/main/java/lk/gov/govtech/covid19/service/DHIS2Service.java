@@ -8,6 +8,7 @@ import lk.gov.govtech.covid19.dto.DHISResponse;
 import lk.gov.govtech.covid19.dto.Enrollment;
 import lk.gov.govtech.covid19.dto.EntityInstance;
 import lk.gov.govtech.covid19.dto.Events;
+import lk.gov.govtech.covid19.dto.FlightInformation;
 import lk.gov.govtech.covid19.dto.FlightPassengerInformation;
 
 import org.apache.commons.httpclient.HttpClient;
@@ -23,8 +24,11 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -37,6 +41,8 @@ public class DHIS2Service {
     private DHISConfiguration dhisConfiguration;
     
     private Gson gson = new Gson();
+    private SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public DHISResponse getEntityTypes() {
 
@@ -223,14 +229,44 @@ public class DHIS2Service {
     }
     
     private void saveFlightPassengerInformation(List<FlightPassengerInformation> fpInfos) {
-        //TODO
+        //TODO - save to DHIS2
+    }
+    
+    private String extractFlightNumber(FlightInformation flightInfo) throws Exception {
+        String flightNumber = flightInfo.getFlightNumber();
+        if (flightNumber == null) {
+            throw new Exception("Flight number not available");
+        }
+        return flightNumber;
+    }
+    
+    private String extractFlightDate(FlightInformation flightInfo) throws Exception {
+        try {
+            return this.extractDate(flightInfo.getFlightDateTime());
+        } catch (ParseException e) {
+            throw new Exception("Invalid flight date time");
+        }
+    }
+    
+    private FlightInformation extractFlightInformation(FlightPassengerInformation fpInfo) throws Exception {
+        FlightInformation flightInfo = fpInfo.getFlightInformation();
+        if (flightInfo == null) {
+            throw new Exception("Flight information not available");
+        }
+        return flightInfo;
+    }
+    
+    private synchronized String extractDate(String dateTime) throws ParseException {
+        Date date = this.dateTimeFormat.parse(dateTime);
+        return this.dateFormat.format(date);
     }
     
     public DHISResponse pushFlightPassengerInformation(FlightPassengerInformation fpInfo) {
-        String flightNo = fpInfo.getFlightInformation().getFlightNumber();
-        String date = fpInfo.getFlightInformation().getFlightDateTime();
         DHISResponse result = new DHISResponse();
         try {
+            FlightInformation flightInfo = this.extractFlightInformation(fpInfo);
+            String flightNo = this.extractFlightNumber(flightInfo);
+            String date = this.extractFlightDate(flightInfo);
             this.saveFlightPassengerInformation(Arrays.asList(fpInfo));
             List<FlightPassengerInformation> passengersInFlight = this.getInfoBorderPassengerList(flightNo, date);
             this.saveFlightPassengerInformation(passengersInFlight);
