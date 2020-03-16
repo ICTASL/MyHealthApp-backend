@@ -1,0 +1,172 @@
+{
+	"info": {
+		"_postman_id": "41628007-ef36-472e-a759-36ed7ba362f0",
+		"name": "COVID-19",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add New Alert Notification",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"title\":\"Test title\",\n   \"subtitle\":\"Test subtitle\",\n   \"source\":\"MOH\",\n   \"messageEn\":\"This is a test message2\",\n   \"messageSi\":\"මෙය පරීක්ෂණ පණිවිඩයකි\",\n   \"messageTa\":\"இது ஒரு சோதனை செய்தி\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/notification/alert/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"notification",
+						"alert",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add New Case Notification",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"caseNumber\":\"DHIS/WP/COL/1234\",\n   \"locations\":[\n      {\n         \"date\":\"2020/02/02\",\n         \"from\":\"2020/02/02 00:00:00\",\n         \"to\":\"2020/02/02 11:59:59\",\n         \"address\":\"Colombo Municipal Council\",\n         \"longitude\":\"1234\",\n         \"latitude\":\"4321\"\n      },\n      {\n         \"date\":\"2020/03/02\",\n         \"from\":\"2020/03/02 13:00:00\",\n         \"to\":\"2020/03/02 15:45:00\",\n         \"address\":\"Galadari Hotel\",\n         \"longitude\":\"1234\",\n         \"latitude\":\"4321\"\n      }\n   ],\n   \"message_en\":\"Person confirmed with COVID-19\",\n   \"message_si\":\"COVID-19 සමඟ තහවුරු කළ පුද්ගලයා\",\n   \"message_ta\":\"COVID-19 உடன் நபர் உறுதிப்படுத்தப்பட்டார்\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/notification/case/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"notification",
+						"case",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Case Notification By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/application/case/13/si",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"application",
+						"case",
+						"13",
+						"si"
+					]
+				},
+				"description": "GET http://localhost:8000/application/case/<caseId>/<lang>\n\nlang should be one of:\n- en\n- si\n- ta"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Latest Case Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/application/case/latest",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"application",
+						"case",
+						"latest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Alert Notification by Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/application/alert/2/si",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"application",
+						"alert",
+						"2",
+						"si"
+					]
+				},
+				"description": "http://localhost:8000/application/alert/<alertId>/<lang>\n\nlang should be one of:\n- en\n- si\n- ta"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Latest Alert Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/application/alert/latest",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"application",
+						"alert",
+						"latest"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
