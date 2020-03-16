@@ -8,7 +8,6 @@ import lk.gov.govtech.covid19.dto.EntityInstance;
 import lk.gov.govtech.covid19.dto.Events;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethodBase;
-import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
@@ -54,10 +53,10 @@ public class DHIS2Service {
         return dhisResponse;
     }
 
-    public String getEntityAttributes() {
+    public DHISResponse getEntityAttributes() {
 
         GetMethod getRequest = new GetMethod(dhisConfiguration.getUrl() + "/trackedEntityAttributes");
-        String entityAttributes = "";
+        DHISResponse dhisResponse = new DHISResponse();
 
         try {
             if (LOGGER.isDebugEnabled()) {
@@ -66,22 +65,22 @@ public class DHIS2Service {
             HttpClient httpClient = getHttpClient();
             setAuthorizationHeader(getRequest);
             int response = httpClient.executeMethod(getRequest);
-            if (response == HttpStatus.SC_OK) {
-                entityAttributes = new String(getRequest.getResponseBody());
-            }
+            dhisResponse.setStatus(response);
+            dhisResponse.setResponse(getRequest.getResponseBodyAsString());
         } catch (IOException e) {
             LOGGER.error("Error while getting entity attributes information", e);
-            entityAttributes = e.getLocalizedMessage();
+            dhisResponse.setStatus(INTERNAL_ERROR_CODE);
+            dhisResponse.setResponse(e.getLocalizedMessage());
         } finally {
             getRequest.releaseConnection();
         }
-        return entityAttributes;
+        return dhisResponse;
     }
 
-    public String getOrganizationUnits() {
+    public DHISResponse getOrganizationUnits() {
 
         GetMethod getRequest = new GetMethod(dhisConfiguration.getUrl() + "/organisationUnits");
-        String organizationUnits = "";
+        DHISResponse dhisResponse = new DHISResponse();
 
         try {
             if (LOGGER.isDebugEnabled()) {
@@ -90,22 +89,22 @@ public class DHIS2Service {
             HttpClient httpClient = getHttpClient();
             setAuthorizationHeader(getRequest);
             int response = httpClient.executeMethod(getRequest);
-            if (response == HttpStatus.SC_OK) {
-                organizationUnits = new String(getRequest.getResponseBody());
-            }
+            dhisResponse.setStatus(response);
+            dhisResponse.setResponse(getRequest.getResponseBodyAsString());
         } catch (IOException e) {
             LOGGER.error("Error while getting organization units information", e);
-            organizationUnits = e.getLocalizedMessage();
+            dhisResponse.setStatus(INTERNAL_ERROR_CODE);
+            dhisResponse.setResponse(e.getLocalizedMessage());
         } finally {
             getRequest.releaseConnection();
         }
-        return organizationUnits;
+        return dhisResponse;
     }
 
-    public String createEntityInstance(EntityInstance entityInstance) {
+    public DHISResponse createEntityInstance(EntityInstance entityInstance) {
 
         PostMethod postRequest = new PostMethod(dhisConfiguration.getUrl() + "/trackedEntityInstances");
-        String respStr = "";
+        DHISResponse dhisResponse = new DHISResponse();
         try {
 
             if (LOGGER.isDebugEnabled()) {
@@ -116,22 +115,22 @@ public class DHIS2Service {
             ObjectMapper objectMapper = new ObjectMapper();
             postRequest.setRequestEntity(getRequestEntity(objectMapper.writeValueAsString(entityInstance)));
             int response = httpClient.executeMethod(postRequest);
-            if (response == HttpStatus.SC_OK) {
-                respStr = new String(postRequest.getResponseBody());
-            }
+            dhisResponse.setStatus(response);
+            dhisResponse.setResponse(postRequest.getResponseBodyAsString());
         } catch (IOException e) {
             LOGGER.error("Error while creating entity instance", e);
-            respStr = e.getLocalizedMessage();
+            dhisResponse.setStatus(INTERNAL_ERROR_CODE);
+            dhisResponse.setResponse(e.getLocalizedMessage());
         } finally {
             postRequest.releaseConnection();
         }
-        return respStr;
+        return dhisResponse;
     }
 
-    public String createEnrollment(Enrollment enrollment) {
+    public DHISResponse createEnrollment(Enrollment enrollment) {
 
         PostMethod postRequest = new PostMethod(dhisConfiguration.getUrl() + "/enrollments");
-        String respStr = "";
+        DHISResponse dhisResponse = new DHISResponse();
         try {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Invoke create entity enrollment");
@@ -141,22 +140,22 @@ public class DHIS2Service {
             ObjectMapper objectMapper = new ObjectMapper();
             postRequest.setRequestEntity(getRequestEntity(objectMapper.writeValueAsString(enrollment)));
             int response = httpClient.executeMethod(postRequest);
-            if (response == HttpStatus.SC_OK) {
-                respStr = new String(postRequest.getResponseBody());
-            }
+            dhisResponse.setStatus(response);
+            dhisResponse.setResponse(postRequest.getResponseBodyAsString());
         } catch (IOException e) {
             LOGGER.error("Error while enrolling", e);
-            respStr = e.getLocalizedMessage();
+            dhisResponse.setStatus(INTERNAL_ERROR_CODE);
+            dhisResponse.setResponse(e.getLocalizedMessage());
         } finally {
             postRequest.releaseConnection();
         }
-        return respStr;
+        return dhisResponse;
     }
 
-    public String createEvents(Events events) {
+    public DHISResponse createEvents(Events events) {
 
         PostMethod postRequest = new PostMethod(dhisConfiguration.getUrl() + "/events.json");
-        String respStr = "";
+        DHISResponse dhisResponse = new DHISResponse();
         try {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Invoke create entity events");
@@ -166,16 +165,16 @@ public class DHIS2Service {
             ObjectMapper objectMapper = new ObjectMapper();
             postRequest.setRequestEntity(getRequestEntity(objectMapper.writeValueAsString(events)));
             int response = httpClient.executeMethod(postRequest);
-            if (response == HttpStatus.SC_OK) {
-                respStr = new String(postRequest.getResponseBody());
-            }
+            dhisResponse.setStatus(response);
+            dhisResponse.setResponse(postRequest.getResponseBodyAsString());
         } catch (IOException e) {
             LOGGER.error("Error while creating event", e);
-            respStr = e.getLocalizedMessage();
+            dhisResponse.setStatus(INTERNAL_ERROR_CODE);
+            dhisResponse.setResponse(e.getLocalizedMessage());
         } finally {
             postRequest.releaseConnection();
         }
-        return respStr;
+        return dhisResponse;
     }
 
     private void setAuthorizationHeader(HttpMethodBase request) {

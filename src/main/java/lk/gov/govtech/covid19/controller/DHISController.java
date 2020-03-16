@@ -29,51 +29,43 @@ public class DHISController {
     @PostMapping(path = "/entity-instances", consumes = "application/json", produces = "application/json")
     public ResponseEntity createEntityInstance(@RequestBody EntityInstance entityInstance) {
 
-        String response = dhis2Service.createEntityInstance(entityInstance);
-        return ResponseEntity.ok().body(response);
+        DHISResponse response = dhis2Service.createEntityInstance(entityInstance);
+        return ResponseEntity.status(response.getStatus()).body(response.getResponse());
     }
 
     @PostMapping(path = "/enrollements", consumes = "application/json", produces = "application/json")
     public ResponseEntity createEnrollment(@RequestBody Enrollment enrollment) {
 
-        String response = dhis2Service.createEnrollment(enrollment);
-        return ResponseEntity.ok().body(response);
+        DHISResponse response = dhis2Service.createEnrollment(enrollment);
+        return ResponseEntity.status(response.getStatus()).body(response.getResponse());
     }
 
     @PostMapping(path = "/events", consumes = "application/json", produces = "application/json")
     public ResponseEntity createEvents(@RequestBody Events events) {
 
-        String response = dhis2Service.createEvents(events);
-        return ResponseEntity.ok().body(response);
+        DHISResponse response = dhis2Service.createEvents(events);
+        return ResponseEntity.status(response.getStatus()).body(response.getResponse());
     }
 
     @GetMapping(path = "/entity-types", produces = "application/json")
     public ResponseEntity getEntityType() {
 
-        DHISResponse entityTypes = dhis2Service.getEntityTypes();
-        return ResponseEntity.status(entityTypes.getStatus()).body(entityTypes.getResponse());
+        DHISResponse response = dhis2Service.getEntityTypes();
+        return ResponseEntity.status(response.getStatus()).body(response.getResponse());
     }
 
     @GetMapping(path = "/organization-units", produces = "application/json")
     public ResponseEntity getOrganizationUnits() {
 
-        String organizationUnits = dhis2Service.getOrganizationUnits();
-        if (StringUtils.isEmpty(organizationUnits)) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok().body(organizationUnits);
-        }
+        DHISResponse response = dhis2Service.getOrganizationUnits();
+        return ResponseEntity.status(response.getStatus()).body(response.getResponse());
     }
 
     @GetMapping(path = "/entity-attributes", produces = "application/json")
     public ResponseEntity getEntityAttributes() {
 
-        String entityAttributes = dhis2Service.getEntityAttributes();
-        if (StringUtils.isEmpty(entityAttributes)) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok().body(entityAttributes);
-        }
+        DHISResponse response = dhis2Service.getEntityAttributes();
+        return ResponseEntity.status(response.getStatus()).body(response.getResponse());
     }
 
 }
