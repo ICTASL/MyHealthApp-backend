@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 @RestController
-@RequestMapping(value = Constants.TF_API_CONTEXT)
+@RequestMapping(value = Constants.      APPLICATION_API_CONTEXT)
 public class ApplicationController {
 
     @Autowired

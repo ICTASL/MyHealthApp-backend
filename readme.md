@@ -18,6 +18,19 @@ returns integer as response
 
 ----
 
+```
+POST http://localhost:8000/notification/alert/add 
+
+{
+   "title":"Test title",
+   "subtitle":"Test subtitle",
+   "source":"MOH",
+   "messageEn":"This is a test message",
+   "messageSi":"මෙය පරීක්ෂණ පණිවිඩයකි",
+   "messageTa":"இது ஒரு சோதனை செய்தி"
+}
+```
+
 ### FCM-Backend
 
 ## Get started
