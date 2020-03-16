@@ -82,106 +82,98 @@
         </div>
         <hr class="mt-5">
     </div>
-    <!--Tabs Wrapper-->
-    <div x-data="{ tab: 'english' }">
-
-        <!--Tabs Section Ends here-->
         <form action="" method="post">
-        <!--English Tab-->
-        <div class="w-full mt-5">
-            <div class="border box-border rounded shadow-md pt-2">
-                <h2 class= "bg-white mt-2 px-8 text-left text-2xl leading-9 font-extrabold text-gray-900">
-                    General
-                </h2>
+            <div class="w-full mt-5">
+                <div class="border box-border rounded shadow-md pt-2">
+                    <h2 class= "bg-white mt-2 px-8 text-left text-2xl leading-9 font-extrabold text-gray-900">
+                        General
+                    </h2>
+                        <div class="flex mt-2  py-4 flex-col w-full bg-gray-200 px-4">
+                            <!--Title Input-->
+                            <div class="mt-2">
+                                <label class="px-4 text-xl text-gray-800 w-full " for="title">Title**</label>
+                                <div class="px-4">
+                                    <input class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
+                                           type="text" placeholder="Title" id="title" required>
+                                </div>
+                            </div>
+
+                            <!--SubTitle Input-->
+                            <div class="mt-2">
+                                <label class="px-4 text-xl text-gray-800 w-full " for="sub_title">Sub Title**</label>
+                                <div class="px-4">
+                                    <input
+                                            class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
+                                            type="text" placeholder="Sub title" id="sub_title" required>
+                                </div>
+                            </div>
+
+                            <!--Source Input-->
+                            <div class="mt-2">
+                                <label class="px-4 text-xl text-gray-800 w-full " for="source">Source**</label>
+                                <div class="px-4">
+                                    <input class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
+                                           type="text" placeholder="Source" id="source" required>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="border box-border rounded shadow-md pt-2 mt-8">
+                    <h2 class= "bg-white mt-2 px-8 text-left text-2xl leading-9 font-extrabold text-gray-900">
+                        English News
+                    </h2>
                     <div class="flex mt-2  py-4 flex-col w-full bg-gray-200 px-4">
-                        <!--Title Input-->
-                        <div class="mt-2">
-                            <label class="px-4 text-xl text-gray-800 w-full " for="title">Title**</label>
+                        <!--Description Input-->
+                        <div class="mt-8">
+                            <label class="px-4 text-xl text-gray-800 w-full" for="english_description">English Description**</label>
                             <div class="px-4">
-                                <input class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                       type="text" placeholder="Title" id="title" required>
-                            </div>
-                        </div>
-
-                        <!--SubTitle Input-->
-                        <div class="mt-2">
-                            <label class="px-4 text-xl text-gray-800 w-full " for="sub_title">Sub Title**</label>
-                            <div class="px-4">
-                                <input
-                                        class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                        type="text" placeholder="Sub title" id="sub_title" required>
-                            </div>
-                        </div>
-
-                        <!--SubTitle Input-->
-                        <div class="mt-2">
-                            <label class="px-4 text-xl text-gray-800 w-full " for="source">Source**</label>
-                            <div class="px-4">
-                                <input class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                       type="text" placeholder="Source" id="source" required>
+                                    <textarea rows="10" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
+                                              type="text" placeholder="description" id="english_description" required></textarea>
                             </div>
                         </div>
                     </div>
-            </div>
-            <div class="border box-border rounded shadow-md pt-2 mt-8">
-                <h2 class= "bg-white mt-2 px-8 text-left text-2xl leading-9 font-extrabold text-gray-900">
-                    English News
-                </h2>
-                <div class="flex mt-2  py-4 flex-col w-full bg-gray-200 px-4">
-                    <!--Description Input-->
-                    <div class="mt-8">
-                        <label class="px-4 text-xl text-gray-800 w-full" for="english_description">English Description**</label>
-                        <div class="px-4">
-                                <textarea rows="10" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                          type="text" placeholder="description" id="english_description" required></textarea>
+                </div>
+
+                <div class="border box-border rounded shadow-md pt-2 mt-8">
+                    <h2 class= "bg-white mt-2 px-8 text-left text-2xl leading-9 font-extrabold text-gray-900">
+                        Sinhala News
+                    </h2>
+                    <div class="flex mt-2  py-4 flex-col w-full bg-gray-200 px-4">
+                        <!--Description Input-->
+                        <div class="mt-8">
+                            <label class="px-4 text-xl text-gray-800 w-full" for="sinhala_description">Sinhala Description</label>
+                            <div class="px-4">
+                                    <textarea rows="10" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
+                                              type="text" placeholder="sinhala_description" id="sinhala_description"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="border box-border rounded shadow-md pt-2 mt-8">
-                <h2 class= "bg-white mt-2 px-8 text-left text-2xl leading-9 font-extrabold text-gray-900">
-                    Sinhala News
-                </h2>
-                <div class="flex mt-2  py-4 flex-col w-full bg-gray-200 px-4">
-                    <!--Description Input-->
-                    <div class="mt-8">
-                        <label class="px-4 text-xl text-gray-800 w-full" for="sinhala_description">Sinhala Description</label>
-                        <div class="px-4">
-                                <textarea rows="10" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                          type="text" placeholder="sinhala_description" id="sinhala_description"></textarea>
+
+                <div class="border box-border rounded shadow-md pt-2 mt-8">
+                    <h2 class= "bg-white mt-2 px-8 text-left text-2xl leading-9 font-extrabold text-gray-900">
+                        Tamil News
+                    </h2>
+                    <div class="flex mt-2  py-4 flex-col w-full bg-gray-200 px-4">
+                        <!--Description Input-->
+                        <div class="mt-8">
+                            <label class="px-4 text-xl text-gray-800 w-full" for="tamil_description">Tamil Description</label>
+                            <div class="px-4">
+                                    <textarea rows="10" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
+                                              type="text" placeholder="description" id="tamil_description"></textarea>
+                            </div>
+                        </div>
+                        <!--Submit Button-->
+                        <div class="mt-8 flex justify-end px-4">
+                            <button type="submit"class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                                Add News
+                            </button>
                         </div>
                     </div>
+
                 </div>
             </div>
-
-
-            <div class="border box-border rounded shadow-md pt-2 mt-8">
-                <h2 class= "bg-white mt-2 px-8 text-left text-2xl leading-9 font-extrabold text-gray-900">
-                    Tamil News
-                </h2>
-                <div class="flex mt-2  py-4 flex-col w-full bg-gray-200 px-4">
-                    <!--Description Input-->
-                    <div class="mt-8">
-                        <label class="px-4 text-xl text-gray-800 w-full" for="tamil_description">Tamil Description</label>
-                        <div class="px-4">
-                                <textarea rows="10" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                          type="text" placeholder="description" id="tamil_description"></textarea>
-                        </div>
-                    </div>
-                    <!--Submit Button-->
-                    <div class="mt-8 flex justify-end px-4">
-                        <button type="submit"class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-                            Add News
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-
-
-        </div>
-
         </form>
     </div>
 
