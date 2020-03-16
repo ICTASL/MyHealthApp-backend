@@ -1,0 +1,240 @@
+{
+	"info": {
+		"_postman_id": "c7c57bd3-ee84-404e-864b-bcc1f0dd2e74",
+		"name": "COVID-19-DHIS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "organizationUnits",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8000/dhis/organization-units",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"dhis",
+						"organization-units"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "trackedEntityAttributes",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8000/dhis/entity-attributes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"dhis",
+						"entity-attributes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "entityTypes",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8000/dhis/entity-types",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"dhis",
+						"entity-types"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "service/entity-instances",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "district",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"trackedEntityType\":\"SXtGAk7eCxX\",\n\"orgUnit\":\"GYBZ1og9bk7\",\n\"attributes\":[\n{\"attribute\":\"DDleOZ1LGAq\",\"value\":\"Male\"},\n{\"attribute\":\"FqwsMUUHpMA\",\"value\":\"Afghanistan\"},\n{\"attribute\":\"LGm4k0JyEd9\",\"value\":\"asdf@asdf.cim\"},\n{\"attribute\":\"eEtOfZW9pnO\",\"value\":\"asdf2\"},\n{\"attribute\":\"gvP9uZqEtM5\",\"value\":\"Test2\"},\n{\"attribute\":\"ihz1qXLws99\",\"value\":\"asdf2\"},\n{\"attribute\":\"nvJtVaGKK4Q\",\"value\":\"2020-03-09\"},\n{\"attribute\":\"pNOTaJeFbPo\",\"value\":\"asdf2\"},\n{\"attribute\":\"pfebiO41tX5\",\"value\":\"1234\"},\n{\"attribute\":\"s1AxHKrRT19\",\"value\":\"asdf2\"},\n{\"attribute\":\"wX3FuQmiLGI\",\"value\":\"asdf2\"}\n],\n\"geometry\":{\"type\":\"Point\",\"coordinates\":[-12.364602903389118,8.727550887880374]}\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/dhis/entity-instances",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"dhis",
+						"entity-instances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "service/enrollements",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "district",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"trackedEntityInstance\":\"aJFGViyDPFt\",\n\"program\":\"Cr6bmkKzQ5c\",\n\"status\":\"ACTIVE\",\n\"orgUnit\":\"GYBZ1og9bk7\",\n\"enrollmentDate\":\"2020-03-15\",\n\"incidentDate\":\"2020-03-15\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/dhis/enrollements",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"dhis",
+						"enrollements"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "service/events",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "district",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"events\":[\n{\"trackedEntityInstance\":\"aJFGViyDPFt\",\n\"program\":\"Cr6bmkKzQ5c\",\n\"programStage\":\"ktw7Aj9CgAJ\",\n\"orgUnit\":\"GYBZ1og9bk7\",\n\"enrollment\":\"jt45zk8YdJD\",\n\"dueDate\":\"2020-03-15\",\n\"status\":\"SCHEDULE\"}]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/dhis/events",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"dhis",
+						"events"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
