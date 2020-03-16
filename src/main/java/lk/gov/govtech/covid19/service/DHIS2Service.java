@@ -10,6 +10,7 @@ import lk.gov.govtech.covid19.dto.EntityInstance;
 import lk.gov.govtech.covid19.dto.Events;
 import lk.gov.govtech.covid19.dto.FlightInformation;
 import lk.gov.govtech.covid19.dto.FlightPassengerInformation;
+import lk.gov.govtech.covid19.dto.PassengerInformation;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethodBase;
@@ -241,10 +242,14 @@ public class DHIS2Service {
     }
     
     private String extractFlightDate(FlightInformation flightInfo) throws Exception {
+        String flightDateTime = flightInfo.getFlightDateTime();
+        if (flightDateTime == null) {
+            throw new Exception("Flight data/time not available");
+        }
         try {
-            return this.extractDate(flightInfo.getFlightDateTime());
+            return this.extractDate(flightDateTime);
         } catch (ParseException e) {
-            throw new Exception("Invalid flight date time");
+            throw new Exception("Invalid flight date/time", e);
         }
     }
     
@@ -261,6 +266,15 @@ public class DHIS2Service {
         return this.dateFormat.format(date);
     }
     
+    private void clearoutImages(FlightPassengerInformation fpInfo) {
+        PassengerInformation pInfo = fpInfo.getPassengerInformation();
+        if (pInfo != null) {
+            pInfo.setArrivalCardImage("***");
+            pInfo.setFaceImage("***");
+            pInfo.setPassportDataPage("***");
+        }
+    }
+    
     public DHISResponse pushFlightPassengerInformation(FlightPassengerInformation fpInfo) {
         DHISResponse result = new DHISResponse();
         try {
@@ -272,6 +286,7 @@ public class DHIS2Service {
             this.saveFlightPassengerInformation(passengersInFlight);
             result.setStatus(200);
         } catch (Exception e) {
+            this.clearoutImages(fpInfo);
             String message = "Error in pushing flight passenger info: " + fpInfo;
             LOGGER.error(message, e);
             result.setStatus(INTERNAL_ERROR_CODE);
