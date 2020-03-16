@@ -2,10 +2,215 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head lang="en">
     <meta charset="UTF-8"/>
-    <link rel="stylesheet" href="/main.css" />
-</head>
-<body>
-hpb portal
+    <meta name="viewport" content="width=device-width">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link th:href="@{/main.css}" rel="stylesheet">
 
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.0.1/dist/alpine.js" defer></script>
+
+</head>
+
+
+<body class="bg-gray-50">
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.0.1/dist/alpine.js" defer></script>
+
+<nav x-data="{ open: true }" class="bg-gray-800">
+    <div class="max-w-6xl mx-auto px-2 sm:px-6 lg:px-8">
+        <div class="relative flex items-center justify-between h-16">
+            <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                <button @click="open = !open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white transition duration-150 ease-in-out">
+                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <path :class="{'hidden': open, 'inline-flex': !open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        <path :class="{'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+                <div class="flex-shrink-0">
+                    <img class="block lg:hidden h-8 w-auto" src="/img/logos/workflow-mark-on-dark.svg" alt="" />
+                    <img class="hidden lg:block h-8 w-auto" src="/img/logos/workflow-logo-on-dark.svg" alt="" />
+                </div>
+                <div class="hidden sm:block sm:ml-6">
+                    <div class="flex">
+                        <a href="#" class="px-3 py-2 rounded-md text-sm font-medium leading-5 text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Send News</a>
+                        <a href="#" class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Send Case</a>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                <button class="p-1 border-2 border-transparent text-gray-400 rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">
+                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                    </svg>
+                </button>
+                <div @click.away="open = false" class="ml-3 relative" x-data="{ open: false }">
+                    <div>
+                        <button @click="open = !open" class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-white transition duration-150 ease-in-out">
+                            <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                        </button>
+                    </div>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg">
+                        <div class="py-1 rounded-md bg-white shadow-xs">
+                            <a href="#" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">Sign out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div :class="{'block': open, 'hidden': !open}" class="hidden sm:hidden">
+        <div class="px-2 pt-2 pb-3">
+            <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Send News</a>
+            <a href="#" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Send Case</a>
+        </div>
+    </div>
+</nav>
+
+
+<!--Main Wrapper-->
+
+<div class="flex flex-col container max-w-6xl  mx-auto bg-gray-50 py-12 px-3 sm:px-6 lg:px-8">
+    <div class="w-full flex flex-col mt-10">
+        <div>
+            <h1 class="text-4xl font-bold">News Portal</h1>
+        </div>
+        <div class="mt-2">
+            <span class="text-base text-gray-600">Insert News Regarding Corona Virus</span>
+        </div>
+        <hr class="mt-5">
+    </div>
+    <!--Tabs Wrapper-->
+    <div x-data="{ tab: 'english' }">
+        <!-- Tabs Section-->
+        <div class="mt-10">
+            <ul class="tabs flex justify-between bg-gray-200 p-1 rounded">
+                <li class="flex-1 mr-2">
+                    <button href="#english" :class="{ 'active-tabs': tab === 'english' }" @click="tab = 'english'" class="tabs-current w-full text-center block  text-blue-500 rounded py-2 px-4" >English</button>
+                </li>
+                <li class="flex-1 mr-2">
+                    <button href="#sinhala"  :class="{ 'active-tabs': tab === 'sinhala' }" @click="tab = 'sinhala'" class=" w-full  text-center block  rounded hover:border-gray-200 text-blue-500 py-2 px-4">Sinhala</button>
+                </li>
+                <li class="flex-1 mr-2">
+                    <button href="#tamil" :class="{ 'active-tabs': tab === 'tamil' }"  @click="tab = 'tamil'" class="w-full  text-center block  rounded hover:border-gray-200 text-blue-500 py-2 px-4">Tamil</button>
+                </li>
+            </ul>
+        </div>
+        <!--Tabs Section Ends here-->
+
+        <!--English Tab-->
+        <div x-show="tab === 'english'" class="w-full mt-5">
+            <div class="border box-border rounded shadow-md pt-2">
+                <h2 class= "bg-white mt-2 px-8 text-left text-2xl leading-9 font-extrabold text-gray-900">
+                    Send News
+                </h2>
+                <form action="">
+                    <div class="flex mt-2  py-4 flex-col w-full bg-gray-200 px-4">
+                        <!--Title Input-->
+                        <div class="mt-2">
+                            <label class="px-4 text-xl text-gray-800 w-full " for="title">Title</label>
+                            <div class="px-4">
+                                <input class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" type="text" placeholder="Title" id="title">
+                            </div>
+                        </div>
+
+                        <!--Description Input-->
+                        <div class="mt-8">
+                            <label class="px-4 text-xl text-gray-800 w-full" for="description">Description</label>
+                            <div class="px-4">
+                                <textarea rows="10" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" type="text" placeholder="Title" id="description"></textarea>
+                            </div>
+                        </div>
+
+                        <!--Submit Button-->
+                        <div class="mt-8 flex justify-end px-4">
+                            <button type="submit"class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                                Add News
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--English Tab Ends Here-->
+
+        <!--Sinhala Tab-->
+        <div x-show="tab === 'sinhala'" class="w-full mt-5">
+            <div class="border box-border rounded shadow-md pt-2">
+                <h2 class= "bg-white mt-2 px-8 text-left text-2xl leading-9 font-extrabold text-gray-900">
+                    Send News
+                </h2>
+                <form action="">
+                    <div class="flex mt-2  py-4 flex-col w-full bg-gray-200 px-4">
+                        <!--Title Input-->
+                        <div class="mt-2">
+                            <label class="px-4 text-xl text-gray-800 w-full " for="title">Title</label>
+                            <div class="px-4">
+                                <input class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" type="text" placeholder="Title" id="title">
+                            </div>
+                        </div>
+
+                        <!--Description Input-->
+                        <div class="mt-8">
+                            <label class="px-4 text-xl text-gray-800 w-full" for="description">Description</label>
+                            <div class="px-4">
+                                <textarea rows="10" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" type="text" placeholder="Title" id="description"></textarea>
+                            </div>
+                        </div>
+
+                        <!--Submit Button-->
+                        <div class="mt-8 flex justify-end px-4">
+                            <button type="submit"class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                                Add News
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--Sinhala Tab Ends Here-->
+
+        <!--Tamil Tab-->
+        <div x-show="tab === 'tamil'" class="w-full mt-5">
+            <div class="border box-border rounded shadow-md pt-2">
+                <h2 class= "bg-white mt-2 px-8 text-left text-2xl leading-9 font-extrabold text-gray-900">
+                    Send News
+                </h2>
+                <form action="">
+                    <div class="flex mt-2  py-4 flex-col w-full bg-gray-200 px-4">
+                        <!--Title Input-->
+                        <div class="mt-2">
+                            <label class="px-4 text-xl text-gray-800 w-full " for="title">Title</label>
+                            <div class="px-4">
+                                <input class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" type="text" placeholder="Title" id="title">
+                            </div>
+                        </div>
+
+                        <!--Description Input-->
+                        <div class="mt-8">
+                            <label class="px-4 text-xl text-gray-800 w-full" for="description">Description</label>
+                            <div class="px-4">
+                                <textarea rows="10" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" type="text" placeholder="Title" id="description"></textarea>
+                            </div>
+                        </div>
+
+                        <!--Submit Button-->
+                        <div class="mt-8 flex justify-end px-4">
+                            <button type="submit"class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                                Add News
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--Tamil Tab Ends Here-->
+    </div>
+
+
+</div>
+<!--Main Wrapper Ends Here-->
 </body>
 </html>
