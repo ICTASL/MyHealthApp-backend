@@ -10,6 +10,9 @@ public class DHIS2Constants {
     public final static String STATUS_ACTIVE = "ACTIVE";
     public final static String STATUS_COMPLETED = "COMPLETED";
     public final static String BIN_CLEAR_VAL = "<binary-data>";
+    public final static String ARRIVAL_CARD_IMG_NAME = "ARRIVAL_CARD_IMAGE";
+    public final static String FACE_IMG_NAME = "FACE_IMAGE";
+    public final static String PASSPORTDATAPAGE_IMG_NAME = "PASSPORTDATAPAGE_IMAGE";
     
     public final static String UID_PROGRAMPORTOFENTRYSURVEILLANCE = "Cr6bmkKzQ5c";
     public final static String UID_PROGRAMSTAGEPORTOFENTRY = "ktw7Aj9CgAJ";
@@ -28,12 +31,26 @@ public class DHIS2Constants {
     public final static String UID_ATTR_TEL_FOREIGN = "s1AxHKrRT19";
     public final static String UID_ATTR_TEL_SRILANKA = "ihz1qXLws99";
     
+    public final static String UID_DEL_INITIALS = "tlroDKcSHY6";
+    public final static String UID_DEL_SURNAME = "Z2Hxua8lYSL";
+    public final static String UID_DEL_MIDDLENAME = "TQsjXPpsvLr";
+    public final static String UID_DEL_GIVENNAME = "iztWr8w2fxL";
+    public final static String UID_DEL_COUNTRYOFRESIDENCE = "dCrJQiqYODB";
+    public final static String UID_DEL_ARRIVEFROM = "FNEPek0vvST";
+    public final static String UID_DEL_ARRIVALCARDNUMBER = "vOVfUT61pEb";
+    public final static String UID_DEL_PURPOSEOFVISIT = "PDaQpHAeMcf";
+    public final static String UID_DEL_REQUESTEDVISADAYS = "txARpK3kciE";
+    public final static String UID_DEL_DESTINATIONCITY = "WhwlzceHJLV";
+    public final static String UID_DEL_ARRIVALCARDIMAGE = "Y8RvojfSf5f";
+    public final static String UID_DEL_FACEIMAGE = "UP3SOZw4JV6";
+    public final static String UID_DEL_PASSPORTDATAPAGE = "fWpjRWQq3cM";
+    
     public final static String UID_DEL_FLIGHTNUMBER = "I2iJgOB0rBH";
     public final static String UID_DEL_FLIGHTDATETIME = "efFnLbT5WLN";
     public final static String UID_DEL_ARRIVEFROMPORT = "FNEPek0vvST";
     public final static String UID_DEL_LANDEDPORT = "qBPlYPn7I3d";
     public final static String UID_DEL_CARRIERCODE = "ewF6QKkwLyN";
     public final static String UID_DEL_ARRIVALPASSENGERCOUNT = "gqtzPQEYs5g";
-    public final static String UID_DEL_TRANSITPASSENGERCOUNT = "o6ABbbyMLhU";    
-
+    public final static String UID_DEL_TRANSITPASSENGERCOUNT = "o6ABbbyMLhU";
+    
 }
