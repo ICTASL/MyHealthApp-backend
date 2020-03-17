@@ -11,6 +11,7 @@ import lk.gov.govtech.covid19.dto.Events;
 import lk.gov.govtech.covid19.dto.FlightInformation;
 import lk.gov.govtech.covid19.dto.FlightPassengerInformation;
 import lk.gov.govtech.covid19.dto.IdDisplayAttribute;
+import lk.gov.govtech.covid19.dto.OrgUnitAttributesResponse;
 import lk.gov.govtech.covid19.dto.PassengerInformation;
 import lk.gov.govtech.covid19.dto.ProgramsResponse;
 import lk.gov.govtech.covid19.dto.TrackedEntityAttributesResponse;
@@ -39,6 +40,9 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+/**
+ * DHIS2 service implementation.
+ */
 @Service
 public class DHIS2Service {
 
@@ -56,13 +60,14 @@ public class DHIS2Service {
     private void init() throws Exception {
         this.initPrograms();
         this.initTEAttributesForFlightUserReg();
+        this.initOrganizationUnits();
         LOGGER.info("DHIS2 service initialized successfully");
     }
     
     private void initPrograms() throws Exception {
         ProgramsResponse resp = this.getPrograms();
         Map<String, String> idMap = this.generateReverseMap(resp.getPrograms());
-        this.fieldIds.portOfEntrySurveillance = this.idLookup(idMap, DHIS2Constants.DISP_PORT_OF_ENTRY_SURVEILLANCE);
+        this.fieldIds.programPortOfEntrySurveillance = this.idLookup(idMap, DHIS2Constants.DISP_PORT_OF_ENTRY_SURVEILLANCE);
     }
     
     private void initTEAttributesForFlightUserReg() throws Exception {
@@ -89,6 +94,12 @@ public class DHIS2Service {
         this.fieldIds.teCountry = this.idLookup(idMap, DHIS2Constants.DISP_COUNTRY);
     }
     
+    private void initOrganizationUnits() throws Exception {
+        OrgUnitAttributesResponse resp = this.getOrgAttrsResponse();
+        Map<String, String> idMap = this.generateReverseMap(resp.getOrganisationUnits());
+        this.fieldIds.organizationSriLanka = this.idLookup(idMap, DHIS2Constants.DISP_SRI_LANKA);
+    }
+    
     private String idLookup(Map<String, String> idMap, String dispName) throws Exception {
         String result = idMap.get(dispName);
         if (result == null) {
@@ -103,6 +114,15 @@ public class DHIS2Service {
             result.put(attr.getDisplayName(), attr.getId());
         }
         return result;
+    }
+    
+    private OrgUnitAttributesResponse getOrgAttrsResponse() throws Exception {
+        DHISResponse resp = this.getOrganizationUnits();
+        String content = resp.getResponse();
+        if (resp.getStatus() != DHIS2Constants.OK_CODE) {
+            throw new Exception("Error in retrieving organization unit attributes: " + content);
+        }
+        return this.gson.fromJson(content, OrgUnitAttributesResponse.class);
     }
     
     private TrackedEntityAttributesResponse getTEAttrsResponse() throws Exception {
@@ -181,7 +201,7 @@ public class DHIS2Service {
 
     public DHISResponse getOrganizationUnits() {
 
-        GetMethod getRequest = new GetMethod(dhisConfiguration.getUrl() + "/organisationUnits");
+        GetMethod getRequest = new GetMethod(dhisConfiguration.getUrl() + "/organisationUnits?paging=false");
         DHISResponse dhisResponse = new DHISResponse();
 
         try {
@@ -359,9 +379,9 @@ public class DHIS2Service {
     private void clearoutImages(FlightPassengerInformation fpInfo) {
         PassengerInformation pInfo = fpInfo.getPassengerInformation();
         if (pInfo != null) {
-            pInfo.setArrivalCardImage("***");
-            pInfo.setFaceImage("***");
-            pInfo.setPassportDataPage("***");
+            pInfo.setArrivalCardImage(DHIS2Constants.BIN_CLEAR_VAL);
+            pInfo.setFaceImage(DHIS2Constants.BIN_CLEAR_VAL);
+            pInfo.setPassportDataPage(DHIS2Constants.BIN_CLEAR_VAL);
         }
     }
     

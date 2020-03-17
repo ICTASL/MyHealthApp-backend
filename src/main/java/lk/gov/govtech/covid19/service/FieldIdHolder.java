@@ -5,7 +5,8 @@ package lk.gov.govtech.covid19.service;
  */
 public class FieldIdHolder {
 
-    public String portOfEntrySurveillance;
+    public String programPortOfEntrySurveillance;
+    public String organizationSriLanka;
     
     public String tePassportNumber;
     public String teNationality;

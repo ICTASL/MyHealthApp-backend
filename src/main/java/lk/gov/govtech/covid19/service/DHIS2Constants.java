@@ -7,8 +7,10 @@ public class DHIS2Constants {
 
     public final static int INTERNAL_ERROR_CODE = 500;
     public final static int OK_CODE = 200;
+    public final static String BIN_CLEAR_VAL = "<binary-data>";
     
     public final static String DISP_PORT_OF_ENTRY_SURVEILLANCE = "Port of Entry Surveillance";
+    public final static String DISP_SRI_LANKA = "Sri Lanka";
     
     /* IDs for TE attributes in flight user registration */
     public final static String DISP_PASSPORT_NUMBER = "Passport Number";
