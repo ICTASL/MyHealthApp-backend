@@ -493,8 +493,8 @@ public class DHIS2Service {
             String flightNo = this.extractFlightNumber(flightInfo);
             String date = this.extractFlightDate(flightInfo);
             teIds.addAll(this.saveFlightPassengerInformation(Arrays.asList(fpInfo)));
-            //List<FlightPassengerInformation> passengersInFlight = this.getInfoBorderPassengerList(flightNo, date);
-            //teIds.addAll(this.saveFlightPassengerInformation(passengersInFlight));
+            List<FlightPassengerInformation> passengersInFlight = this.getInfoBorderPassengerList(flightNo, date);
+            teIds.addAll(this.saveFlightPassengerInformation(passengersInFlight));
             result.setStatus(DHIS2Constants.OK_CODE);
             result.setResponse(this.gson.toJson(teIds));
         } catch (Exception e) {
