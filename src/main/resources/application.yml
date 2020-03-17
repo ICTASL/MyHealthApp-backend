@@ -16,6 +16,10 @@ spring:
         infoBorderUrl: http://localhost:8080
     pid:
         file: application.pid
+    portal:
+        username: dev@aaa.com
+        password: dev
+
 
 firebase: 
     configurations:
