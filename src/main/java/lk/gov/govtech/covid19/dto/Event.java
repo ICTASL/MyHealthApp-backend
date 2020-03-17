@@ -10,7 +10,7 @@ public class Event {
     private String program;
     private String programStage;
     private String orgUnit;
-    private String enrollment;
+    //private String enrollment;
     private String dueDate;
     private String status;
     private List<DataElement> dataValues;

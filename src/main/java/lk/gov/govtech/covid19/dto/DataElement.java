@@ -7,6 +7,6 @@ import lombok.Data;
  */
 @Data
 public class DataElement {
-    String dataElement;
-    String value;
+    private String dataElement;
+    private String value;
 }
