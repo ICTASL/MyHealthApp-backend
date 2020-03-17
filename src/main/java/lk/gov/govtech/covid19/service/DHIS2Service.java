@@ -2,6 +2,8 @@ package lk.gov.govtech.covid19.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import lk.gov.govtech.covid19.config.DHISConfiguration;
 import lk.gov.govtech.covid19.dto.AddressInformation;
@@ -398,7 +400,17 @@ public class DHIS2Service {
         return attrs;
     }
     
-    private void createFPEntityInstance(FlightPassengerInformation fpInfo) throws Exception {
+    private String extractTEInstanceId(String content) throws Exception {
+        JsonElement el = JsonParser.parseString(content);
+        try {
+            return el.getAsJsonObject().get("response").getAsJsonObject().get("importSummaries").getAsJsonArray().get(0)
+                    .getAsJsonObject().get("reference").getAsString();
+        } catch (Exception e) {
+            throw new Exception("Invalid JSON content for extracting TE instance id: " + content);
+        }
+    }
+    
+    private String createFPEntityInstance(FlightPassengerInformation fpInfo) throws Exception {
         EntityInstance entityInstance = new EntityInstance();
         entityInstance.setOrgUnit(this.fieldIds.organizationSriLanka);
         entityInstance.setTrackedEntityType(this.fieldIds.personTrackedEntityType);
@@ -407,10 +419,18 @@ public class DHIS2Service {
         if (resp.getStatus() != DHIS2Constants.OK_CODE) {
             throw new Exception("Error increating FP tracked entity instance: " + resp.getResponse());
         }
+        return this.extractTEInstanceId(resp.getResponse());
     }
     
-    private void createFPEnrollment(FlightPassengerInformation fpInfo) throws Exception {
+    private void createFPEnrollment(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
         Enrollment enrollment = new Enrollment(); 
+        enrollment.setOrgUnit(this.fieldIds.organizationSriLanka);
+        enrollment.setProgram(this.fieldIds.programPortOfEntrySurveillance);
+        String currentDate = this.getCurrentDate();
+        enrollment.setEnrollmentDate(currentDate);
+        enrollment.setIncidentDate(currentDate);
+        enrollment.setStatus(DHIS2Constants.ENROLLMENT_STATUS_ACTIVE);
+        enrollment.setTrackedEntityInstance(teInstanceId);
         DHISResponse resp = this.createEnrollment(enrollment);
         if (resp.getStatus() != DHIS2Constants.OK_CODE) {
             throw new Exception("Error increating FP enrollment: " + resp.getResponse());
@@ -421,8 +441,8 @@ public class DHIS2Service {
         if (fpInfo.getPassengerInformation() == null) {
             throw new Exception("Passenger information is not available");
         }
-        this.createFPEntityInstance(fpInfo);
-        this.createFPEnrollment(fpInfo);
+        String teInstanceId = this.createFPEntityInstance(fpInfo);
+        this.createFPEnrollment(fpInfo, teInstanceId);
     }
     
     private String extractFlightNumber(FlightInformation flightInfo) throws Exception {
@@ -456,6 +476,10 @@ public class DHIS2Service {
     private synchronized String extractDate(String dateTime) throws ParseException {
         Date date = this.dateTimeFormat.parse(dateTime);
         return this.dateFormat.format(date);
+    }
+    
+    private synchronized String getCurrentDate() {
+        return this.dateFormat.format(new Date());
     }
     
     private void clearoutImages(FlightPassengerInformation fpInfo) {
