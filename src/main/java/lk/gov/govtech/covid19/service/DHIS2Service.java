@@ -6,7 +6,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import lk.gov.govtech.covid19.config.DHISConfiguration;
-import lk.gov.govtech.covid19.dto.AddressInformation;
 import lk.gov.govtech.covid19.dto.Attribute;
 import lk.gov.govtech.covid19.dto.DHISResponse;
 import lk.gov.govtech.covid19.dto.Enrollment;
@@ -74,25 +73,29 @@ public class DHIS2Service {
     private void initPrograms() throws Exception {
         ProgramsResponse resp = this.getPrograms();
         Map<String, String> idMap = this.generateReverseMap(resp.getPrograms());
-        this.fieldIds.programPortOfEntrySurveillance = this.idLookup(idMap, DHIS2Constants.DISP_PORT_OF_ENTRY_SURVEILLANCE);
+        this.fieldIds.programPortOfEntrySurveillance = this.idLookup(idMap, 
+                DHIS2Constants.DISP_PORT_OF_ENTRY_SURVEILLANCE);
     }
     
     private void initTEAttributesForFlightUserReg() throws Exception {
         TrackedEntityAttributesResponse resp = this.getTEAttrsResponse();
         Map<String, String> idMap = this.generateReverseMap(resp.getTrackedEntityAttributes());
+        /* Person tracked entity instance fields with flight user registration */
         this.fieldIds.tePassportNumber = this.idLookup(idMap, DHIS2Constants.DISP_PASSPORT_NUMBER);
         this.fieldIds.teNationality = this.idLookup(idMap, DHIS2Constants.DISP_NATIONALITY);
-        this.fieldIds.teInitials = this.idLookup(idMap, DHIS2Constants.DISP_INITIALS);
-        this.fieldIds.teSurname = this.idLookup(idMap, DHIS2Constants.DISP_SURNAME);
-        this.fieldIds.teMiddleName = this.idLookup(idMap, DHIS2Constants.DISP_MIDDLENAME);
-        this.fieldIds.teGivenName = this.idLookup(idMap, DHIS2Constants.DISP_GIVENNAME);
         this.fieldIds.teIdCardNumber = this.idLookup(idMap, DHIS2Constants.DISP_IDCARDNUMBER);
         this.fieldIds.teDateOfBirth = this.idLookup(idMap, DHIS2Constants.DISP_DATEOFBIRTH);
         this.fieldIds.teGender = this.idLookup(idMap, DHIS2Constants.DISP_GENDER);
         this.fieldIds.teEmailAddress = this.idLookup(idMap, DHIS2Constants.DISP_EMAILADDRESS);
+        this.fieldIds.teFullAddress = this.idLookup(idMap, DHIS2Constants.DISP_FULLADDRESS);
+
+        /* others fields of flight user registration (events) */
+        this.fieldIds.teInitials = this.idLookup(idMap, DHIS2Constants.DISP_INITIALS);
+        this.fieldIds.teSurname = this.idLookup(idMap, DHIS2Constants.DISP_SURNAME);
+        this.fieldIds.teMiddleName = this.idLookup(idMap, DHIS2Constants.DISP_MIDDLENAME);
+        this.fieldIds.teGivenName = this.idLookup(idMap, DHIS2Constants.DISP_GIVENNAME);
         this.fieldIds.teFaceImage = this.idLookup(idMap, DHIS2Constants.DISP_FACEIMAGE);
         this.fieldIds.tePassportDataPage = this.idLookup(idMap, DHIS2Constants.DISP_PASSPORTDATAPAGE);
-        this.fieldIds.teFullAddress = this.idLookup(idMap, DHIS2Constants.DISP_FULLADDRESS);
         this.fieldIds.teAddressLine1 = this.idLookup(idMap, DHIS2Constants.DISP_ADDRESSLINE1);
         this.fieldIds.teAddressLine2 = this.idLookup(idMap, DHIS2Constants.DISP_ADDRESSLINE2);
         this.fieldIds.teCity = this.idLookup(idMap, DHIS2Constants.DISP_CITY);
@@ -361,10 +364,12 @@ public class DHIS2Service {
         }
     }
     
-    private void saveFlightPassengerInformation(List<FlightPassengerInformation> fpInfos) throws Exception {
+    private List<String> saveFlightPassengerInformation(List<FlightPassengerInformation> fpInfos) throws Exception {
+        List<String> teIds = new ArrayList<String>();
         for (FlightPassengerInformation fpInfo : fpInfos) {
-            this.saveFlightPassengerInformation(fpInfo);
+            teIds.add(this.saveFlightPassengerInformation(fpInfo));
         }
+        return teIds;
     }
     
     private Attribute attr(String id, String value) {
@@ -378,25 +383,10 @@ public class DHIS2Service {
         List<Attribute> attrs = new ArrayList<Attribute>();
         attrs.add(attr(this.fieldIds.tePassportNumber, fpInfo.getPassengerInformation().getPassportNumber()));
         attrs.add(attr(this.fieldIds.teNationality, fpInfo.getPassengerInformation().getNationality()));
-        attrs.add(attr(this.fieldIds.teInitials, fpInfo.getPassengerInformation().getInitials()));
-        attrs.add(attr(this.fieldIds.teSurname, fpInfo.getPassengerInformation().getSurname()));
-        attrs.add(attr(this.fieldIds.teMiddleName, fpInfo.getPassengerInformation().getMiddleName()));
-        attrs.add(attr(this.fieldIds.teGivenName, fpInfo.getPassengerInformation().getGivenName()));
         attrs.add(attr(this.fieldIds.teIdCardNumber, fpInfo.getPassengerInformation().getIdCardNumber()));
         attrs.add(attr(this.fieldIds.teDateOfBirth, fpInfo.getPassengerInformation().getDateOfBirth()));
         attrs.add(attr(this.fieldIds.teGender, fpInfo.getPassengerInformation().getGender()));
         attrs.add(attr(this.fieldIds.teEmailAddress, fpInfo.getPassengerInformation().getEmailAddress()));
-        attrs.add(attr(this.fieldIds.teFaceImage, fpInfo.getPassengerInformation().getFaceImage()));
-        attrs.add(attr(this.fieldIds.tePassportDataPage, fpInfo.getPassengerInformation().getPassportDataPage()));
-        if (fpInfo.getAddressInformation().size() > 0) {
-            AddressInformation addrInfo = fpInfo.getAddressInformation().get(0);
-            attrs.add(attr(this.fieldIds.teFullAddress, addrInfo.getFullAddress()));
-            attrs.add(attr(this.fieldIds.teAddressLine1, addrInfo.getAddressLine1()));
-            attrs.add(attr(this.fieldIds.teAddressLine2, addrInfo.getAddressLine2()));
-            attrs.add(attr(this.fieldIds.teCity, addrInfo.getCity()));
-            attrs.add(attr(this.fieldIds.tePostalCode, addrInfo.getPostalCode()));
-            attrs.add(attr(this.fieldIds.teCountry, addrInfo.getCountry()));
-        }
         return attrs;
     }
     
@@ -417,7 +407,7 @@ public class DHIS2Service {
         entityInstance.setAttributes(this.generateFPInfoAttrs(fpInfo));
         DHISResponse resp = this.createEntityInstance(entityInstance);
         if (resp.getStatus() != DHIS2Constants.OK_CODE) {
-            throw new Exception("Error increating FP tracked entity instance: " + resp.getResponse());
+            throw new Exception("Error in creating FP tracked entity instance: " + resp.getResponse());
         }
         return this.extractTEInstanceId(resp.getResponse());
     }
@@ -437,12 +427,13 @@ public class DHIS2Service {
         }
     }
     
-    private void saveFlightPassengerInformation(FlightPassengerInformation fpInfo) throws Exception {
+    private String saveFlightPassengerInformation(FlightPassengerInformation fpInfo) throws Exception {
         if (fpInfo.getPassengerInformation() == null) {
             throw new Exception("Passenger information is not available");
         }
         String teInstanceId = this.createFPEntityInstance(fpInfo);
         this.createFPEnrollment(fpInfo, teInstanceId);
+        return teInstanceId;
     }
     
     private String extractFlightNumber(FlightInformation flightInfo) throws Exception {
@@ -497,13 +488,15 @@ public class DHIS2Service {
         }
         DHISResponse result = new DHISResponse();
         try {
+            List<String> teIds = new ArrayList<String>();
             FlightInformation flightInfo = this.extractFlightInformation(fpInfo);
             String flightNo = this.extractFlightNumber(flightInfo);
             String date = this.extractFlightDate(flightInfo);
-            this.saveFlightPassengerInformation(Arrays.asList(fpInfo));
-            List<FlightPassengerInformation> passengersInFlight = this.getInfoBorderPassengerList(flightNo, date);
-            this.saveFlightPassengerInformation(passengersInFlight);
+            teIds.addAll(this.saveFlightPassengerInformation(Arrays.asList(fpInfo)));
+            //List<FlightPassengerInformation> passengersInFlight = this.getInfoBorderPassengerList(flightNo, date);
+            //teIds.addAll(this.saveFlightPassengerInformation(passengersInFlight));
             result.setStatus(DHIS2Constants.OK_CODE);
+            result.setResponse(this.gson.toJson(teIds));
         } catch (Exception e) {
             this.clearoutImages(fpInfo);
             String message = "Error in pushing flight passenger info: " + fpInfo;

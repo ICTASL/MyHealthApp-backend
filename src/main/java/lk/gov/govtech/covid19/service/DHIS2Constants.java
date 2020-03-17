@@ -14,20 +14,19 @@ public class DHIS2Constants {
     public final static String DISP_SRI_LANKA = "Sri Lanka";
     public final static String DISP_PERSON = "Person";
     
-    /* IDs for TE attributes in flight user registration */
-    public final static String DISP_PASSPORT_NUMBER = "Passport Number";
-    public final static String DISP_NATIONALITY = "Nationality";
+    public final static String DISP_PASSPORT_NUMBER = "Passport Number";//k
+    public final static String DISP_NATIONALITY = "Nationality";//k
     public final static String DISP_INITIALS = "Initials";
     public final static String DISP_SURNAME = "Surname";
     public final static String DISP_MIDDLENAME = "Middle Name";
     public final static String DISP_GIVENNAME = "Given Name";
-    public final static String DISP_IDCARDNUMBER = "NIC Number";
-    public final static String DISP_DATEOFBIRTH = "Date of Birth";
-    public final static String DISP_GENDER = "Gender";
-    public final static String DISP_EMAILADDRESS = "Email";
+    public final static String DISP_IDCARDNUMBER = "NIC Number";//k
+    public final static String DISP_DATEOFBIRTH = "Date of Birth";//k
+    public final static String DISP_GENDER = "Gender";//l
+    public final static String DISP_EMAILADDRESS = "Email";//l
     public final static String DISP_FACEIMAGE = "Face Image";
     public final static String DISP_PASSPORTDATAPAGE = "Passport Data Page";
-    public final static String DISP_FULLADDRESS = "Full Address in Sri Lanka";
+    public final static String DISP_FULLADDRESS = "Full Address in Sri Lanka";//k
     public final static String DISP_ADDRESSLINE1 = "Address Line 1";
     public final static String DISP_ADDRESSLINE2 = "Address Line 2";
     public final static String DISP_CITY = "Address City";
