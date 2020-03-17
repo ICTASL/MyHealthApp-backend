@@ -99,7 +99,7 @@
 			"response": []
 		},
 		{
-			"name": "entityTypes Copy",
+			"name": "programmes",
 			"request": {
 				"auth": {
 					"type": "basic",
