@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/azhamn/COVID-19.svg?branch=master)](https://travis-ci.org/azhamn/COVID-19)
+----
 # COVID-19 Backend Services
 
 ## How to run
