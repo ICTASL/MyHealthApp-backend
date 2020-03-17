@@ -255,14 +255,31 @@ public class DHIS2Service {
         return attr;
     }
     
+    private String generateFullName(PassengerInformation pinfo) {
+        String fullName = pinfo.getGivenName() == null ? "" : pinfo.getGivenName();
+        fullName += " " + (pinfo.getMiddleName() == null ? "" : pinfo.getMiddleName());
+        fullName = fullName.trim();
+        if (fullName.isEmpty()) {
+            fullName = pinfo.getInitials() == null ? "" : pinfo.getInitials();
+        }
+        fullName += " " + pinfo.getSurname();
+        fullName = fullName.trim();
+        if (fullName.isEmpty()) {
+            fullName = null;
+        }
+        return fullName;
+    }
+    
     private List<Attribute> generateFPInfoAttrs(FlightPassengerInformation fpInfo) {
         List<Attribute> attrs = new ArrayList<Attribute>();
-        attrs.add(attr(DHIS2Constants.UID_ATTR_PASSPORT_NUMBER, fpInfo.getPassengerInformation().getPassportNumber()));
-        attrs.add(attr(DHIS2Constants.UID_ATTR_NATIONALITY, fpInfo.getPassengerInformation().getNationality()));
-        attrs.add(attr(DHIS2Constants.UID_ATTR_NIC, fpInfo.getPassengerInformation().getIdCardNumber()));
-        attrs.add(attr(DHIS2Constants.UID_ATTR_DOB, fpInfo.getPassengerInformation().getDateOfBirth()));
-        attrs.add(attr(DHIS2Constants.UID_ATTR_GENDER, fpInfo.getPassengerInformation().getGender()));
-        attrs.add(attr(DHIS2Constants.UID_ATTR_EMAIL, fpInfo.getPassengerInformation().getEmailAddress()));
+        PassengerInformation pinfo = fpInfo.getPassengerInformation();
+        attrs.add(attr(DHIS2Constants.UID_ATTR_PASSPORT_NUMBER, pinfo.getPassportNumber()));
+        attrs.add(attr(DHIS2Constants.UID_ATTR_NATIONALITY, pinfo.getNationality()));
+        attrs.add(attr(DHIS2Constants.UID_ATTR_NIC, pinfo.getIdCardNumber()));
+        attrs.add(attr(DHIS2Constants.UID_ATTR_DOB, pinfo.getDateOfBirth()));
+        attrs.add(attr(DHIS2Constants.UID_ATTR_GENDER, pinfo.getGender()));
+        attrs.add(attr(DHIS2Constants.UID_ATTR_EMAIL, pinfo.getEmailAddress()));
+        attrs.add(attr(DHIS2Constants.UID_ATTR_FULLNAME, this.generateFullName(pinfo)));
         return attrs;
     }
     
