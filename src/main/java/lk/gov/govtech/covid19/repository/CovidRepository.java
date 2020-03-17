@@ -72,7 +72,7 @@ public class CovidRepository {
         return holder.getKey().intValue();
     }
 
-    public void addCaseNotification(CaseNotificationRequest request) {
+    public int addCaseNotification(CaseNotificationRequest request) {
 //        jdbcTemplate.update("INSERT INTO `epid_case` (`case_number`, `message_en`, `message_si`, `message_ta`) VALUES (?,?,?,?)",
 //               request.getCaseNumber(), request.getMessage_en(), request.getMessage_si(), request.getMessage_ta());
 
@@ -89,6 +89,8 @@ public class CovidRepository {
         }, holder);
 
         addCaseLocation(request.getLocations(), holder.getKey().intValue());
+
+        return holder.getKey().intValue();
     }
 
     private void addCaseLocation(List<Location> locations, Integer caseId) {
