@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import lk.gov.govtech.covid19.config.DHISConfiguration;
+import lk.gov.govtech.covid19.dto.AddressInformation;
 import lk.gov.govtech.covid19.dto.Attribute;
 import lk.gov.govtech.covid19.dto.DHISResponse;
 import lk.gov.govtech.covid19.dto.DataElement;
@@ -23,6 +24,11 @@ import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
+import org.apache.commons.httpclient.methods.multipart.ByteArrayPartSource;
+import org.apache.commons.httpclient.methods.multipart.FilePart;
+import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
+import org.apache.commons.httpclient.methods.multipart.Part;
+import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +61,7 @@ public class DHIS2Service {
     private final static SimpleDateFormat FPI_DATETIMEFORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private final static SimpleDateFormat FPI_DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
     private final static SimpleDateFormat DHIS2_DATETIMEFORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+    private final static SimpleDateFormat DHIS2_DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     public DHISResponse getEntityTypes() {
 
@@ -267,6 +274,45 @@ public class DHIS2Service {
         }
     }
     
+    private String addFileResource(String fileName, byte[] data) throws Exception {
+        if (data == null) {
+            return null;
+        }
+        PostMethod postRequest = new PostMethod(dhisConfiguration.getUrl() + "/fileResources");
+        try {
+            HttpClient httpClient = getHttpClient();
+            setAuthorizationHeader(postRequest);
+            Part[] parts = { new FilePart("file", new ByteArrayPartSource(fileName, data)) };
+            postRequest.setRequestEntity(new MultipartRequestEntity(parts, new HttpMethodParams()));
+            int response = httpClient.executeMethod(postRequest);
+            String content = postRequest.getResponseBodyAsString();
+            if (response != DHIS2Constants.OK_CODE) {
+                throw new Exception("Error in adding file resource: " + content);
+            }
+            try {
+                return JsonParser.parseString(content).getAsJsonObject().get("response").getAsJsonObject()
+                        .get("fileResource").getAsJsonObject().get("id").getAsString();
+            } catch (Exception e) {
+                throw new Exception("Invalid file resource add result JSON: " + content);
+            }
+        } finally {
+            postRequest.releaseConnection();
+        }
+    }
+    
+    private String addFileResource(String name, String base64Data) throws Exception {
+        if (base64Data == null) {
+            return null;
+        }
+        byte[] data;
+        try {
+            data = Base64.getDecoder().decode(base64Data);
+        } catch (IllegalArgumentException e) {
+            throw new Exception("Invalid base64 encoded data to be put as a file resource");
+        }
+        return this.addFileResource(name, data);
+    }
+    
     private List<String> saveFlightPassengerInformation(Set<FlightPassengerInformation> fpInfos) throws Exception {
         List<String> teIds = new ArrayList<String>();
         for (FlightPassengerInformation fpInfo : fpInfos) {
@@ -340,19 +386,40 @@ public class DHIS2Service {
             throw new Exception("The flight information is not available");
         }
         List<DataElement> result = new ArrayList<DataElement>();
-        result.add(this.del(DHIS2Constants.UID_DEL_FLIGHTNUMBER, finfo.getFlightNumber()));
-        result.add(this.del(DHIS2Constants.UID_DEL_FLIGHTDATETIME, 
-                   this.fpiToDHIS2DataTime(finfo.getFlightDateTime())));
-        result.add(this.del(DHIS2Constants.UID_DEL_ARRIVEFROMPORT, finfo.getArriveFromPort()));
-        result.add(this.del(DHIS2Constants.UID_DEL_LANDEDPORT, finfo.getLandedPort()));
-        result.add(this.del(DHIS2Constants.UID_DEL_CARRIERCODE, finfo.getCarrierCode()));
-        result.add(this.del(DHIS2Constants.UID_DEL_ARRIVALPASSENGERCOUNT, finfo.getArrivalPassengerCount()));
-        result.add(this.del(DHIS2Constants.UID_DEL_TRANSITPASSENGERCOUNT, finfo.getTransitPassengerCount()));
+        result.add(del(DHIS2Constants.UID_DEL_FLIGHTNUMBER, finfo.getFlightNumber()));
+        result.add(del(DHIS2Constants.UID_DEL_FLIGHTDATETIME, this.fpiToDHIS2DataTime(finfo.getFlightDateTime())));
+        result.add(del(DHIS2Constants.UID_DEL_ARRIVEFROMPORT, finfo.getArriveFromPort()));
+        result.add(del(DHIS2Constants.UID_DEL_LANDEDPORT, finfo.getLandedPort()));
+        result.add(del(DHIS2Constants.UID_DEL_CARRIERCODE, finfo.getCarrierCode()));
+        result.add(del(DHIS2Constants.UID_DEL_ARRIVALPASSENGERCOUNT, finfo.getArrivalPassengerCount()));
+        result.add(del(DHIS2Constants.UID_DEL_TRANSITPASSENGERCOUNT, finfo.getTransitPassengerCount()));
         return result;
     }
     
-    private void populateCommonValues(Event event, String teInstanceId) {
-        event.setDueDate(this.getFPICurrentDate());
+    private List<DataElement> generateFPInfoDataElements(FlightPassengerInformation fpInfo) throws Exception {
+        List<DataElement> result = new ArrayList<DataElement>();
+        PassengerInformation pinfo = fpInfo.getPassengerInformation();
+        //result.add(del(DHIS2Constants.UID_DEL_INITIALS, pinfo.getInitials()));
+        //result.add(del(DHIS2Constants.UID_DEL_SURNAME, pinfo.getSurname()));
+        //result.add(del(DHIS2Constants.UID_DEL_MIDDLENAME, pinfo.getMiddleName()));
+        //result.add(del(DHIS2Constants.UID_DEL_GIVENNAME, pinfo.getGivenName()));
+        result.add(del(DHIS2Constants.UID_DEL_COUNTRYOFRESIDENCE, pinfo.getCountryOfResidence()));
+        result.add(del(DHIS2Constants.UID_DEL_ARRIVEFROM, pinfo.getArriveFrom()));
+        result.add(del(DHIS2Constants.UID_DEL_ARRIVALCARDNUMBER, pinfo.getArrivalCardNumber()));
+        result.add(del(DHIS2Constants.UID_DEL_PURPOSEOFVISIT, pinfo.getPurposeOfVisit()));
+        result.add(del(DHIS2Constants.UID_DEL_REQUESTEDVISADAYS, pinfo.getRequestedVisaDays()));
+        result.add(del(DHIS2Constants.UID_DEL_DESTINATIONCITY, pinfo.getDestinationCity()));
+        result.add(del(DHIS2Constants.UID_DEL_ARRIVALCARDIMAGE, 
+                this.addFileResource(DHIS2Constants.ARRIVAL_CARD_IMG_NAME, pinfo.getArrivalCardImage())));
+        result.add(del(DHIS2Constants.UID_DEL_FACEIMAGE, 
+                this.addFileResource(DHIS2Constants.FACE_IMG_NAME, pinfo.getFaceImage())));
+        result.add(del(DHIS2Constants.UID_DEL_PASSPORTDATAPAGE, 
+                this.addFileResource(DHIS2Constants.PASSPORTDATAPAGE_IMG_NAME, pinfo.getPassportDataPage())));
+        return result;
+    }
+    
+    private void populateCommonEventValues(Event event, String teInstanceId) {
+        event.setDueDate(this.getDHIS2CurrentDate());
         event.setProgram(DHIS2Constants.UID_PROGRAMPORTOFENTRYSURVEILLANCE);
         event.setProgramStage(DHIS2Constants.UID_PROGRAMSTAGEPORTOFENTRY);
         event.setOrgUnit(DHIS2Constants.UID_ORGANIZATIONSRILANKA);
@@ -362,14 +429,55 @@ public class DHIS2Service {
     
     private Event generateFlightInfoEvent(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
         Event event = new Event();
-        this.populateCommonValues(event, teInstanceId);
+        this.populateCommonEventValues(event, teInstanceId);
         event.setDataValues(this.generateFlightInfoDataElements(fpInfo));
+        return event;
+    }
+    
+    private Event generateFPInfoEvent(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
+        Event event = new Event();
+        this.populateCommonEventValues(event, teInstanceId);
+        event.setDataValues(this.generateFPInfoDataElements(fpInfo));
+        return event;
+    }
+    
+    private List<Event> generateFPAddressEvents(FlightPassengerInformation fpInfo, 
+            String teInstanceId) throws Exception {
+        List<Event> result = new ArrayList<Event>();
+        List<AddressInformation> addressInfos = fpInfo.getAddressInformation();
+        if (addressInfos == null) {
+            return new ArrayList<Event>(0);
+        }
+        for (AddressInformation addressInfo : addressInfos) {
+            result.add(this.generateFPAddressEvent(addressInfo, teInstanceId));
+        }
+        return result;
+    }
+    
+    private List<DataElement> generateFPAddressDataElements(AddressInformation addressInfo) throws Exception {
+        List<DataElement> result = new ArrayList<DataElement>();
+        result.add(del(DHIS2Constants.UID_DEL_FULLADDRESS, addressInfo.getFullAddress()));
+        result.add(del(DHIS2Constants.UID_DEL_ADDRESSLINE1, addressInfo.getAddressLine1()));
+        result.add(del(DHIS2Constants.UID_DEL_ADDRESSLINE2, addressInfo.getAddressLine2()));
+        result.add(del(DHIS2Constants.UID_DEL_CITY, addressInfo.getCity()));
+        result.add(del(DHIS2Constants.UID_DEL_POSTALCODE, addressInfo.getPostalCode()));
+        result.add(del(DHIS2Constants.UID_DEL_STATEPROVINCE, addressInfo.getStateProvince()));
+        result.add(del(DHIS2Constants.UID_DEL_COUNTRY, addressInfo.getCountry()));
+        return result;
+    }
+    
+    private Event generateFPAddressEvent(AddressInformation addressInfo, String teInstanceId) throws Exception {
+        Event event = new Event();
+        this.populateCommonEventValues(event, teInstanceId);
+        event.setDataValues(this.generateFPAddressDataElements(addressInfo));
         return event;
     }
         
     private List<Event> generateEvents(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
         List<Event> result = new ArrayList<Event>();
         result.add(this.generateFlightInfoEvent(fpInfo, teInstanceId));
+        result.add(this.generateFPInfoEvent(fpInfo, teInstanceId));
+        result.addAll(this.generateFPAddressEvents(fpInfo, teInstanceId));
         return result;
     }
     
@@ -398,7 +506,7 @@ public class DHIS2Service {
         Enrollment enrollment = new Enrollment(); 
         enrollment.setOrgUnit(DHIS2Constants.UID_ORGANIZATIONSRILANKA);
         enrollment.setProgram(DHIS2Constants.UID_PROGRAMPORTOFENTRYSURVEILLANCE);
-        String currentDate = this.getFPICurrentDate();
+        String currentDate = this.getDHIS2CurrentDate();
         enrollment.setEnrollmentDate(currentDate);
         enrollment.setIncidentDate(currentDate);
         enrollment.setStatus(DHIS2Constants.STATUS_ACTIVE);
@@ -452,8 +560,8 @@ public class DHIS2Service {
         return FPI_DATEFORMAT.format(date);
     }
     
-    private synchronized String getFPICurrentDate() {
-        return FPI_DATEFORMAT.format(new Date());
+    private synchronized String getDHIS2CurrentDate() {
+        return DHIS2_DATEFORMAT.format(new Date());
     }
     
     private void clearoutImages(FlightPassengerInformation fpInfo) {

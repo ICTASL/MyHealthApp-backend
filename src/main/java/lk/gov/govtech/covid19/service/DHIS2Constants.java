@@ -53,4 +53,12 @@ public class DHIS2Constants {
     public final static String UID_DEL_ARRIVALPASSENGERCOUNT = "gqtzPQEYs5g";
     public final static String UID_DEL_TRANSITPASSENGERCOUNT = "o6ABbbyMLhU";
     
+    public final static String UID_DEL_FULLADDRESS = "pNOTaJeFbPo";
+    public final static String UID_DEL_ADDRESSLINE1 = "yyKQf4fubfG";
+    public final static String UID_DEL_ADDRESSLINE2 = "qesgByc4bvs";
+    public final static String UID_DEL_CITY = "eTYRq3nIZe8";
+    public final static String UID_DEL_POSTALCODE = "aLvWnqXOoTo";
+    public final static String UID_DEL_STATEPROVINCE = "eMw6liw1Urd";
+    public final static String UID_DEL_COUNTRY = "jIzrWXNrAeV";
+    
 }
