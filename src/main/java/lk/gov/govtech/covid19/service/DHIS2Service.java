@@ -15,13 +15,7 @@ import lk.gov.govtech.covid19.dto.Event;
 import lk.gov.govtech.covid19.dto.Events;
 import lk.gov.govtech.covid19.dto.FlightInformation;
 import lk.gov.govtech.covid19.dto.FlightPassengerInformation;
-import lk.gov.govtech.covid19.dto.IdDisplayAttribute;
-import lk.gov.govtech.covid19.dto.OrgUnitAttributesResponse;
 import lk.gov.govtech.covid19.dto.PassengerInformation;
-import lk.gov.govtech.covid19.dto.ProgramsResponse;
-import lk.gov.govtech.covid19.dto.ProgramsStagesResponse;
-import lk.gov.govtech.covid19.dto.TrackedEntityAttributesResponse;
-import lk.gov.govtech.covid19.dto.TrackedEntityTypesResponse;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethodBase;
@@ -42,11 +36,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.annotation.PostConstruct;
 
 /**
  * DHIS2 service implementation.
@@ -62,148 +52,6 @@ public class DHIS2Service {
     private Gson gson = new Gson();
     private SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private FieldIdHolder fieldIds = new FieldIdHolder();
-    
-    @PostConstruct
-    private void init() throws Exception {
-        this.initPrograms();
-        this.initProgramStages();
-        this.initTEAttributesForFlightUserReg();
-        this.initOrganizationUnits();
-        this.initTrackedEntityTypes();
-        LOGGER.info("DHIS2 service initialized successfully");
-    }
-    
-    private void initPrograms() throws Exception {
-        ProgramsResponse resp = this.getPrograms();
-        Map<String, String> idMap = this.generateReverseMap(resp.getPrograms());
-        this.fieldIds.programPortOfEntrySurveillance = this.idLookup(idMap, 
-                DHIS2Constants.DISP_PORT_OF_ENTRY_SURVEILLANCE);
-    }
-    
-    private void initProgramStages() throws Exception {
-        ProgramsStagesResponse resp = this.getProgramsStages();
-        Map<String, String> idMap = this.generateReverseMap(resp.getProgramStages());
-        this.fieldIds.programStagePortOfEntry = this.idLookup(idMap, 
-                DHIS2Constants.DISP_REG_AT_PORT_OF_ENTRY);
-    }
-    
-    private void initTEAttributesForFlightUserReg() throws Exception {
-        TrackedEntityAttributesResponse resp = this.getTEAttrsResponse();
-        Map<String, String> idMap = this.generateReverseMap(resp.getTrackedEntityAttributes());
-        /* Person tracked entity instance fields with flight user registration */
-        this.fieldIds.tePassportNumber = this.idLookup(idMap, DHIS2Constants.DISP_PASSPORT_NUMBER);
-        this.fieldIds.teNationality = this.idLookup(idMap, DHIS2Constants.DISP_NATIONALITY);
-        this.fieldIds.teIdCardNumber = this.idLookup(idMap, DHIS2Constants.DISP_IDCARDNUMBER);
-        this.fieldIds.teDateOfBirth = this.idLookup(idMap, DHIS2Constants.DISP_DATEOFBIRTH);
-        this.fieldIds.teGender = this.idLookup(idMap, DHIS2Constants.DISP_GENDER);
-        this.fieldIds.teEmailAddress = this.idLookup(idMap, DHIS2Constants.DISP_EMAILADDRESS);
-
-        /* others fields of flight user registration (events) */
-        this.fieldIds.initials = this.idLookup(idMap, DHIS2Constants.DISP_INITIALS);
-        this.fieldIds.surname = this.idLookup(idMap, DHIS2Constants.DISP_SURNAME);
-        //this.fieldIds.middleName = this.idLookup(idMap, DHIS2Constants.DISP_MIDDLENAME);
-        //this.fieldIds.givenName = this.idLookup(idMap, DHIS2Constants.DISP_GIVENNAME);
-        //this.fieldIds.faceImage = this.idLookup(idMap, DHIS2Constants.DISP_FACEIMAGE);
-        //this.fieldIds.passportDataPage = this.idLookup(idMap, DHIS2Constants.DISP_PASSPORTDATAPAGE);
-        //this.fieldIds.addressLine1 = this.idLookup(idMap, DHIS2Constants.DISP_ADDRESSLINE1);
-        //this.fieldIds.addressLine2 = this.idLookup(idMap, DHIS2Constants.DISP_ADDRESSLINE2);
-        //this.fieldIds.city = this.idLookup(idMap, DHIS2Constants.DISP_CITY);
-        //this.fieldIds.postalCode = this.idLookup(idMap, DHIS2Constants.DISP_POSTALCODE);
-        //this.fieldIds.stateProvince = this.idLookup(idMap, DHIS2Constants.DISP_STATEPROVINCE);
-        //this.fieldIds.country = this.idLookup(idMap, DHIS2Constants.DISP_COUNTRY);
-    }
-    
-    private void initOrganizationUnits() throws Exception {
-        OrgUnitAttributesResponse resp = this.getOrgAttrsResponse();
-        Map<String, String> idMap = this.generateReverseMap(resp.getOrganisationUnits());
-        this.fieldIds.organizationSriLanka = this.idLookup(idMap, DHIS2Constants.DISP_SRI_LANKA);
-    }
-    
-    private void initTrackedEntityTypes() throws Exception {
-        TrackedEntityTypesResponse resp = this.getTrackedEntityTypesResponse();
-        Map<String, String> idMap = this.generateReverseMap(resp.getTrackedEntityTypes());
-        this.fieldIds.personTrackedEntityType = this.idLookup(idMap, DHIS2Constants.DISP_PERSON);
-    }
-    
-    private String idLookup(Map<String, String> idMap, String dispName) throws Exception {
-        String result = idMap.get(dispName);
-        if (result == null) {
-            throw new Exception("'" + dispName + "' attribute ID does not exist");
-        }
-        return result;
-    }
-        
-    private Map<String, String> generateReverseMap(List<IdDisplayAttribute> attrs) {
-        Map<String, String> result = new HashMap<String, String>();
-        for (IdDisplayAttribute attr : attrs) {
-            result.put(attr.getDisplayName(), attr.getId());
-        }
-        return result;
-    }
-    
-    private OrgUnitAttributesResponse getOrgAttrsResponse() throws Exception {
-        DHISResponse resp = this.getOrganizationUnits();
-        String content = resp.getResponse();
-        if (resp.getStatus() != DHIS2Constants.OK_CODE) {
-            throw new Exception("Error in retrieving organization unit attributes: " + content);
-        }
-        return this.gson.fromJson(content, OrgUnitAttributesResponse.class);
-    }
-    
-    private TrackedEntityTypesResponse getTrackedEntityTypesResponse() throws Exception {
-        DHISResponse resp = this.getEntityTypes();
-        String content = resp.getResponse();
-        if (resp.getStatus() != DHIS2Constants.OK_CODE) {
-            throw new Exception("Error in retrieving tracked entity type attributes: " + content);
-        }
-        return this.gson.fromJson(content, TrackedEntityTypesResponse.class);
-    }
-    
-    private TrackedEntityAttributesResponse getTEAttrsResponse() throws Exception {
-        DHISResponse resp = this.getEntityAttributes();
-        String content = resp.getResponse();
-        if (resp.getStatus() != DHIS2Constants.OK_CODE) {
-            throw new Exception("Error in retrieving TE attributes: " + content);
-        }
-        return this.gson.fromJson(content, TrackedEntityAttributesResponse.class);
-    }
-    
-    private ProgramsResponse getPrograms() throws Exception {
-        GetMethod getRequest = new GetMethod(this.dhisConfiguration.getUrl() + "/programs?paging=false");
-        try {
-            HttpClient httpClient = getHttpClient();
-            setAuthorizationHeader(getRequest);
-            int response = httpClient.executeMethod(getRequest);
-            String content = getRequest.getResponseBodyAsString();
-            if (response != DHIS2Constants.OK_CODE) {
-                throw new Exception("Error in retrieving programs: " + content);
-            }
-            return this.gson.fromJson(content, ProgramsResponse.class);
-        } catch (IOException e) {
-            throw new Exception("Error in retrieving programs", e);
-        } finally {
-            getRequest.releaseConnection();
-        }
-    }
-    
-    private ProgramsStagesResponse getProgramsStages() throws Exception {
-        GetMethod getRequest = new GetMethod(this.dhisConfiguration.getUrl() + "/programStages?paging=false");
-        try {
-            HttpClient httpClient = getHttpClient();
-            setAuthorizationHeader(getRequest);
-            int response = httpClient.executeMethod(getRequest);
-            String content = getRequest.getResponseBodyAsString();
-            if (response != DHIS2Constants.OK_CODE) {
-                throw new Exception("Error in retrieving program stages: " + content);
-            }
-            return this.gson.fromJson(content, ProgramsStagesResponse.class);
-        } catch (IOException e) {
-            throw new Exception("Error in retrieving program stages", e);
-        } finally {
-            getRequest.releaseConnection();
-        }
-    }
 
     public DHISResponse getEntityTypes() {
 
@@ -409,12 +257,12 @@ public class DHIS2Service {
     
     private List<Attribute> generateFPInfoAttrs(FlightPassengerInformation fpInfo) {
         List<Attribute> attrs = new ArrayList<Attribute>();
-        attrs.add(attr(this.fieldIds.tePassportNumber, fpInfo.getPassengerInformation().getPassportNumber()));
-        attrs.add(attr(this.fieldIds.teNationality, fpInfo.getPassengerInformation().getNationality()));
-        attrs.add(attr(this.fieldIds.teIdCardNumber, fpInfo.getPassengerInformation().getIdCardNumber()));
-        attrs.add(attr(this.fieldIds.teDateOfBirth, fpInfo.getPassengerInformation().getDateOfBirth()));
-        attrs.add(attr(this.fieldIds.teGender, fpInfo.getPassengerInformation().getGender()));
-        attrs.add(attr(this.fieldIds.teEmailAddress, fpInfo.getPassengerInformation().getEmailAddress()));
+        attrs.add(attr(DHIS2Constants.UID_ATTR_PASSPORT_NUMBER, fpInfo.getPassengerInformation().getPassportNumber()));
+        attrs.add(attr(DHIS2Constants.UID_ATTR_NATIONALITY, fpInfo.getPassengerInformation().getNationality()));
+        attrs.add(attr(DHIS2Constants.UID_ATTR_NIC, fpInfo.getPassengerInformation().getIdCardNumber()));
+        attrs.add(attr(DHIS2Constants.UID_ATTR_DOB, fpInfo.getPassengerInformation().getDateOfBirth()));
+        attrs.add(attr(DHIS2Constants.UID_ATTR_GENDER, fpInfo.getPassengerInformation().getGender()));
+        attrs.add(attr(DHIS2Constants.UID_ATTR_EMAIL, fpInfo.getPassengerInformation().getEmailAddress()));
         return attrs;
     }
     
@@ -438,9 +286,9 @@ public class DHIS2Service {
         List<Event> result = new ArrayList<Event>();
         Event event = new Event();
         event.setDueDate(this.getCurrentDate());
-        event.setProgram(this.fieldIds.programPortOfEntrySurveillance);
-        event.setProgramStage(this.fieldIds.programStagePortOfEntry);
-        event.setOrgUnit(this.fieldIds.organizationSriLanka);
+        event.setProgram(DHIS2Constants.UID_PROGRAMPORTOFENTRYSURVEILLANCE);
+        event.setProgramStage(DHIS2Constants.UID_PROGRAMSTAGEPORTOFENTRY);
+        event.setOrgUnit(DHIS2Constants.UID_ORGANIZATIONSRILANKA);
         event.setTrackedEntityInstance(teInstanceId);
         event.setDataValues(this.generateDataElements(fpInfo));
         return result;
@@ -457,8 +305,8 @@ public class DHIS2Service {
     
     private String createFPEntityInstance(FlightPassengerInformation fpInfo) throws Exception {
         EntityInstance entityInstance = new EntityInstance();
-        entityInstance.setOrgUnit(this.fieldIds.organizationSriLanka);
-        entityInstance.setTrackedEntityType(this.fieldIds.personTrackedEntityType);
+        entityInstance.setOrgUnit(DHIS2Constants.UID_ORGANIZATIONSRILANKA);
+        entityInstance.setTrackedEntityType(DHIS2Constants.UID_PERSONTRACKEDENTITYTYPE);
         entityInstance.setAttributes(this.generateFPInfoAttrs(fpInfo));
         DHISResponse resp = this.createEntityInstance(entityInstance);
         if (resp.getStatus() != DHIS2Constants.OK_CODE) {
@@ -469,8 +317,8 @@ public class DHIS2Service {
     
     private void createFPEnrollment(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
         Enrollment enrollment = new Enrollment(); 
-        enrollment.setOrgUnit(this.fieldIds.organizationSriLanka);
-        enrollment.setProgram(this.fieldIds.programPortOfEntrySurveillance);
+        enrollment.setOrgUnit(DHIS2Constants.UID_ORGANIZATIONSRILANKA);
+        enrollment.setProgram(DHIS2Constants.UID_PROGRAMPORTOFENTRYSURVEILLANCE);
         String currentDate = this.getCurrentDate();
         enrollment.setEnrollmentDate(currentDate);
         enrollment.setIncidentDate(currentDate);
