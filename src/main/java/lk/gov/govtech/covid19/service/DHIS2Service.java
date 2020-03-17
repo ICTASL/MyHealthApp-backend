@@ -126,7 +126,7 @@ public class DHIS2Service {
 
     public DHISResponse getProgrammes() {
 
-        GetMethod getRequest = new GetMethod(dhisConfiguration.getUrl() + "/programs");
+        GetMethod getRequest = new GetMethod(dhisConfiguration.getUrl() + "/programs?paging=false");
         DHISResponse dhisResponse = new DHISResponse();
 
         try {
