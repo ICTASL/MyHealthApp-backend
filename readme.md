@@ -15,6 +15,9 @@ Please keep the following in mind when submitting your valuable contributions �
 ## How to run
 - install mysql server
 - execute `covid19.sql` on server (execute `covid19_test.sql` to add test data)
+ 
+- replace the `covid-19-lk-dev-firebase-adminsdk.json` file in `/src/main/resources/credentials/` with the private key from Firebase Admin SDK
+
 - build project using `mvn clean install`
 - run using: `mvn spring-boot:run`
 
@@ -93,54 +96,65 @@ POST http://localhost:8000/notification/case/add
 ```
 
 ---
-#### Get Status
+
+## FCM Testing
+
+ #### GET /dashboard/status - Get the status of total case, death case, recovered case and suspect case by Covid-19
+
+
 ```
-GET http://localhost:8000/application/dashboard/status
+curl -H "Content-Type: application/json" -X GET http://localhost:8000/application/dashboard/status
 ```
 
-### FCM-Backend
+ #### If succeeded you should receive following JSON response with code `200`:
 
-## Get started
-
-- replace the `covid-19-lk-dev-firebase-adminsdk.json` file with the actual file
-- replace the `token` in application.yml
-
-## testing
-
-* GET /notification – Trigger sample notification with default values sending 
-- `curl -H "Content-Type: application/json" -X GET http://localhost:8000/notification`
-
-* POST /notification/topic – Send a message to a specific topic
-- `curl -d '{"title":"Hello", "message":"The message...", "topic":"contactTopic"}' -H "Content-Type: application/json" -X POST http://localhost:8000/notification/topic`
-
-* POST /notification/token – Send a message to a specific device (with the token)
-- `curl -d '{"title":"Hey you!", "message":"Watch out!", "token":"cct00ebz8eg:APA91bFcTkFE_0Qafj6nWv5yHxqCLTyxAaqi4QzwsFNLP5M9G78X8Z5UMZTW004q1PUux63Ut-1WMGVToMNTdB3ZfO8lCZlc4lGpxm7LBdWfkhaUxdbpQ5xIO5cAb-w9H2dBLNHT7i-U", "topic": ""}' -H "Content-Type: application/json" -X POST http://localhost:8080/notification/token`
-
-* POST /notification/data – Send a message to a specific topic with additional payload data.
-- `curl -d '{"title":"Hello", "message":"Data message", "topic":"contactTopic"}' -H "Content-Type: application/json" -X POST http://localhost:8000/notification/data`
-
-*If succeeded you should receive following JSON response with code 200:
-
-- `{
-    "status": 200,
-    "message": "Notification has been sent."
-}`
-
-* GET /dashboard/status - Get the status of total case, death case, recovered case and suspect case by Covid-19
-- `curl -H "Content-Type: application/json" -X GET http://localhost:8000/application/dashboard/status`
-
-*If succeeded you should receive following JSON response with code 200:
-
-- `{
+```
+{
     "lk_total_case": 99,
     "lk_recovered_case": 99,
     "lk_total_deaths": 99,
     "lk_total_suspect": 99,
     "last_update_time": "2020-03-17 15:10"
-}`
+}
+```
 
-#Web Portal UI
+---
+ #### GET /notification – Trigger sample notification with default values sending 
+```
+curl -H "Content-Type: application/json" -X GET http://localhost:8000/notification
+```
+
+#### POST /notification/topic – Send a message to a specific topic
+
+```
+curl -d '{"title":"Hello", "message":"The message...", "topic":"contactTopic"}' -H "Content-Type: application/json" -X POST http://localhost:8000/notification/topic
+```
+
+#### POST /notification/token – Send a message to a specific device (with the token)
+
+```
+curl -d '{"title":"Hey you!", "message":"Watch out!", "token":"cct00ebz8eg:APA91bFcTkFE_0Qafj6nWv5yHxqCLTyxAaqi4QzwsFNLP5M9G78X8Z5UMZTW004q1PUux63Ut-1WMGVToMNTdB3ZfO8lCZlc4lGpxm7LBdWfkhaUxdbpQ5xIO5cAb-w9H2dBLNHT7i-U", "topic": ""}' -H "Content-Type: application/json" -X POST http://localhost:8080/notification/token
+```
+
+#### POST /notification/data – Send a message to a specific topic with additional payload data.
+
+```
+curl -d '{"title":"Hello", "message":"Data message", "topic":"contactTopic"}' -H "Content-Type: application/json" -X POST http://localhost:8000/notification/data
+```
+ #### If succeeded you should receive following JSON response with code 200:
+
+```
+{
+    "status": 200,
+    "message": "Notification has been sent."
+}
+```
+
+
+# Web Portal UI
+
 ## Getting started
+
 ### Setting up Build system
 - In order to Setup You need to Run `npm install` to install all the dependencies. 
 - Now Run `npm run watch`.
@@ -151,4 +165,3 @@ GET http://localhost:8000/application/dashboard/status
 - Hit Ctrl+C or just close the command line window to stop the server.
 
 _Happy Contributing!_
-
