@@ -3,6 +3,7 @@ package lk.gov.govtech.covid19.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,10 +27,22 @@ public class WebAuthConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        http
+        http //TODO: following disables auth for GET and POST, has to be removed
             .authorizeRequests()
-                .mvcMatchers(PORTAL_API_CONTEXT + "/**") //TODO: notification api context
+                .mvcMatchers("/**")
+                .permitAll()
+                .and()
+            .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/**")
+                .permitAll()
+                .and()
+            .csrf().disable()
+
+            .authorizeRequests()
+                .mvcMatchers(PORTAL_API_CONTEXT + "/**")
                 .hasRole("USER")
+                .and()
+            .httpBasic()
                 .and()
             .formLogin()
                 .loginPage(PORTAL_API_CONTEXT)
