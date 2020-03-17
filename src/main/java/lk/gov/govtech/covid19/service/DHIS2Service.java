@@ -87,21 +87,20 @@ public class DHIS2Service {
         this.fieldIds.teDateOfBirth = this.idLookup(idMap, DHIS2Constants.DISP_DATEOFBIRTH);
         this.fieldIds.teGender = this.idLookup(idMap, DHIS2Constants.DISP_GENDER);
         this.fieldIds.teEmailAddress = this.idLookup(idMap, DHIS2Constants.DISP_EMAILADDRESS);
-        this.fieldIds.teFullAddress = this.idLookup(idMap, DHIS2Constants.DISP_FULLADDRESS);
 
         /* others fields of flight user registration (events) */
-        this.fieldIds.teInitials = this.idLookup(idMap, DHIS2Constants.DISP_INITIALS);
-        this.fieldIds.teSurname = this.idLookup(idMap, DHIS2Constants.DISP_SURNAME);
-        this.fieldIds.teMiddleName = this.idLookup(idMap, DHIS2Constants.DISP_MIDDLENAME);
-        this.fieldIds.teGivenName = this.idLookup(idMap, DHIS2Constants.DISP_GIVENNAME);
-        this.fieldIds.teFaceImage = this.idLookup(idMap, DHIS2Constants.DISP_FACEIMAGE);
-        this.fieldIds.tePassportDataPage = this.idLookup(idMap, DHIS2Constants.DISP_PASSPORTDATAPAGE);
-        this.fieldIds.teAddressLine1 = this.idLookup(idMap, DHIS2Constants.DISP_ADDRESSLINE1);
-        this.fieldIds.teAddressLine2 = this.idLookup(idMap, DHIS2Constants.DISP_ADDRESSLINE2);
-        this.fieldIds.teCity = this.idLookup(idMap, DHIS2Constants.DISP_CITY);
-        this.fieldIds.tePostalCode = this.idLookup(idMap, DHIS2Constants.DISP_POSTALCODE);
-        this.fieldIds.teStateProvince = this.idLookup(idMap, DHIS2Constants.DISP_STATEPROVINCE);
-        this.fieldIds.teCountry = this.idLookup(idMap, DHIS2Constants.DISP_COUNTRY);
+        this.fieldIds.initials = this.idLookup(idMap, DHIS2Constants.DISP_INITIALS);
+        this.fieldIds.surname = this.idLookup(idMap, DHIS2Constants.DISP_SURNAME);
+        this.fieldIds.middleName = this.idLookup(idMap, DHIS2Constants.DISP_MIDDLENAME);
+        this.fieldIds.givenName = this.idLookup(idMap, DHIS2Constants.DISP_GIVENNAME);
+        this.fieldIds.faceImage = this.idLookup(idMap, DHIS2Constants.DISP_FACEIMAGE);
+        this.fieldIds.passportDataPage = this.idLookup(idMap, DHIS2Constants.DISP_PASSPORTDATAPAGE);
+        this.fieldIds.addressLine1 = this.idLookup(idMap, DHIS2Constants.DISP_ADDRESSLINE1);
+        this.fieldIds.addressLine2 = this.idLookup(idMap, DHIS2Constants.DISP_ADDRESSLINE2);
+        this.fieldIds.city = this.idLookup(idMap, DHIS2Constants.DISP_CITY);
+        this.fieldIds.postalCode = this.idLookup(idMap, DHIS2Constants.DISP_POSTALCODE);
+        this.fieldIds.stateProvince = this.idLookup(idMap, DHIS2Constants.DISP_STATEPROVINCE);
+        this.fieldIds.country = this.idLookup(idMap, DHIS2Constants.DISP_COUNTRY);
     }
     
     private void initOrganizationUnits() throws Exception {

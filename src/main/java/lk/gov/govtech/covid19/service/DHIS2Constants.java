@@ -26,7 +26,6 @@ public class DHIS2Constants {
     public final static String DISP_EMAILADDRESS = "Email";//l
     public final static String DISP_FACEIMAGE = "Face Image";
     public final static String DISP_PASSPORTDATAPAGE = "Passport Data Page";
-    public final static String DISP_FULLADDRESS = "Full Address in Sri Lanka";//k
     public final static String DISP_ADDRESSLINE1 = "Address Line 1";
     public final static String DISP_ADDRESSLINE2 = "Address Line 2";
     public final static String DISP_CITY = "Address City";

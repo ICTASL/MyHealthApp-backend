@@ -9,7 +9,6 @@ import lk.gov.govtech.covid19.util.Constants;
 import lk.gov.govtech.covid19.service.DHIS2Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

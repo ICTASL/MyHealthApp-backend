@@ -11,22 +11,22 @@ public class FieldIdHolder {
     
     public String tePassportNumber;
     public String teNationality;
-    public String teInitials;
-    public String teSurname;
-    public String teMiddleName;
-    public String teGivenName;
     public String teIdCardNumber;
     public String teDateOfBirth;
     public String teGender;
     public String teEmailAddress;
-    public String teFaceImage;
-    public String tePassportDataPage;
-    public String teFullAddress;
-    public String teAddressLine1;
-    public String teAddressLine2;
-    public String teCity;
-    public String tePostalCode;
-    public String teStateProvince;
-    public String teCountry;
+
+    public String initials;
+    public String surname;
+    public String middleName;
+    public String givenName;
+    public String faceImage;
+    public String passportDataPage;
+    public String addressLine1;
+    public String addressLine2;
+    public String city;
+    public String postalCode;
+    public String stateProvince;
+    public String country;
     
 }
