@@ -166,6 +166,27 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Get Dashboard Status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/application/dashboard/status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"application",
+						"dashboard",
+						"status"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}
