@@ -4,6 +4,9 @@ target/
 !**/src/main/**
 !**/src/test/**
 
+### Credentials ###
+**/src/main/resources/credentials/*
+
 ### STS ###
 .apt_generated
 .classpath
