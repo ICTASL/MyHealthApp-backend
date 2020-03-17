@@ -293,27 +293,48 @@ public class DHIS2Service {
         }
     }
     
-    private List<DataElement> generateDataElements(FlightPassengerInformation fpInfo) throws Exception {
-        List<DataElement> result = new ArrayList<DataElement>();
-        //TODO
+    private DataElement del(String id, String value) {
+        DataElement result = new DataElement();
+        result.setDataElement(id);
+        result.setValue(value);
         return result;
     }
-        
-    private List<Event> generateEvent(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
-        List<Event> result = new ArrayList<Event>();
-        Event event = new Event();
+    
+    private List<DataElement> generateFlightInfoDataElements(FlightPassengerInformation fpInfo) throws Exception {
+        FlightInformation finfo = fpInfo.getFlightInformation();
+        if (finfo == null) {
+            throw new Exception("The flight information is not available");
+        }
+        List<DataElement> result = new ArrayList<DataElement>();
+        result.add(this.del(DHIS2Constants.UID_DEL_FLIGHTNUMBER, finfo.getFlightNumber()));
+        return result;
+    }
+    
+    private void populateCommonValues(Event event, String teInstanceId) {
         event.setDueDate(this.getCurrentDate());
         event.setProgram(DHIS2Constants.UID_PROGRAMPORTOFENTRYSURVEILLANCE);
         event.setProgramStage(DHIS2Constants.UID_PROGRAMSTAGEPORTOFENTRY);
         event.setOrgUnit(DHIS2Constants.UID_ORGANIZATIONSRILANKA);
+        event.setStatus(DHIS2Constants.STATUS_COMPLETED);
         event.setTrackedEntityInstance(teInstanceId);
-        event.setDataValues(this.generateDataElements(fpInfo));
+    }
+    
+    private Event generateFlightInfoEvent(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
+        Event event = new Event();
+        this.populateCommonValues(event, teInstanceId);
+        event.setDataValues(this.generateFlightInfoDataElements(fpInfo));
+        return event;
+    }
+        
+    private List<Event> generateEvents(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
+        List<Event> result = new ArrayList<Event>();
+        result.add(this.generateFlightInfoEvent(fpInfo, teInstanceId));
         return result;
     }
     
     private void createFPEvents(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
         Events events = new Events();
-        events.setEvents(this.generateEvent(fpInfo, teInstanceId));
+        events.setEvents(this.generateEvents(fpInfo, teInstanceId));
         DHISResponse resp = this.createEvents(events);
         if (resp.getStatus() != DHIS2Constants.OK_CODE) {
             throw new Exception("Error in creating FP events: " + resp.getResponse());
@@ -339,7 +360,7 @@ public class DHIS2Service {
         String currentDate = this.getCurrentDate();
         enrollment.setEnrollmentDate(currentDate);
         enrollment.setIncidentDate(currentDate);
-        enrollment.setStatus(DHIS2Constants.ENROLLMENT_STATUS_ACTIVE);
+        enrollment.setStatus(DHIS2Constants.STATUS_ACTIVE);
         enrollment.setTrackedEntityInstance(teInstanceId);
         DHISResponse resp = this.createEnrollment(enrollment);
         if (resp.getStatus() != DHIS2Constants.OK_CODE) {

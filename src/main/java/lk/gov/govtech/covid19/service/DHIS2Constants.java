@@ -7,7 +7,8 @@ public class DHIS2Constants {
 
     public final static int INTERNAL_ERROR_CODE = 500;
     public final static int OK_CODE = 200;
-    public final static String ENROLLMENT_STATUS_ACTIVE = "ACTIVE";
+    public final static String STATUS_ACTIVE = "ACTIVE";
+    public final static String STATUS_COMPLETED = "COMPLETED";
     public final static String BIN_CLEAR_VAL = "<binary-data>";
     
     public final static String UID_PROGRAMPORTOFENTRYSURVEILLANCE = "Cr6bmkKzQ5c";
@@ -26,5 +27,7 @@ public class DHIS2Constants {
     public final static String UID_ATTR_SERIAL_NUMBER = "wX3FuQmiLGI";
     public final static String UID_ATTR_TEL_FOREIGN = "s1AxHKrRT19";
     public final static String UID_ATTR_TEL_SRILANKA = "ihz1qXLws99";
+    
+    public final static String UID_DEL_FLIGHTNUMBER = "I2iJgOB0rBH";
 
 }
