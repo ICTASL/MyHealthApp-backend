@@ -116,7 +116,7 @@ public class ApplicationService {
 
             response.setLk_total_case(status.getLk_total_case());
             response.setLk_recovered_case(status.getLk_recovered_case());
-            response.setLk_total_deths(status.getLk_total_deths());
+            response.setLk_total_deaths(status.getLk_total_deaths());
             response.setLk_total_suspect(status.getLk_total_suspect());
             response.setLast_update_time(sdf.format(status.getLast_update_time()));
         }
