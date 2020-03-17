@@ -5,11 +5,14 @@ import lk.gov.govtech.covid19.datasource.CovidDatasource;
 import lk.gov.govtech.covid19.dto.AlertNotificationRequest;
 import lk.gov.govtech.covid19.dto.CaseNotificationRequest;
 import lk.gov.govtech.covid19.dto.Location;
+import lk.gov.govtech.covid19.dto.StatusResponse;
 import lk.gov.govtech.covid19.model.AlertNotificationEntity;
 import lk.gov.govtech.covid19.model.CaseNotificationEntity;
+import lk.gov.govtech.covid19.model.StatusEntity;
 import lk.gov.govtech.covid19.model.mapper.AlertNotificationEntityRowMapper;
 import lk.gov.govtech.covid19.model.mapper.CaseNotificationEntityRowMapper;
 import lk.gov.govtech.covid19.model.mapper.CaseNotificationLocationMapper;
+import lk.gov.govtech.covid19.model.mapper.StatusEntityRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -118,6 +121,12 @@ public class CovidRepository {
         List<Integer> idList = jdbcTemplate.query("select id from epid_case ORDER BY id DESC LIMIT 1", (rs, rowNum) -> rs.getInt("id"));
 
         return idList.isEmpty() ? 0 : idList.get(0);
+    }
+
+    public StatusEntity getStatus() {
+        List<StatusEntity> statusList =  jdbcTemplate.query("select * from covid_status", new StatusEntityRowMapper());
+        return statusList.isEmpty() ? null : statusList.get(0);
+
     }
 
 }

@@ -2,6 +2,7 @@ package lk.gov.govtech.covid19.controller;
 
 import lk.gov.govtech.covid19.dto.AlertNotificationResponse;
 import lk.gov.govtech.covid19.dto.CaseNotificationResponse;
+import lk.gov.govtech.covid19.dto.StatusResponse;
 import lk.gov.govtech.covid19.service.ApplicationService;
 import lk.gov.govtech.covid19.util.Constants;
 import lombok.extern.slf4j.Slf4j;
@@ -58,5 +59,17 @@ public class ApplicationController {
     @GetMapping(path = "/case/latest")
     public ResponseEntity getLastCaseId(){
         return ResponseEntity.ok().body(applicationService.getLastCaseNotificationId());
+    }
+
+    @GetMapping(path = "/dashboard/status", produces = "application/json")
+    public ResponseEntity getSatus() {
+        StatusResponse response = applicationService.getStatus();
+
+        if (response == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok().body(response);
+        }
+
     }
 }
