@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 import lk.gov.govtech.covid19.config.DHISConfiguration;
+import lk.gov.govtech.covid19.dto.AddressInformation;
+import lk.gov.govtech.covid19.dto.Attribute;
 import lk.gov.govtech.covid19.dto.DHISResponse;
 import lk.gov.govtech.covid19.dto.Enrollment;
 import lk.gov.govtech.covid19.dto.EntityInstance;
@@ -15,6 +17,7 @@ import lk.gov.govtech.covid19.dto.OrgUnitAttributesResponse;
 import lk.gov.govtech.covid19.dto.PassengerInformation;
 import lk.gov.govtech.covid19.dto.ProgramsResponse;
 import lk.gov.govtech.covid19.dto.TrackedEntityAttributesResponse;
+import lk.gov.govtech.covid19.dto.TrackedEntityTypesResponse;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethodBase;
@@ -31,6 +34,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
@@ -61,6 +65,7 @@ public class DHIS2Service {
         this.initPrograms();
         this.initTEAttributesForFlightUserReg();
         this.initOrganizationUnits();
+        this.initTrackedEntityTypes();
         LOGGER.info("DHIS2 service initialized successfully");
     }
     
@@ -100,6 +105,12 @@ public class DHIS2Service {
         this.fieldIds.organizationSriLanka = this.idLookup(idMap, DHIS2Constants.DISP_SRI_LANKA);
     }
     
+    private void initTrackedEntityTypes() throws Exception {
+        TrackedEntityTypesResponse resp = this.getTrackedEntityTypesResponse();
+        Map<String, String> idMap = this.generateReverseMap(resp.getTrackedEntityTypes());
+        this.fieldIds.personTrackedEntityType = this.idLookup(idMap, DHIS2Constants.DISP_PERSON);
+    }
+    
     private String idLookup(Map<String, String> idMap, String dispName) throws Exception {
         String result = idMap.get(dispName);
         if (result == null) {
@@ -123,6 +134,15 @@ public class DHIS2Service {
             throw new Exception("Error in retrieving organization unit attributes: " + content);
         }
         return this.gson.fromJson(content, OrgUnitAttributesResponse.class);
+    }
+    
+    private TrackedEntityTypesResponse getTrackedEntityTypesResponse() throws Exception {
+        DHISResponse resp = this.getEntityTypes();
+        String content = resp.getResponse();
+        if (resp.getStatus() != DHIS2Constants.OK_CODE) {
+            throw new Exception("Error in retrieving tracked entity type attributes: " + content);
+        }
+        return this.gson.fromJson(content, TrackedEntityTypesResponse.class);
     }
     
     private TrackedEntityAttributesResponse getTEAttrsResponse() throws Exception {
@@ -154,7 +174,7 @@ public class DHIS2Service {
 
     public DHISResponse getEntityTypes() {
 
-        GetMethod getRequest = new GetMethod(dhisConfiguration.getUrl() + "/trackedEntityTypes");
+        GetMethod getRequest = new GetMethod(dhisConfiguration.getUrl() + "/trackedEntityTypes?paging=false");
         DHISResponse dhisResponse = new DHISResponse();
         try {
             if (LOGGER.isDebugEnabled()) {
@@ -339,8 +359,70 @@ public class DHIS2Service {
         }
     }
     
-    private void saveFlightPassengerInformation(List<FlightPassengerInformation> fpInfos) {
-        //TODO - save to DHIS2
+    private void saveFlightPassengerInformation(List<FlightPassengerInformation> fpInfos) throws Exception {
+        for (FlightPassengerInformation fpInfo : fpInfos) {
+            this.saveFlightPassengerInformation(fpInfo);
+        }
+    }
+    
+    private Attribute attr(String id, String value) {
+        Attribute attr = new Attribute();
+        attr.setAttribute(id);
+        attr.setValue(value);
+        return attr;
+    }
+    
+    private List<Attribute> generateFPInfoAttrs(FlightPassengerInformation fpInfo) {
+        List<Attribute> attrs = new ArrayList<Attribute>();
+        attrs.add(attr(this.fieldIds.tePassportNumber, fpInfo.getPassengerInformation().getPassportNumber()));
+        attrs.add(attr(this.fieldIds.teNationality, fpInfo.getPassengerInformation().getNationality()));
+        attrs.add(attr(this.fieldIds.teInitials, fpInfo.getPassengerInformation().getInitials()));
+        attrs.add(attr(this.fieldIds.teSurname, fpInfo.getPassengerInformation().getSurname()));
+        attrs.add(attr(this.fieldIds.teMiddleName, fpInfo.getPassengerInformation().getMiddleName()));
+        attrs.add(attr(this.fieldIds.teGivenName, fpInfo.getPassengerInformation().getGivenName()));
+        attrs.add(attr(this.fieldIds.teIdCardNumber, fpInfo.getPassengerInformation().getIdCardNumber()));
+        attrs.add(attr(this.fieldIds.teDateOfBirth, fpInfo.getPassengerInformation().getDateOfBirth()));
+        attrs.add(attr(this.fieldIds.teGender, fpInfo.getPassengerInformation().getGender()));
+        attrs.add(attr(this.fieldIds.teEmailAddress, fpInfo.getPassengerInformation().getEmailAddress()));
+        attrs.add(attr(this.fieldIds.teFaceImage, fpInfo.getPassengerInformation().getFaceImage()));
+        attrs.add(attr(this.fieldIds.tePassportDataPage, fpInfo.getPassengerInformation().getPassportDataPage()));
+        if (fpInfo.getAddressInformation().size() > 0) {
+            AddressInformation addrInfo = fpInfo.getAddressInformation().get(0);
+            attrs.add(attr(this.fieldIds.teFullAddress, addrInfo.getFullAddress()));
+            attrs.add(attr(this.fieldIds.teAddressLine1, addrInfo.getAddressLine1()));
+            attrs.add(attr(this.fieldIds.teAddressLine2, addrInfo.getAddressLine2()));
+            attrs.add(attr(this.fieldIds.teCity, addrInfo.getCity()));
+            attrs.add(attr(this.fieldIds.tePostalCode, addrInfo.getPostalCode()));
+            attrs.add(attr(this.fieldIds.teCountry, addrInfo.getCountry()));
+        }
+        return attrs;
+    }
+    
+    private void createFPEntityInstance(FlightPassengerInformation fpInfo) throws Exception {
+        EntityInstance entityInstance = new EntityInstance();
+        entityInstance.setOrgUnit(this.fieldIds.organizationSriLanka);
+        entityInstance.setTrackedEntityType(this.fieldIds.personTrackedEntityType);
+        entityInstance.setAttributes(this.generateFPInfoAttrs(fpInfo));
+        DHISResponse resp = this.createEntityInstance(entityInstance);
+        if (resp.getStatus() != DHIS2Constants.OK_CODE) {
+            throw new Exception("Error increating FP tracked entity instance: " + resp.getResponse());
+        }
+    }
+    
+    private void createFPEnrollment(FlightPassengerInformation fpInfo) throws Exception {
+        Enrollment enrollment = new Enrollment(); 
+        DHISResponse resp = this.createEnrollment(enrollment);
+        if (resp.getStatus() != DHIS2Constants.OK_CODE) {
+            throw new Exception("Error increating FP enrollment: " + resp.getResponse());
+        }
+    }
+    
+    private void saveFlightPassengerInformation(FlightPassengerInformation fpInfo) throws Exception {
+        if (fpInfo.getPassengerInformation() == null) {
+            throw new Exception("Passenger information is not available");
+        }
+        this.createFPEntityInstance(fpInfo);
+        this.createFPEnrollment(fpInfo);
     }
     
     private String extractFlightNumber(FlightInformation flightInfo) throws Exception {

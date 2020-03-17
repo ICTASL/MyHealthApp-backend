@@ -7,6 +7,7 @@ public class FieldIdHolder {
 
     public String programPortOfEntrySurveillance;
     public String organizationSriLanka;
+    public String personTrackedEntityType;
     
     public String tePassportNumber;
     public String teNationality;

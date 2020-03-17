@@ -11,6 +11,7 @@ public class DHIS2Constants {
     
     public final static String DISP_PORT_OF_ENTRY_SURVEILLANCE = "Port of Entry Surveillance";
     public final static String DISP_SRI_LANKA = "Sri Lanka";
+    public final static String DISP_PERSON = "Person";
     
     /* IDs for TE attributes in flight user registration */
     public final static String DISP_PASSPORT_NUMBER = "Passport Number";
