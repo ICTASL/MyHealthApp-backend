@@ -84,30 +84,29 @@ POST http://localhost:8000/notification/case/add
 ```
 
 ---
-## FCM Backend Testing
+### FCM Backend Testing
 
-### GET /notification – Trigger sample notification with default values sending 
+#### GET /notification – Trigger sample notification with default values sending 
 ```
 curl -H "Content-Type: application/json" -X GET http://localhost:8000/notification`
 ```
 
-### POST /notification/topic – Send a message to a specific topic
+#### POST /notification/topic – Send a message to a specific topic
  
 ```
 curl -d '{"title":"Hello", "message":"The message...", "topic":"contactTopic"}' -H "Content-Type: application/json" -X POST http://localhost:8000/notification/topic`
 ```
 
-### POST /notification/token – Send a message to a specific device (with the token)
+#### POST /notification/token – Send a message to a specific device (with the token)
 
 ```
 curl -d '{"title":"Hey you!", "message":"Watch out!", "token":"cct00ebz8eg:APA91bFcTkFE_0Qafj6nWv5yHxqCLTyxAaqi4QzwsFNLP5M9G78X8Z5UMZTW004q1PUux63Ut-1WMGVToMNTdB3ZfO8lCZlc4lGpxm7LBdWfkhaUxdbpQ5xIO5cAb-w9H2dBLNHT7i-U", "topic": ""}' -H "Content-Type: application/json" -X POST http://localhost:8080/notification/token`
 ```
 
-### POST /notification/data – Send a message to a specific topic with additional payload data.
+#### POST /notification/data – Send a message to a specific topic with additional payload data.
 
 ```
 curl -d '{"title":"Hello", "message":"Data message", "topic":"contactTopic"}' -H "Content-Type: application/json" -X POST http://localhost:8000/notification/data`
-
 ```
 If succeeded you should receive following JSON response with code 200:
 
