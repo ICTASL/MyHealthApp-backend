@@ -8,13 +8,11 @@ public class Constants {
     public static final String DHIS_API_CONTEXT = "/dhis";
 
     /*
-    * context for all calls related to web portal used for notification publication
+    * context for all calls related to web portal UI used for notification publication
     * */
     public static final String PORTAL_API_CONTEXT = "/portal";
-    //sub context for news notification publication
-    public static final String NEWS_API_CONTEXT = "/news";
-    //sub context for case notification publication
-    public static final String CASE_API_CONTEXT = "/cases";
+    public static final String NEWS_PATH = "/news";
+    public static final String CASES_PATH = "/cases";
 
     public static final String APPLICATION_API_CONTEXT = "/application";
 
