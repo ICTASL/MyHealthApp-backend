@@ -124,6 +124,30 @@ public class DHIS2Service {
         return dhisResponse;
     }
 
+    public DHISResponse getProgrammes() {
+
+        GetMethod getRequest = new GetMethod(dhisConfiguration.getUrl() + "/programs");
+        DHISResponse dhisResponse = new DHISResponse();
+
+        try {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Invoke getting programmes");
+            }
+            HttpClient httpClient = getHttpClient();
+            setAuthorizationHeader(getRequest);
+            int response = httpClient.executeMethod(getRequest);
+            dhisResponse.setStatus(response);
+            dhisResponse.setResponse(getRequest.getResponseBodyAsString());
+        } catch (IOException e) {
+            LOGGER.error("Error while getting programmes information", e);
+            dhisResponse.setStatus(DHIS2Constants.INTERNAL_ERROR_CODE);
+            dhisResponse.setResponse(e.getLocalizedMessage());
+        } finally {
+            getRequest.releaseConnection();
+        }
+        return dhisResponse;
+    }
+
     public DHISResponse createEntityInstance(EntityInstance entityInstance) {
 
         PostMethod postRequest = new PostMethod(dhisConfiguration.getUrl() + "/trackedEntityInstances");

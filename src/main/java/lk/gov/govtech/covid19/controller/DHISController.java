@@ -67,6 +67,13 @@ public class DHISController {
         DHISResponse response = dhis2Service.getEntityAttributes();
         return ResponseEntity.status(response.getStatus()).body(response.getResponse());
     }
+
+    @GetMapping(path = "/programmes", produces = "application/json")
+    public ResponseEntity getProgrammes() {
+
+        DHISResponse response = dhis2Service.getProgrammes();
+        return ResponseEntity.status(response.getStatus()).body(response.getResponse());
+    }
     
     @PostMapping(path = "/passenger-information", produces = "application/json")
     public ResponseEntity pushPassengerInformation(@RequestBody FlightPassengerInformation fpInfo) {
