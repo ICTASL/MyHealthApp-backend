@@ -8,5 +8,5 @@ import lombok.Data;
 @Data
 public class DataElement {
     private String dataElement;
-    private String value;
+    private Object value;
 }

@@ -52,8 +52,9 @@ public class DHIS2Service {
     private DHISConfiguration dhisConfiguration;
     
     private Gson gson = new Gson();
-    private SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private final static SimpleDateFormat FPI_DATETIMEFORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private final static SimpleDateFormat FPI_DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    private final static SimpleDateFormat DHIS2_DATETIMEFORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
     public DHISResponse getEntityTypes() {
 
@@ -319,11 +320,18 @@ public class DHIS2Service {
         }
     }
     
-    private DataElement del(String id, String value) {
+    private DataElement del(String id, Object value) {
         DataElement result = new DataElement();
         result.setDataElement(id);
         result.setValue(value);
         return result;
+    }
+    
+    private String fpiToDHIS2DataTime(String datetime) throws Exception {
+        if (datetime == null) {
+            return null;
+        }
+        return DHIS2_DATETIMEFORMAT.format(FPI_DATETIMEFORMAT.parse(datetime));
     }
     
     private List<DataElement> generateFlightInfoDataElements(FlightPassengerInformation fpInfo) throws Exception {
@@ -333,11 +341,18 @@ public class DHIS2Service {
         }
         List<DataElement> result = new ArrayList<DataElement>();
         result.add(this.del(DHIS2Constants.UID_DEL_FLIGHTNUMBER, finfo.getFlightNumber()));
+        result.add(this.del(DHIS2Constants.UID_DEL_FLIGHTDATETIME, 
+                   this.fpiToDHIS2DataTime(finfo.getFlightDateTime())));
+        result.add(this.del(DHIS2Constants.UID_DEL_ARRIVEFROMPORT, finfo.getArriveFromPort()));
+        result.add(this.del(DHIS2Constants.UID_DEL_LANDEDPORT, finfo.getLandedPort()));
+        result.add(this.del(DHIS2Constants.UID_DEL_CARRIERCODE, finfo.getCarrierCode()));
+        result.add(this.del(DHIS2Constants.UID_DEL_ARRIVALPASSENGERCOUNT, finfo.getArrivalPassengerCount()));
+        result.add(this.del(DHIS2Constants.UID_DEL_TRANSITPASSENGERCOUNT, finfo.getTransitPassengerCount()));
         return result;
     }
     
     private void populateCommonValues(Event event, String teInstanceId) {
-        event.setDueDate(this.getCurrentDate());
+        event.setDueDate(this.getFPICurrentDate());
         event.setProgram(DHIS2Constants.UID_PROGRAMPORTOFENTRYSURVEILLANCE);
         event.setProgramStage(DHIS2Constants.UID_PROGRAMSTAGEPORTOFENTRY);
         event.setOrgUnit(DHIS2Constants.UID_ORGANIZATIONSRILANKA);
@@ -383,7 +398,7 @@ public class DHIS2Service {
         Enrollment enrollment = new Enrollment(); 
         enrollment.setOrgUnit(DHIS2Constants.UID_ORGANIZATIONSRILANKA);
         enrollment.setProgram(DHIS2Constants.UID_PROGRAMPORTOFENTRYSURVEILLANCE);
-        String currentDate = this.getCurrentDate();
+        String currentDate = this.getFPICurrentDate();
         enrollment.setEnrollmentDate(currentDate);
         enrollment.setIncidentDate(currentDate);
         enrollment.setStatus(DHIS2Constants.STATUS_ACTIVE);
@@ -418,7 +433,7 @@ public class DHIS2Service {
             throw new Exception("Flight data/time not available");
         }
         try {
-            return this.extractDate(flightDateTime);
+            return this.extractFPIDate(flightDateTime);
         } catch (ParseException e) {
             throw new Exception("Invalid flight date/time", e);
         }
@@ -432,13 +447,13 @@ public class DHIS2Service {
         return flightInfo;
     }
     
-    private synchronized String extractDate(String dateTime) throws ParseException {
-        Date date = this.dateTimeFormat.parse(dateTime);
-        return this.dateFormat.format(date);
+    private synchronized String extractFPIDate(String dateTime) throws ParseException {
+        Date date = FPI_DATETIMEFORMAT.parse(dateTime);
+        return FPI_DATEFORMAT.format(date);
     }
     
-    private synchronized String getCurrentDate() {
-        return this.dateFormat.format(new Date());
+    private synchronized String getFPICurrentDate() {
+        return FPI_DATEFORMAT.format(new Date());
     }
     
     private void clearoutImages(FlightPassengerInformation fpInfo) {

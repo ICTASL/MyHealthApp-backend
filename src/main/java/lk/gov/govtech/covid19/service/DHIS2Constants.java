@@ -29,5 +29,11 @@ public class DHIS2Constants {
     public final static String UID_ATTR_TEL_SRILANKA = "ihz1qXLws99";
     
     public final static String UID_DEL_FLIGHTNUMBER = "I2iJgOB0rBH";
+    public final static String UID_DEL_FLIGHTDATETIME = "efFnLbT5WLN";
+    public final static String UID_DEL_ARRIVEFROMPORT = "FNEPek0vvST";
+    public final static String UID_DEL_LANDEDPORT = "qBPlYPn7I3d";
+    public final static String UID_DEL_CARRIERCODE = "ewF6QKkwLyN";
+    public final static String UID_DEL_ARRIVALPASSENGERCOUNT = "gqtzPQEYs5g";
+    public final static String UID_DEL_TRANSITPASSENGERCOUNT = "o6ABbbyMLhU";    
 
 }

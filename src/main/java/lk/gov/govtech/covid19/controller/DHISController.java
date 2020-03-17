@@ -88,12 +88,12 @@ public class DHISController {
                 "    \"submitedDate\": null,\n" + 
                 "    \"flightInformation\": {\n" + 
                 "        \"flightNumber\": null,\n" + 
-                "        \"flightDateTime\": null,\n" + 
+                "        \"flightDateTime\": \"2020-05-01 05:01:02\",\n" + 
                 "        \"arriveFromPort\": null,\n" + 
                 "        \"landedPort\": null,\n" + 
                 "        \"carrierCode\": null,\n" + 
-                "        \"arrivalPassengerCount\": 0,\n" + 
-                "        \"transitPassengerCount\": 0\n" + 
+                "        \"arrivalPassengerCount\": 100,\n" + 
+                "        \"transitPassengerCount\": 100\n" + 
                 "    },\n" + 
                 "    \"passengerInformation\": {\n" + 
                 "        \"passportNumber\": null,\n" + 
@@ -150,12 +150,12 @@ public class DHISController {
                 "    \"submitedDate\": null,\n" + 
                 "    \"flightInformation\": {\n" + 
                 "        \"flightNumber\": null,\n" + 
-                "        \"flightDateTime\": null,\n" + 
+                "        \"flightDateTime\": \"2020-05-01 05:01:02\",\n" + 
                 "        \"arriveFromPort\": null,\n" + 
                 "        \"landedPort\": null,\n" + 
                 "        \"carrierCode\": null,\n" + 
-                "        \"arrivalPassengerCount\": 0,\n" + 
-                "        \"transitPassengerCount\": 0\n" + 
+                "        \"arrivalPassengerCount\": 100,\n" + 
+                "        \"transitPassengerCount\": 100\n" + 
                 "    },\n" + 
                 "    \"passengerInformation\": {\n" + 
                 "        \"passportNumber\": null,\n" + 
