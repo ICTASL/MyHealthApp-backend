@@ -1,21 +1,14 @@
 package lk.gov.govtech.covid19.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import static lk.gov.govtech.covid19.util.Constants.*;
 
@@ -23,11 +16,8 @@ import static lk.gov.govtech.covid19.util.Constants.*;
 @EnableWebSecurity
 public class WebAuthConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Value("${spring.portal.username}")
-    private String portalUsername;
-
-    @Value("${spring.portal.password}")
-    private String portalPassword;
+    @Autowired
+    PortalUserConfiguration users;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -47,6 +37,8 @@ public class WebAuthConfiguration extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl(PORTAL_API_CONTEXT + NEWS_PATH)
                 .and()
             .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher(PORTAL_API_CONTEXT + "/logout")) //logs out with a GET
+                .permitAll()
                 .logoutSuccessUrl(PORTAL_API_CONTEXT);
     }
 
@@ -54,9 +46,20 @@ public class WebAuthConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
         auth.inMemoryAuthentication()
-                    .withUser(portalUsername)
-                    .password(passwordEncoder().encode(portalPassword))
+                    .withUser(users.getUsername1())
+                    .password(passwordEncoder().encode(users.getPassword1()))
+                    .roles("USER")
+                .and()
+                    .withUser(users.getUsername2())
+                    .password(passwordEncoder().encode(users.getPassword2()))
+                    .roles("USER")
+                .and()
+                    .withUser(users.getUsername3())
+                    .password(passwordEncoder().encode(users.getPassword3()))
+                    .roles("USER")
+                .and()
+                    .withUser(users.getUsername4())
+                    .password(passwordEncoder().encode(users.getPassword4()))
                     .roles("USER");
     }
-
 }

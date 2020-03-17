@@ -17,8 +17,14 @@ spring:
     pid:
         file: application.pid
     portal:
-        username: dev@aaa.com
-        password: dev
+        username1: dev1@aaa.com
+        password1: dev
+        username2: dev2@aaa.com
+        password2: dev
+        username3: dev3@aaa.com
+        password3: dev
+        username4: dev4@aaa.com
+        password4: dev
 
 
 firebase: 
