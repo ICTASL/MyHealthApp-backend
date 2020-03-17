@@ -84,8 +84,9 @@ POST http://localhost:8000/notification/case/add
 
 ---
 #### Get Status
-
+```
 GET http://localhost:8000/application/dashboard/status
+```
 
 ### FCM-Backend
 
