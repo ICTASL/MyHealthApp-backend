@@ -13,6 +13,7 @@ import lk.gov.govtech.covid19.dto.FlightPassengerInformation;
 import lk.gov.govtech.covid19.dto.IdDisplayAttribute;
 import lk.gov.govtech.covid19.dto.PassengerInformation;
 import lk.gov.govtech.covid19.dto.ProgramsResponse;
+import lk.gov.govtech.covid19.dto.TrackedEntityAttributesResponse;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethodBase;
@@ -54,23 +55,63 @@ public class DHIS2Service {
     @PostConstruct
     private void init() throws Exception {
         this.initPrograms();
+        this.initTEAttributesForFlightUserReg();
+        LOGGER.info("DHIS2 service initialized successfully");
     }
     
     private void initPrograms() throws Exception {
         ProgramsResponse resp = this.getPrograms();
         Map<String, String> idMap = this.generateReverseMap(resp.getPrograms());
-        this.fieldIds.portOfEntrySurveillance = idMap.get(DHIS2Constants.DISP_PORT_OF_ENTRY_SURVEILLANCE);
-        if (this.fieldIds.portOfEntrySurveillance == null) {
-            throw new Exception("'Port of Entry Surveillance' program does not exist");
-        }
+        this.fieldIds.portOfEntrySurveillance = this.idLookup(idMap, DHIS2Constants.DISP_PORT_OF_ENTRY_SURVEILLANCE);
     }
     
+    private void initTEAttributesForFlightUserReg() throws Exception {
+        TrackedEntityAttributesResponse resp = this.getTEAttrsResponse();
+        Map<String, String> idMap = this.generateReverseMap(resp.getTrackedEntityAttributes());
+        this.fieldIds.tePassportNumber = this.idLookup(idMap, DHIS2Constants.DISP_PASSPORT_NUMBER);
+        this.fieldIds.teNationality = this.idLookup(idMap, DHIS2Constants.DISP_NATIONALITY);
+        this.fieldIds.teInitials = this.idLookup(idMap, DHIS2Constants.DISP_INITIALS);
+        this.fieldIds.teSurname = this.idLookup(idMap, DHIS2Constants.DISP_SURNAME);
+        this.fieldIds.teMiddleName = this.idLookup(idMap, DHIS2Constants.DISP_MIDDLENAME);
+        this.fieldIds.teGivenName = this.idLookup(idMap, DHIS2Constants.DISP_GIVENNAME);
+        this.fieldIds.teIdCardNumber = this.idLookup(idMap, DHIS2Constants.DISP_IDCARDNUMBER);
+        this.fieldIds.teDateOfBirth = this.idLookup(idMap, DHIS2Constants.DISP_DATEOFBIRTH);
+        this.fieldIds.teGender = this.idLookup(idMap, DHIS2Constants.DISP_GENDER);
+        this.fieldIds.teEmailAddress = this.idLookup(idMap, DHIS2Constants.DISP_EMAILADDRESS);
+        this.fieldIds.teFaceImage = this.idLookup(idMap, DHIS2Constants.DISP_FACEIMAGE);
+        this.fieldIds.tePassportDataPage = this.idLookup(idMap, DHIS2Constants.DISP_PASSPORTDATAPAGE);
+        this.fieldIds.teFullAddress = this.idLookup(idMap, DHIS2Constants.DISP_FULLADDRESS);
+        this.fieldIds.teAddressLine1 = this.idLookup(idMap, DHIS2Constants.DISP_ADDRESSLINE1);
+        this.fieldIds.teAddressLine2 = this.idLookup(idMap, DHIS2Constants.DISP_ADDRESSLINE2);
+        this.fieldIds.teCity = this.idLookup(idMap, DHIS2Constants.DISP_CITY);
+        this.fieldIds.tePostalCode = this.idLookup(idMap, DHIS2Constants.DISP_POSTALCODE);
+        this.fieldIds.teStateProvince = this.idLookup(idMap, DHIS2Constants.DISP_STATEPROVINCE);
+        this.fieldIds.teCountry = this.idLookup(idMap, DHIS2Constants.DISP_COUNTRY);
+    }
+    
+    private String idLookup(Map<String, String> idMap, String dispName) throws Exception {
+        String result = idMap.get(dispName);
+        if (result == null) {
+            throw new Exception("'" + dispName + "' attribute ID does not exist");
+        }
+        return result;
+    }
+        
     private Map<String, String> generateReverseMap(List<IdDisplayAttribute> attrs) {
         Map<String, String> result = new HashMap<String, String>();
         for (IdDisplayAttribute attr : attrs) {
             result.put(attr.getDisplayName(), attr.getId());
         }
         return result;
+    }
+    
+    private TrackedEntityAttributesResponse getTEAttrsResponse() throws Exception {
+        DHISResponse resp = this.getEntityAttributes();
+        String content = resp.getResponse();
+        if (resp.getStatus() != DHIS2Constants.OK_CODE) {
+            throw new Exception("Error in retrieving TE attributes: " + content);
+        }
+        return this.gson.fromJson(content, TrackedEntityAttributesResponse.class);
     }
     
     private ProgramsResponse getPrograms() throws Exception {

@@ -17,8 +17,8 @@ public class FieldIdHolder {
     public String teDateOfBirth;
     public String teGender;
     public String teEmailAddress;
-    public String tefaceImage;
-    public String tepassportDataPage;
+    public String teFaceImage;
+    public String tePassportDataPage;
     public String teFullAddress;
     public String teAddressLine1;
     public String teAddressLine2;
