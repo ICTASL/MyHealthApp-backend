@@ -36,7 +36,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * DHIS2 service implementation.
@@ -264,7 +266,7 @@ public class DHIS2Service {
         }
     }
     
-    private List<String> saveFlightPassengerInformation(List<FlightPassengerInformation> fpInfos) throws Exception {
+    private List<String> saveFlightPassengerInformation(Set<FlightPassengerInformation> fpInfos) throws Exception {
         List<String> teIds = new ArrayList<String>();
         for (FlightPassengerInformation fpInfo : fpInfos) {
             teIds.add(this.saveFlightPassengerInformation(fpInfo));
@@ -458,8 +460,9 @@ public class DHIS2Service {
             FlightInformation flightInfo = this.extractFlightInformation(fpInfo);
             String flightNo = this.extractFlightNumber(flightInfo);
             String date = this.extractFlightDate(flightInfo);
-            teIds.addAll(this.saveFlightPassengerInformation(Arrays.asList(fpInfo)));
-            List<FlightPassengerInformation> passengersInFlight = this.getInfoBorderPassengerList(flightNo, date);
+            /* the set is to eliminate similar records on insertion */
+            Set<FlightPassengerInformation> passengersInFlight = new HashSet<>(this.getInfoBorderPassengerList(flightNo, date));
+            passengersInFlight.add(fpInfo);
             teIds.addAll(this.saveFlightPassengerInformation(passengersInFlight));
             result.setStatus(DHIS2Constants.OK_CODE);
             result.setResponse(this.gson.toJson(teIds));
