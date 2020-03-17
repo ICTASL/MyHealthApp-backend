@@ -11,6 +11,7 @@ public class DHIS2Constants {
     public final static String BIN_CLEAR_VAL = "<binary-data>";
     
     public final static String DISP_PORT_OF_ENTRY_SURVEILLANCE = "Port of Entry Surveillance";
+    public final static String DISP_REG_AT_PORT_OF_ENTRY = "Registration at Port of Entry";
     public final static String DISP_SRI_LANKA = "Sri Lanka";
     public final static String DISP_PERSON = "Person";
     

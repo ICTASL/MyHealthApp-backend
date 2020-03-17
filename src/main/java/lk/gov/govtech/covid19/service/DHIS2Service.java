@@ -8,8 +8,10 @@ import com.google.gson.JsonParser;
 import lk.gov.govtech.covid19.config.DHISConfiguration;
 import lk.gov.govtech.covid19.dto.Attribute;
 import lk.gov.govtech.covid19.dto.DHISResponse;
+import lk.gov.govtech.covid19.dto.DataElement;
 import lk.gov.govtech.covid19.dto.Enrollment;
 import lk.gov.govtech.covid19.dto.EntityInstance;
+import lk.gov.govtech.covid19.dto.Event;
 import lk.gov.govtech.covid19.dto.Events;
 import lk.gov.govtech.covid19.dto.FlightInformation;
 import lk.gov.govtech.covid19.dto.FlightPassengerInformation;
@@ -17,6 +19,7 @@ import lk.gov.govtech.covid19.dto.IdDisplayAttribute;
 import lk.gov.govtech.covid19.dto.OrgUnitAttributesResponse;
 import lk.gov.govtech.covid19.dto.PassengerInformation;
 import lk.gov.govtech.covid19.dto.ProgramsResponse;
+import lk.gov.govtech.covid19.dto.ProgramsStagesResponse;
 import lk.gov.govtech.covid19.dto.TrackedEntityAttributesResponse;
 import lk.gov.govtech.covid19.dto.TrackedEntityTypesResponse;
 
@@ -64,6 +67,7 @@ public class DHIS2Service {
     @PostConstruct
     private void init() throws Exception {
         this.initPrograms();
+        this.initProgramStages();
         this.initTEAttributesForFlightUserReg();
         this.initOrganizationUnits();
         this.initTrackedEntityTypes();
@@ -75,6 +79,13 @@ public class DHIS2Service {
         Map<String, String> idMap = this.generateReverseMap(resp.getPrograms());
         this.fieldIds.programPortOfEntrySurveillance = this.idLookup(idMap, 
                 DHIS2Constants.DISP_PORT_OF_ENTRY_SURVEILLANCE);
+    }
+    
+    private void initProgramStages() throws Exception {
+        ProgramsStagesResponse resp = this.getProgramsStages();
+        Map<String, String> idMap = this.generateReverseMap(resp.getProgramStages());
+        this.fieldIds.programStagePortOfEntry = this.idLookup(idMap, 
+                DHIS2Constants.DISP_REG_AT_PORT_OF_ENTRY);
     }
     
     private void initTEAttributesForFlightUserReg() throws Exception {
@@ -91,16 +102,16 @@ public class DHIS2Service {
         /* others fields of flight user registration (events) */
         this.fieldIds.initials = this.idLookup(idMap, DHIS2Constants.DISP_INITIALS);
         this.fieldIds.surname = this.idLookup(idMap, DHIS2Constants.DISP_SURNAME);
-        this.fieldIds.middleName = this.idLookup(idMap, DHIS2Constants.DISP_MIDDLENAME);
-        this.fieldIds.givenName = this.idLookup(idMap, DHIS2Constants.DISP_GIVENNAME);
-        this.fieldIds.faceImage = this.idLookup(idMap, DHIS2Constants.DISP_FACEIMAGE);
-        this.fieldIds.passportDataPage = this.idLookup(idMap, DHIS2Constants.DISP_PASSPORTDATAPAGE);
-        this.fieldIds.addressLine1 = this.idLookup(idMap, DHIS2Constants.DISP_ADDRESSLINE1);
-        this.fieldIds.addressLine2 = this.idLookup(idMap, DHIS2Constants.DISP_ADDRESSLINE2);
-        this.fieldIds.city = this.idLookup(idMap, DHIS2Constants.DISP_CITY);
-        this.fieldIds.postalCode = this.idLookup(idMap, DHIS2Constants.DISP_POSTALCODE);
-        this.fieldIds.stateProvince = this.idLookup(idMap, DHIS2Constants.DISP_STATEPROVINCE);
-        this.fieldIds.country = this.idLookup(idMap, DHIS2Constants.DISP_COUNTRY);
+        //this.fieldIds.middleName = this.idLookup(idMap, DHIS2Constants.DISP_MIDDLENAME);
+        //this.fieldIds.givenName = this.idLookup(idMap, DHIS2Constants.DISP_GIVENNAME);
+        //this.fieldIds.faceImage = this.idLookup(idMap, DHIS2Constants.DISP_FACEIMAGE);
+        //this.fieldIds.passportDataPage = this.idLookup(idMap, DHIS2Constants.DISP_PASSPORTDATAPAGE);
+        //this.fieldIds.addressLine1 = this.idLookup(idMap, DHIS2Constants.DISP_ADDRESSLINE1);
+        //this.fieldIds.addressLine2 = this.idLookup(idMap, DHIS2Constants.DISP_ADDRESSLINE2);
+        //this.fieldIds.city = this.idLookup(idMap, DHIS2Constants.DISP_CITY);
+        //this.fieldIds.postalCode = this.idLookup(idMap, DHIS2Constants.DISP_POSTALCODE);
+        //this.fieldIds.stateProvince = this.idLookup(idMap, DHIS2Constants.DISP_STATEPROVINCE);
+        //this.fieldIds.country = this.idLookup(idMap, DHIS2Constants.DISP_COUNTRY);
     }
     
     private void initOrganizationUnits() throws Exception {
@@ -171,6 +182,24 @@ public class DHIS2Service {
             return this.gson.fromJson(content, ProgramsResponse.class);
         } catch (IOException e) {
             throw new Exception("Error in retrieving programs", e);
+        } finally {
+            getRequest.releaseConnection();
+        }
+    }
+    
+    private ProgramsStagesResponse getProgramsStages() throws Exception {
+        GetMethod getRequest = new GetMethod(this.dhisConfiguration.getUrl() + "/programStages?paging=false");
+        try {
+            HttpClient httpClient = getHttpClient();
+            setAuthorizationHeader(getRequest);
+            int response = httpClient.executeMethod(getRequest);
+            String content = getRequest.getResponseBodyAsString();
+            if (response != DHIS2Constants.OK_CODE) {
+                throw new Exception("Error in retrieving program stages: " + content);
+            }
+            return this.gson.fromJson(content, ProgramsStagesResponse.class);
+        } catch (IOException e) {
+            throw new Exception("Error in retrieving program stages", e);
         } finally {
             getRequest.releaseConnection();
         }
@@ -399,6 +428,33 @@ public class DHIS2Service {
         }
     }
     
+    private List<DataElement> generateDataElements(FlightPassengerInformation fpInfo) throws Exception {
+        List<DataElement> result = new ArrayList<DataElement>();
+        //TODO
+        return result;
+    }
+        
+    private List<Event> generateEvent(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
+        List<Event> result = new ArrayList<Event>();
+        Event event = new Event();
+        event.setDueDate(this.getCurrentDate());
+        event.setProgram(this.fieldIds.programPortOfEntrySurveillance);
+        event.setProgramStage(this.fieldIds.programStagePortOfEntry);
+        event.setOrgUnit(this.fieldIds.organizationSriLanka);
+        event.setTrackedEntityInstance(teInstanceId);
+        event.setDataValues(this.generateDataElements(fpInfo));
+        return result;
+    }
+    
+    private void createFPEvents(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
+        Events events = new Events();
+        events.setEvents(this.generateEvent(fpInfo, teInstanceId));
+        DHISResponse resp = this.createEvents(events);
+        if (resp.getStatus() != DHIS2Constants.OK_CODE) {
+            throw new Exception("Error in creating FP events: " + resp.getResponse());
+        }
+    }
+    
     private String createFPEntityInstance(FlightPassengerInformation fpInfo) throws Exception {
         EntityInstance entityInstance = new EntityInstance();
         entityInstance.setOrgUnit(this.fieldIds.organizationSriLanka);
@@ -422,16 +478,17 @@ public class DHIS2Service {
         enrollment.setTrackedEntityInstance(teInstanceId);
         DHISResponse resp = this.createEnrollment(enrollment);
         if (resp.getStatus() != DHIS2Constants.OK_CODE) {
-            throw new Exception("Error increating FP enrollment: " + resp.getResponse());
+            throw new Exception("Error in creating FP enrollment: " + resp.getResponse());
         }
     }
-    
+        
     private String saveFlightPassengerInformation(FlightPassengerInformation fpInfo) throws Exception {
         if (fpInfo.getPassengerInformation() == null) {
             throw new Exception("Passenger information is not available");
         }
         String teInstanceId = this.createFPEntityInstance(fpInfo);
         this.createFPEnrollment(fpInfo, teInstanceId);
+        this.createFPEvents(fpInfo, teInstanceId);
         return teInstanceId;
     }
     
