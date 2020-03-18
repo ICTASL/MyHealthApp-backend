@@ -38,11 +38,17 @@ public class AddressInformation {
         if (!StringUtils.isEmpty(this.postalCode)) {
             otherComponents.add(this.postalCode);
         }
-        lines.add(String.join(",", otherComponents));
+        if (!otherComponents.isEmpty()) {
+            lines.add(String.join(",", otherComponents));
+        }
         if (!StringUtils.isEmpty(this.country)) {
             lines.add(this.country);
         }
-        return String.join("\n", lines);
+        if (!lines.isEmpty()) {
+            return String.join("\n", lines);
+        } else {
+            return null;
+        }
     }
     
     @Override

@@ -31,6 +31,7 @@ import org.apache.commons.httpclient.methods.multipart.FilePart;
 import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
 import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -331,18 +332,24 @@ public class DHIS2Service {
     }
     
     private String generateFullName(PassengerInformation pinfo) {
-        String fullName = pinfo.getGivenName() == null ? "" : pinfo.getGivenName();
-        fullName += " " + (pinfo.getMiddleName() == null ? "" : pinfo.getMiddleName());
-        fullName = fullName.trim();
-        if (fullName.isEmpty()) {
-            fullName = pinfo.getInitials() == null ? "" : pinfo.getInitials();
+        List<String> comps = new ArrayList<>();
+        if (StringUtils.isNotEmpty(pinfo.getInitials())) {
+            comps.add(pinfo.getInitials());
         }
-        fullName += " " + pinfo.getSurname();
-        fullName = fullName.trim();
-        if (fullName.isEmpty()) {
-            fullName = null;
+        if (StringUtils.isNotEmpty(pinfo.getGivenName())) {
+            comps.add(pinfo.getGivenName());
         }
-        return fullName;
+        if (StringUtils.isNotEmpty(pinfo.getMiddleName())) {
+            comps.add(pinfo.getMiddleName());
+        }
+        if (StringUtils.isNotEmpty(pinfo.getSurname())) {
+            comps.add(pinfo.getSurname());
+        }
+        if (!comps.isEmpty()) {
+            return String.join(" ", comps);
+        } else {
+            return null;
+        }
     }
     
     private String generateAddressAttributeValue(FlightPassengerInformation fpInfo) {
@@ -352,9 +359,31 @@ public class DHIS2Service {
         }
         List<String> addrInfoStrings = new ArrayList<>();
         for (AddressInformation addrInfo : addrInfos) {
-            addrInfoStrings.add(addrInfo.toString());
+            String address = addrInfo.toString();
+            if (StringUtils.isNotEmpty(address)) {
+                addrInfoStrings.add(address);
+            }
         }
-        return String.join("\n\n", addrInfoStrings);
+        if (!addrInfoStrings.isEmpty()) {
+            return String.join("\n\n", addrInfoStrings);
+        } else {
+            return null;
+        }
+    }
+    
+    private boolean isNumberSriLankan(String number) {
+        if (StringUtils.isEmpty(number)) {
+            return false;
+        }
+        number = number.trim();
+        if (number.startsWith("00")) {
+            return number.startsWith("0094");
+        }
+        if (number.startsWith("+")) {
+            return number.startsWith("+94");
+        }
+        // at the end, if it's just some ten digit number, our first guess it's Sri Lankan
+        return number.length() == 10;
     }
     
     private String[] generateLocalForeignTelNumberValues(FlightPassengerInformation fpInfo) {
@@ -364,7 +393,21 @@ public class DHIS2Service {
         if (contactNumbers == null) {
             return telNos;
         }
-        //TODO
+        List<String> additionalNumbers = new ArrayList<String>();
+        for (ContactNumber contactNumber : contactNumbers) {
+            String number = contactNumber.getContactNumber();
+            if (StringUtils.isEmpty(number)) {
+                continue;
+            }
+            if (this.isNumberSriLankan(number) && StringUtils.isEmpty(telNos[0])) {
+                telNos[0] = number;
+            } else {
+                additionalNumbers.add(number);
+            }
+        }
+        if (!additionalNumbers.isEmpty()) {
+            telNos[1] = String.join(",", additionalNumbers);
+        }
         return telNos;
     }
         
@@ -381,7 +424,7 @@ public class DHIS2Service {
         attrs.add(attr(DHIS2Constants.UID_ATTR_FULLADDRESS_SRILANKA, this.generateAddressAttributeValue(fpInfo)));
         String[] localForeignTelNos = this.generateLocalForeignTelNumberValues(fpInfo);
         attrs.add(attr(DHIS2Constants.UID_ATTR_TEL_SRILANKA, localForeignTelNos[0]));
-        attrs.add(attr(DHIS2Constants.UID_ATTR_TEL_FOREIGN, localForeignTelNos[0])); 
+        attrs.add(attr(DHIS2Constants.UID_ATTR_TEL_FOREIGN, localForeignTelNos[1])); 
         return attrs;
     }
     
