@@ -5,7 +5,7 @@
 ## Contributing
 Please keep the following in mind when submitting your valuable contributions 😊
 - Currently, all development is happening out of the master branch, so kindly fork it and make your changes there before submitting a PR.
-- If you've implemented a new API, update the readme and [postman collection](../postman/COVID-19.postman_collection.json). This makes it so much easier for other developers to consume your APIs.
+- If you've implemented a new API, update the readme and [postman collection](../master/postman/COVID-19.postman_collection.json). This makes it so much easier for other developers to consume your APIs.
 - Rebase your code before submitting PRs: `git pull --rebase upstream master` ensures there are no conflicts and keeps the tree clean!
 - Comments are always encouraged - you never know who'll continue to work on your code next, so let's make their life a bit easier shall we 😉
 - Finally, see something wrong or have a suggestion? raise an [issue](https://github.com/azhamn/COVID-19/issues) so we can get working on it right away!
