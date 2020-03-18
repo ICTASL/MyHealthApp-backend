@@ -61,4 +61,11 @@ public class DHIS2Constants {
     public final static String UID_DEL_STATEPROVINCE = "eMw6liw1Urd";
     public final static String UID_DEL_COUNTRY = "jIzrWXNrAeV";
     
+    public final static String UID_DEL_LASTDEPARTUREFLIGHTNO = "khQaqna4p8y";
+    public final static String UID_DEL_LASTDEPARTUREDATE = "s2frxu3A4sV";
+    public final static String UID_DEL_LASTDEPARTUREFLIGHTDESTINATION = "tNrw7GMs0Vc";
+    public final static String UID_DEL_LASTDEPARTURECARDNO = "GHOQ28kVq7i";
+    
+    public final static String UID_DEL_CONTACTNUMBER = "XXXXXXXXXXXXXX";    
+    
 }

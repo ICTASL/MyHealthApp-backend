@@ -8,6 +8,7 @@ import com.google.gson.JsonParser;
 import lk.gov.govtech.covid19.config.DHISConfiguration;
 import lk.gov.govtech.covid19.dto.AddressInformation;
 import lk.gov.govtech.covid19.dto.Attribute;
+import lk.gov.govtech.covid19.dto.ContactNumber;
 import lk.gov.govtech.covid19.dto.DHISResponse;
 import lk.gov.govtech.covid19.dto.DataElement;
 import lk.gov.govtech.covid19.dto.Enrollment;
@@ -16,6 +17,7 @@ import lk.gov.govtech.covid19.dto.Event;
 import lk.gov.govtech.covid19.dto.Events;
 import lk.gov.govtech.covid19.dto.FlightInformation;
 import lk.gov.govtech.covid19.dto.FlightPassengerInformation;
+import lk.gov.govtech.covid19.dto.LastDepartureInformation;
 import lk.gov.govtech.covid19.dto.PassengerInformation;
 
 import org.apache.commons.httpclient.HttpClient;
@@ -434,6 +436,26 @@ public class DHIS2Service {
         return event;
     }
     
+    private List<DataElement> generateLastDepartureDataElements(FlightPassengerInformation fpInfo) throws Exception {
+        LastDepartureInformation ldInfo = fpInfo.getLastDepartureInformation();
+        if (ldInfo == null) {
+            throw new Exception("The last departure information is not available");
+        }
+        List<DataElement> result = new ArrayList<DataElement>();
+        result.add(del(DHIS2Constants.UID_DEL_LASTDEPARTUREFLIGHTNO, ldInfo.getDepartureFlightNo()));
+        result.add(del(DHIS2Constants.UID_DEL_LASTDEPARTUREDATE, ldInfo.getDepartureDate()));
+        result.add(del(DHIS2Constants.UID_DEL_LASTDEPARTUREFLIGHTDESTINATION, ldInfo.getFlightDestination()));
+        result.add(del(DHIS2Constants.UID_DEL_LASTDEPARTURECARDNO, ldInfo.getDepartureCardNo()));
+        return result;
+    }
+    
+    private Event generateLastDepartureEvent(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
+        Event event = new Event();
+        this.populateCommonEventValues(event, teInstanceId);
+        event.setDataValues(this.generateLastDepartureDataElements(fpInfo));
+        return event;
+    }
+    
     private Event generateFPInfoEvent(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
         Event event = new Event();
         this.populateCommonEventValues(event, teInstanceId);
@@ -450,6 +472,28 @@ public class DHIS2Service {
         }
         for (AddressInformation addressInfo : addressInfos) {
             result.add(this.generateFPAddressEvent(addressInfo, teInstanceId));
+        }
+        return result;
+    }
+    
+    private Event generateFPContactNumberEvent(ContactNumber contactNumber, String teInstanceId) throws Exception {
+        Event event = new Event();
+        this.populateCommonEventValues(event, teInstanceId);
+        List<DataElement> dataEls = new ArrayList<DataElement>();
+        dataEls.add(del(DHIS2Constants.UID_DEL_CONTACTNUMBER, contactNumber.getContactNumber()));
+        event.setDataValues(dataEls);
+        return event;
+    }
+    
+    private List<Event> generateFPContactNumberEvents(FlightPassengerInformation fpInfo, 
+            String teInstanceId) throws Exception {
+        List<Event> result = new ArrayList<Event>();
+        List<ContactNumber> contactNumbers = fpInfo.getContactNumbers();
+        if (contactNumbers == null) {
+            return new ArrayList<Event>(0);
+        }
+        for (ContactNumber contactNumber : contactNumbers) {
+            result.add(this.generateFPContactNumberEvent(contactNumber, teInstanceId));
         }
         return result;
     }
@@ -477,7 +521,9 @@ public class DHIS2Service {
         List<Event> result = new ArrayList<Event>();
         result.add(this.generateFlightInfoEvent(fpInfo, teInstanceId));
         result.add(this.generateFPInfoEvent(fpInfo, teInstanceId));
-        result.addAll(this.generateFPAddressEvents(fpInfo, teInstanceId));
+        //result.addAll(this.generateFPAddressEvents(fpInfo, teInstanceId));
+        //result.addAll(this.generateFPContactNumberEvents(fpInfo, teInstanceId));
+        result.add(this.generateLastDepartureEvent(fpInfo, teInstanceId));
         return result;
     }
     
