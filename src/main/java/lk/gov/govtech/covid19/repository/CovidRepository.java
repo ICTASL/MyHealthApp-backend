@@ -53,10 +53,10 @@ public class CovidRepository {
     }
 
     public int addAlertNotification(AlertNotificationRequest notification) {
-
-        jdbcTemplate.update("INSERT INTO `notification` (`title`, `subtitle`, `source`, `message_en`, `message_si`, `message_ta`) VALUES (?,?,?,?,?,?)",
-                notification.getTitle(), notification.getSubtitle(), notification.getSource(),
-                notification.getMessageEn(), notification.getMessageSi(), notification.getMessageTa());
+//
+//        jdbcTemplate.update("INSERT INTO `notification` (`title`, `subtitle`, `source`, `message_en`, `message_si`, `message_ta`) VALUES (?,?,?,?,?,?)",
+//                notification.getTitle(), notification.getSubtitle(), notification.getSource(),
+//                notification.getMessageEn(), notification.getMessageSi(), notification.getMessageTa());
 
         KeyHolder holder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
