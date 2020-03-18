@@ -138,3 +138,17 @@ GET http://localhost:8000/application/dashboard/status
     "lk_total_suspect": 99,
     "last_update_time": "2020-03-17 15:10"
 }`
+
+#Web Portal UI
+## Getting started
+### Setting up Build system
+- In order to Setup You need to Run `npm install` to install all the dependencies. 
+- Now Run `npm run watch`.
+- All of the following folders are monitored for changes, which will tell the browser to reload automatically after any changes are made:
+`Resources>Js`
+-Now you can edit any html file inside the resource.
+
+- Hit Ctrl+C or just close the command line window to stop the server.
+
+_Happy Contributing!_
+
