@@ -21,12 +21,12 @@
             </h2>
         </div>
 
-        <form class="mt-8" action="#" method="POST">
-            <input type="hidden" name="remember" value="true" />
+        <form class="mt-8" th:action="@{/portal}" method="POST">
+            <input type="hidden" name="remember" value="false" />
             <div class="rounded-md shadow-sm">
             <!-- Email Input-->
                 <div>
-                    <input aria-label="Email address" name="email" type="email" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Email address" />
+                    <input aria-label="Email address" name="username" type="email" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Email address" />
                 </div>
 
             <!--Password Input-->

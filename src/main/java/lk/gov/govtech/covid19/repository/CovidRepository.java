@@ -5,11 +5,14 @@ import lk.gov.govtech.covid19.datasource.CovidDatasource;
 import lk.gov.govtech.covid19.dto.AlertNotificationRequest;
 import lk.gov.govtech.covid19.dto.CaseNotificationRequest;
 import lk.gov.govtech.covid19.dto.Location;
+import lk.gov.govtech.covid19.dto.StatusResponse;
 import lk.gov.govtech.covid19.model.AlertNotificationEntity;
 import lk.gov.govtech.covid19.model.CaseNotificationEntity;
+import lk.gov.govtech.covid19.model.StatusEntity;
 import lk.gov.govtech.covid19.model.mapper.AlertNotificationEntityRowMapper;
 import lk.gov.govtech.covid19.model.mapper.CaseNotificationEntityRowMapper;
 import lk.gov.govtech.covid19.model.mapper.CaseNotificationLocationMapper;
+import lk.gov.govtech.covid19.model.mapper.StatusEntityRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -49,14 +52,30 @@ public class CovidRepository {
         return idList.isEmpty() ? 0 : idList.get(0);
     }
 
-    public void addAlertNotification(AlertNotificationRequest notification) {
+    public int addAlertNotification(AlertNotificationRequest notification) {
 
         jdbcTemplate.update("INSERT INTO `notification` (`title`, `subtitle`, `source`, `message_en`, `message_si`, `message_ta`) VALUES (?,?,?,?,?,?)",
                 notification.getTitle(), notification.getSubtitle(), notification.getSource(),
                 notification.getMessageEn(), notification.getMessageSi(), notification.getMessageTa());
+
+        KeyHolder holder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO `notification` (`title`, `subtitle`, `source`, `message_en`, `message_si`, `message_ta`) VALUES (?,?,?,?,?,?)",
+                    Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, notification.getTitle());
+            ps.setString(2, notification.getSubtitle());
+            ps.setString(3, notification.getSource());
+            ps.setString(4, notification.getMessageEn());
+            ps.setString(5, notification.getMessageSi());
+            ps.setString(6, notification.getMessageTa());
+
+            return ps;
+        }, holder);
+
+        return holder.getKey().intValue();
     }
 
-    public void addCaseNotification(CaseNotificationRequest request) {
+    public int addCaseNotification(CaseNotificationRequest request) {
 //        jdbcTemplate.update("INSERT INTO `epid_case` (`case_number`, `message_en`, `message_si`, `message_ta`) VALUES (?,?,?,?)",
 //               request.getCaseNumber(), request.getMessage_en(), request.getMessage_si(), request.getMessage_ta());
 
@@ -73,6 +92,8 @@ public class CovidRepository {
         }, holder);
 
         addCaseLocation(request.getLocations(), holder.getKey().intValue());
+
+        return holder.getKey().intValue();
     }
 
     private void addCaseLocation(List<Location> locations, Integer caseId) {
@@ -100,6 +121,12 @@ public class CovidRepository {
         List<Integer> idList = jdbcTemplate.query("select id from epid_case ORDER BY id DESC LIMIT 1", (rs, rowNum) -> rs.getInt("id"));
 
         return idList.isEmpty() ? 0 : idList.get(0);
+    }
+
+    public StatusEntity getStatus() {
+        List<StatusEntity> statusList =  jdbcTemplate.query("select * from covid_status", new StatusEntityRowMapper());
+        return statusList.isEmpty() ? null : statusList.get(0);
+
     }
 
 }

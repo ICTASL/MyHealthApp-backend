@@ -16,12 +16,22 @@ spring:
         infoBorderUrl: http://localhost:8080
     pid:
         file: application.pid
+    portal:
+        username1: dev1@aaa.com
+        password1: dev
+        username2: dev2@aaa.com
+        password2: dev
+        username3: dev3@aaa.com
+        password3: dev
+        username4: dev4@aaa.com
+        password4: dev
+
 
 firebase: 
     configurations:
         path: credentials/covid-19-lk-dev-firebase-adminsdk.json
     notifications:
-       topic: 'common'
+       topic: 'mobile_message'
        title: 'Common topic - Hello'
        message: 'Sending test message'
        token: ''

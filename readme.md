@@ -1,4 +1,16 @@
+[![Build Status](https://travis-ci.org/azhamn/COVID-19.svg?branch=master)](https://travis-ci.org/azhamn/COVID-19)
+----
 # COVID-19 Backend Services
+
+## Contributing
+Please keep the following in mind when submitting your valuable contributions 😊
+- Currently, all development is happening out of the master branch, so kindly fork it and make your changes there before submitting a PR.
+- If you've implemented a new API, update the readme and [postman collection](../postman/COVID-19.postman_collection.json). This makes it so much easier for other developers to consume your APIs.
+- Rebase your code before submitting PRs: `git pull --rebase upstream master` ensures there are no conflicts and keeps the tree clean!
+- Comments are always encouraged - you never know who'll continue to work on your code next, so let's make their life a bit easier shall we 😉
+- Finally, see something wrong or have a suggestion? raise an [issue](https://github.com/azhamn/COVID-19/issues) so we can get working on it right away!
+
+----
 
 ## How to run
 - install mysql server
@@ -80,6 +92,12 @@ POST http://localhost:8000/notification/case/add
 }
 ```
 
+---
+#### Get Status
+```
+GET http://localhost:8000/application/dashboard/status
+```
+
 ### FCM-Backend
 
 ## Get started
@@ -106,4 +124,17 @@ POST http://localhost:8000/notification/case/add
 - `{
     "status": 200,
     "message": "Notification has been sent."
+}`
+
+* GET /dashboard/status - Get the status of total case, death case, recovered case and suspect case by Covid-19
+- `curl -H "Content-Type: application/json" -X GET http://localhost:8000/application/dashboard/status`
+
+*If succeeded you should receive following JSON response with code 200:
+
+- `{
+    "lk_total_case": 99,
+    "lk_recovered_case": 99,
+    "lk_total_deaths": 99,
+    "lk_total_suspect": 99,
+    "last_update_time": "2020-03-17 15:10"
 }`

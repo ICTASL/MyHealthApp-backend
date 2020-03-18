@@ -99,6 +99,52 @@
 			"response": []
 		},
 		{
+			"name": "programmes",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "Dev12345#",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "dev",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8000/dhis/programmes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"dhis",
+						"programmes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "service/entity-instances",
 			"request": {
 				"auth": {

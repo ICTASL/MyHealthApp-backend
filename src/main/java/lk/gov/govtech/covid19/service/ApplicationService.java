@@ -2,11 +2,15 @@ package lk.gov.govtech.covid19.service;
 
 import lk.gov.govtech.covid19.dto.AlertNotificationResponse;
 import lk.gov.govtech.covid19.dto.CaseNotificationResponse;
+import lk.gov.govtech.covid19.dto.StatusResponse;
 import lk.gov.govtech.covid19.model.AlertNotificationEntity;
 import lk.gov.govtech.covid19.model.CaseNotificationEntity;
+import lk.gov.govtech.covid19.model.StatusEntity;
 import lk.gov.govtech.covid19.repository.CovidRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.text.SimpleDateFormat;
 
 @Service
 public class ApplicationService {
@@ -102,4 +106,22 @@ public class ApplicationService {
         return repository.getLastCaseNotificationId();
     }
 
+    public StatusResponse getStatus() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        StatusEntity status = repository.getStatus();
+        StatusResponse response = null;
+
+        if (status != null) {
+            response = new StatusResponse();
+
+            response.setLk_total_case(status.getLk_total_case());
+            response.setLk_recovered_case(status.getLk_recovered_case());
+            response.setLk_total_deaths(status.getLk_total_deaths());
+            response.setLk_total_suspect(status.getLk_total_suspect());
+            response.setLast_update_time(sdf.format(status.getLast_update_time()));
+        }
+        return response;
+    }
 }
+
+

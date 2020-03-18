@@ -11,5 +11,4 @@ public class LastDepartureInformation {
     String departureDate;
     String flightDestination;
     String departureCardNo;
-    String departureDestination;
 }

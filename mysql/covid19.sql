@@ -48,3 +48,12 @@ CREATE TABLE `notification_message_type` (
   `name` VARCHAR(45) NULL,
   `description` VARCHAR(45) NULL,
   PRIMARY KEY (`id`));
+  
+CREATE TABLE `covid_status` (
+  `id` INT NOT NULL PRIMARY KEY,
+  `lk_total_case` INT NOT NULL,
+  `lk_recovered_case` INT NOT NULL,
+  `lk_total_deaths` INT NOT NULL,
+  `lk_total_suspect` INT NOT NULL,
+  `last_update_time` timestamp default current_timestamp NOT NULL on update current_timestamp
+)

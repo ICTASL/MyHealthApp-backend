@@ -74,6 +74,14 @@ public class PushNotificationService {
 		}
 	}
 
+	public void sendPushNotificationWithData(Map<String, String> data, PushNotificationRequest request){
+		try {
+			fcmService.sendMessage(data, request);
+		} catch (InterruptedException | ExecutionException e) {
+			logger.error(e.getMessage());
+		}
+	}
+
 	private Map<String, String> getSamplePayloadData() {
 		Map<String, String> pushData = new HashMap<>();
 		pushData.put("messageId", payloadMessageId);
