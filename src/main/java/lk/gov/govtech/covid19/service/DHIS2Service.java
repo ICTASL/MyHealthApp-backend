@@ -65,6 +65,13 @@ public class DHIS2Service {
     private final static SimpleDateFormat FPI_DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
     private final static SimpleDateFormat DHIS2_DATETIMEFORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
     private final static SimpleDateFormat DHIS2_DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    
+    private HttpClient httpClient;
+    
+    public DHIS2Service() {
+        this.httpClient = new HttpClient(new MultiThreadedHttpConnectionManager());
+        this.httpClient.getParams().setParameter("http.connection.stalecheck", new Boolean(true));
+    }
 
     public DHISResponse getEntityTypes() {
 
@@ -252,10 +259,7 @@ public class DHIS2Service {
     }
 
     private HttpClient getHttpClient() {
-
-        HttpClient httpClient = new HttpClient(new MultiThreadedHttpConnectionManager());
-        httpClient.getParams().setParameter("http.connection.stalecheck", new Boolean(true));
-        return httpClient;
+        return this.httpClient;
     }
     
     private List<FlightPassengerInformation> getInfoBorderPassengerList(String flightNo, 
