@@ -48,6 +48,8 @@ public class NotificationService {
         executorService.submit(() -> {
             PushNotificationRequest pushNotificationRequest = new PushNotificationRequest();
             pushNotificationRequest.setTopic(PUSH_NOTIFICATION_TOPIC);
+            pushNotificationRequest.setTitle(request.getSource());
+            pushNotificationRequest.setMessage(request.getTitle());
 
             data.put("type", PUSH_NOTIFICATION_MESSAGE_TYPE_ALERT);
             data.put("id", String.valueOf(id));

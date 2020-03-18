@@ -64,16 +64,15 @@ public class FCMService {
     }
 
     private Message getPreconfiguredMessageWithData(Map<String, String> data, PushNotificationRequest request) {
-        Message message = Message.builder().putAllData(data).setTopic(request.getTopic()).build();
-
-        return message;
+       // Message message = Message.builder().putAllData(data).setTopic(request.getTopic()).build();
+        return getPreconfiguredMessageBuilder(request).putAllData(data).setTopic(request.getTopic())
+                .build();
     }
 
     private Message.Builder getPreconfiguredMessageBuilder(PushNotificationRequest request) {
         AndroidConfig androidConfig = getAndroidConfig(request.getTopic());
         ApnsConfig apnsConfig = getApnsConfig(request.getTopic());
-        return Message.builder()
-                .setApnsConfig(apnsConfig).setAndroidConfig(androidConfig).setNotification(
+        return Message.builder().setNotification(
                         new Notification(request.getTitle(), request.getMessage()));
     }
 
