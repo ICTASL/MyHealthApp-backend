@@ -149,12 +149,13 @@ curl -d '{"title":"Hello", "message":"Data message", "topic":"contactTopic"}' -H
 }
 ```
 
+
 #### GET /dashboard/status - Get the status of total case, death case, recovered case and suspect case by Covid-19
 ```
 curl -H "Content-Type: application/json" -X GET http://localhost:8000/application/dashboard/status`
 ```
 
-If succeeded you should receive following JSON response with code 200:
+*If succeeded you should receive following JSON response with code 200:
 
 ```
 {
