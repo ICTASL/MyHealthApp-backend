@@ -195,7 +195,7 @@
                             <label class="px-4 text-base text-gray-700 w-full" for="from">From</label>
                             <div class="px-4">
                                 <flat-pickr class="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                            v-model="location.from" :config="config" placeholder="Select a from date" :name="`locations[${index}][from]`"></flat-pickr>
+                                            v-model="location.from" :config="configTime" placeholder="Select a from date" :name="`locations[${index}][from]`"></flat-pickr>
                             </div>
                         </div>
                         <!--To Input-->
@@ -203,7 +203,7 @@
                             <label class="px-4 text-base text-gray-700 w-full" for="to">To</label>
                             <div class="px-4">
                                 <flat-pickr class="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                            v-model="location.to" :config="config" placeholder="Select a end date" :name="`locations[${index}][to]`"></flat-pickr>
+                                            v-model="location.to" :config="configTime" placeholder="Select a end date" :name="`locations[${index}][to]`"></flat-pickr>
                             </div>
                         </div>
                     </div>
@@ -253,6 +253,11 @@
             },
             configDate:{
                 enableTime: false,
+            },
+            configTime:{
+                noCalendar: true,
+                enableTime: true,
+                dateFormat: "H:i",
             },
             cases:{
 
