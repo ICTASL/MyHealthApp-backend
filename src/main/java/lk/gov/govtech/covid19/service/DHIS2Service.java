@@ -2,7 +2,9 @@ package lk.gov.govtech.covid19.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import lk.gov.govtech.covid19.config.DHISConfiguration;
@@ -71,6 +73,7 @@ public class DHIS2Service {
     private HttpClient httpClient;
 
     public DHIS2Service() {
+
         this.httpClient = new HttpClient(new MultiThreadedHttpConnectionManager());
         this.httpClient.getParams().setParameter("http.connection.stalecheck", new Boolean(true));
     }
@@ -174,11 +177,11 @@ public class DHIS2Service {
 
         EntityInstance entityInstance = new EntityInstance();
         entityInstance.setTrackedEntityType(DHIS2Constants.UID_PERSONTRACKEDENTITYTYPE);
-        entityInstance.setOrgUnit("dKl0ZJcEWbf"); //TODO Need to calculate and find this
+        String orgUnit = "dKl0ZJcEWbf"; //TODO Need to calculate and find this
+        entityInstance.setOrgUnit(orgUnit);
 
         Geometry geometry = new Geometry();
         geometry.setType(DHIS2Constants.GEOMETRY_TYPE);
-
         geometry.setCoordinates(new Double[]{Double.parseDouble(patients.getLattitude()), Double.parseDouble(patients.getLongitude())});
         entityInstance.setGeometry(geometry);
 
@@ -204,16 +207,39 @@ public class DHIS2Service {
         address.setValue(patients.getAddress());
         attributes.add(address);
 
-        Attribute mobileImei = new Attribute();
-        mobileImei.setAttribute("mobileImei");
-        mobileImei.setValue(patients.getMobileImei());
-        attributes.add(mobileImei);
+//TODO need to add
+//        Attribute mobileImei = new Attribute();
+//        mobileImei.setAttribute("mobileImei");
+//        mobileImei.setValue(patients.getMobileImei());
+//        attributes.add(mobileImei);
 
+//TODO need to add case list
         entityInstance.setAttributes(attributes);
 
         DHISResponse response = createEntityInstance(entityInstance);
+        if (response.getStatus() == DHIS2Constants.OK_CODE) {
+            JsonElement jelement = new JsonParser().parse(response.getResponse());
+            JsonObject jobject = jelement.getAsJsonObject();
+            jobject = jobject.getAsJsonObject("response");
+            JsonArray jarray = jobject.getAsJsonArray("importSummaries");
+            jobject = jarray.get(0).getAsJsonObject();
+            String reference = jobject.get("reference").toString();
+            reference = reference.replace("\"","");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String today = format.format(new Date());
 
-        return response;
+            Enrollment enrollment = new Enrollment();
+            enrollment.setTrackedEntityInstance(reference);
+            enrollment.setProgram(DHIS2Constants.UID_PROGRAM_SUSPECTED_CASE);
+            enrollment.setStatus(DHIS2Constants.STATUS_ACTIVE);
+            enrollment.setOrgUnit(orgUnit);
+            enrollment.setEnrollmentDate(today);
+            enrollment.setIncidentDate(today);
+            DHISResponse enrollmentResponse = createEnrollment(enrollment);
+            return enrollmentResponse;
+        } else {
+            return response;
+        }
 
     }
 

@@ -18,6 +18,7 @@ public class DHIS2Constants {
     public final static String UID_PROGRAMSTAGEPORTOFENTRY = "ktw7Aj9CgAJ";
     public final static String UID_ORGANIZATIONSRILANKA = "GYBZ1og9bk7";
     public final static String UID_PERSONTRACKEDENTITYTYPE = "SXtGAk7eCxX";
+    public final static String UID_PROGRAM_SUSPECTED_CASE = "tcU9SCAblLd";
 
     public final static String UID_ATTR_FULLADDRESS_SRILANKA = "pNOTaJeFbPo";
     public final static String UID_ATTR_DOB = "nvJtVaGKK4Q";
