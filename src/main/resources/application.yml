@@ -25,7 +25,8 @@ spring:
         password3: dev
         username4: dev4@aaa.com
         password4: dev
-
+    googleapi:
+        mapKey: abc
 
 firebase: 
     configurations:
