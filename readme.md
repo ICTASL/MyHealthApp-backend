@@ -98,7 +98,7 @@ POST http://localhost:8000/notification/case/add
 #### Get Status
 
 ```
-curl -H "Content-Type: application/json" -X GET http://localhost:8000/application/dashboard/status
+GET http://localhost:8000/application/dashboard/status
 ```
 
 If succeeded you should receive following JSON response with code `200`:
@@ -137,9 +137,8 @@ curl -d '{"title":"Hey you!", "message":"Watch out!", "token":"cct00ebz8eg:APA91
 #### POST /notification/data – Send a message to a specific topic with additional payload data.
 
 ```
-curl -d '{"title":"Hello", "message":"Data message", "topic":"contactTopic"}' -H "Content-Type: application/json" -X POST http://localhost:8000/notification/data
+'{"title":"Hello", "message":"Data message", "topic":"contactTopic"}' -H "Content-Type: application/json" -X POST http://localhost:8000/notification/data
 ```
-
  #### If succeeded you should receive following JSON response with code 200:
 
 ```
@@ -154,6 +153,7 @@ curl -d '{"title":"Hello", "message":"Data message", "topic":"contactTopic"}' -H
 curl -H "Content-Type: application/json" -X GET http://localhost:8000/application/dashboard/status`
 ```
 
+*If succeeded you should receive following JSON response with code 200:
 
 ```
 {
