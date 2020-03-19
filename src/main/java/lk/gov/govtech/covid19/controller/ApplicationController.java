@@ -3,15 +3,13 @@ package lk.gov.govtech.covid19.controller;
 import lk.gov.govtech.covid19.dto.AlertNotificationResponse;
 import lk.gov.govtech.covid19.dto.CaseNotificationResponse;
 import lk.gov.govtech.covid19.dto.StatusResponse;
+import lk.gov.govtech.covid19.dto.UpdateStatusRequest;
 import lk.gov.govtech.covid19.service.ApplicationService;
 import lk.gov.govtech.covid19.util.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Controller class for all task force application related apis
@@ -61,6 +59,7 @@ public class ApplicationController {
         return ResponseEntity.ok().body(applicationService.getLastCaseNotificationId());
     }
 
+    //get Covid-19 Status
     @GetMapping(path = "/dashboard/status", produces = "application/json")
     public ResponseEntity getSatus() {
         StatusResponse response = applicationService.getStatus();
@@ -69,6 +68,19 @@ public class ApplicationController {
             return ResponseEntity.notFound().build();
         } else {
             return ResponseEntity.ok().body(response);
+        }
+
+    }
+
+    //Update Covid-19 Status
+    @PutMapping(path = "/dashboard/status", consumes = "application/json", produces = "application/json")
+    public ResponseEntity updateStatus(@RequestBody UpdateStatusRequest request){
+
+        if(request==null){
+            return ResponseEntity.noContent().build();
+        }else {
+            applicationService.updateStatus(request);
+            return ResponseEntity.accepted().build();
         }
 
     }
