@@ -1,0 +1,42 @@
+{
+  "name": "COVID-19",
+  "version": "1.0.0",
+  "description": "[![Build Status](https://travis-ci.org/azhamn/COVID-19.svg?branch=master)](https://travis-ci.org/azhamn/COVID-19) ---- # COVID-19 Backend Services",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "node-sass": "^4.13.1",
+    "tailwindcss": "^1.2.0",
+    "vue": "^2.6.11",
+    "vue-flatpickr-component": "^8.1.5",
+    "vue-google-autocomplete": "^1.1.0",
+    "vue-sweetalert2": "^3.0.3"
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^2.1.0",
+    "cross-env": "^7.0.2",
+    "laravel-mix": "^5.0.4",
+    "laravel-mix-purgecss": "^5.0.0-rc.1",
+    "sass-loader": "^8.0.2",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "scripts": {
+    "dev": "npm run development",
+    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "npm run development -- --watch",
+    "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "prod": "npm run production",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keshansandeepa/COVID-19.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/keshansandeepa/COVID-19/issues"
+  },
+  "homepage": "https://github.com/keshansandeepa/COVID-19#readme"
+}

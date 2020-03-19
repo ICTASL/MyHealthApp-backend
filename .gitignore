@@ -34,3 +34,5 @@ build/
 target
 /bin/
 *.pid
+/node_modules
+/node_modules/.cache
