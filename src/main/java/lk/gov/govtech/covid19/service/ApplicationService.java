@@ -125,7 +125,6 @@ public class ApplicationService {
     }
 
     public void updateStatus(UpdateStatusRequest request) {
-
         repository.updateStatus(request);
 
     }
