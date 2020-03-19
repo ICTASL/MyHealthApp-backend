@@ -31,8 +31,6 @@ public class WebAuthConfiguration extends WebSecurityConfigurerAdapter {
         * Endpoints without auth
         * - /application/** (all were GETs)
         * - /dhis/** (includes both POSTS and GETs)
-        * - /notification (GET)
-        * - /notification/topic, /notification/token, /notification/data (POSTs)
         *
         * Endpoints with auth: either http basic auth or login (/portal) based can be used
         * - /notification/alert/add
@@ -44,16 +42,12 @@ public class WebAuthConfiguration extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .mvcMatchers( // to exclude auth for GETs
                         APPLICATION_API_CONTEXT +"/**",
-                        DHIS_API_CONTEXT + "/**",
-                        NOTIFICATION_API_CONTEXT)
+                        DHIS_API_CONTEXT + "/**")
                 .permitAll()
                 .and()
             .authorizeRequests()
                 .antMatchers(HttpMethod.POST, // to exclude auth for POSTs
-                        DHIS_API_CONTEXT + "/**",
-                        "/notification/topic",
-                        "/notification/token",
-                        "/notification/data")
+                        DHIS_API_CONTEXT + "/**")
                 .permitAll()
                 .and()
             .csrf().disable()
