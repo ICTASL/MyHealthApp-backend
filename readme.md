@@ -251,6 +251,16 @@ If succeeded you should receive response code 202
 
 ```
 
+#### PUT /dashboard/status - Update total case, death case, recovered case and suspect case status of Covid-19
+```
+`curl -d '{"lk_total_case": 98,"lk_recovered_case": 98,"lk_total_deaths": 99,"lk_total_suspect": 99}' -H "Content-Type: application/json" -X PUT http://localhost:8000/application/dashboard/status`
+```
+
+```
+If succeeded you should receive response code 202
+
+```
+
 # Web Portal UI
 
 ## Getting started
