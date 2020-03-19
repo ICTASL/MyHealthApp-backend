@@ -187,6 +187,43 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Update Dashboard Status",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"lk_total_case\": 98,\n    \"lk_recovered_case\": 98,\n    \"lk_total_deaths\": 99,\n    \"lk_total_suspect\": 99\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/application/dashboard/status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"application",
+						"dashboard",
+						"status"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}
