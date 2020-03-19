@@ -26,8 +26,8 @@ public class ApplicationController {
 
     @GetMapping(path = "/alert/{messageId}/{lang}", produces = "application/json")
     public ResponseEntity getAlert(@PathVariable("messageId") String messageId, @PathVariable("lang") String lang) {
-
         AlertNotificationResponse response = applicationService.getAlertNotification(messageId, lang);
+
 
         if (response == null) {
             return ResponseEntity.notFound().build();
