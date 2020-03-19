@@ -19,6 +19,7 @@ public class Covid19Application {
     public void init(){
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Colombo"));   // It will set UTC timezone
         log.info("Spring boot application running in Asia/Colombo timezone :"+ new Date());
+
     }
 
     public static void main(String[] args) throws UnknownHostException {
