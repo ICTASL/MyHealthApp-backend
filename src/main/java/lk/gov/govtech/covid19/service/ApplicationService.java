@@ -3,6 +3,7 @@ package lk.gov.govtech.covid19.service;
 import lk.gov.govtech.covid19.dto.AlertNotificationResponse;
 import lk.gov.govtech.covid19.dto.CaseNotificationResponse;
 import lk.gov.govtech.covid19.dto.StatusResponse;
+import lk.gov.govtech.covid19.dto.UpdateStatusRequest;
 import lk.gov.govtech.covid19.model.AlertNotificationEntity;
 import lk.gov.govtech.covid19.model.CaseNotificationEntity;
 import lk.gov.govtech.covid19.model.StatusEntity;
@@ -121,6 +122,11 @@ public class ApplicationService {
             response.setLast_update_time(sdf.format(status.getLast_update_time()));
         }
         return response;
+    }
+
+    public void updateStatus(UpdateStatusRequest request) {
+        repository.updateStatus(request);
+
     }
 }
 

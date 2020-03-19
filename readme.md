@@ -112,7 +112,18 @@ If succeeded you should receive following JSON response with code `200`:
     "last_update_time": "2020-03-17 15:10"
 }
 ```
----
+----
+#### Update Dashboard Status
+```
+PUT http://localhost:8000/application/dashboard/status
+
+{
+    "lk_total_case": 98,
+    "lk_recovered_case": 98,
+    "lk_total_deaths": 99,
+    "lk_total_suspect": 99
+}
+```
 
 ## FCM Testing
 
@@ -148,88 +159,6 @@ curl -d '{"title":"Hello", "message":"Data message", "topic":"contactTopic"}' -H
     "message": "Notification has been sent."
 }
 ```
-
-
-#### GET /dashboard/status - Get the status of total case, death case, recovered case and suspect case by Covid-19
-```
-curl -H "Content-Type: application/json" -X GET http://localhost:8000/application/dashboard/status`
-```
-
-If succeeded you should receive following JSON response with code 200:
-
-```
-{
-    "lk_total_case": 99,
-    "lk_recovered_case": 99,
-    "lk_total_deaths": 99,
-    "lk_total_suspect": 99,
-    "last_update_time": "2020-03-17 15:10"
-}
-```
-# How to Start The Application as a Service (Ubuntu)
-
-## Step 1 Create a Service
-- *covid-19* : Customizable 
-```bash
-sudo vim /etc/systemd/system/covid-19.service
-```
-Copy/paste the following into the file `/etc/systemd/system/covid-19.service`
-- *WorkingDirectory* : The directory of the application
-- *ExecStart* : The bash script path to start the application
-```bash
-[Unit]
-# Description of the service
-Description= COVID-19 Service
-[Service]
-# The user that should run the service 
-User=green
-# The configuration file application.properties should be here:
-# Change this to your workspace
-WorkingDirectory=/home/green/app-service-test
-#path to executable. 
-#executable is a bash script which calls jar file
-ExecStart=/home/green/app-service-test/service
-SuccessExitStatus=143
-TimeoutStopSec=10
-Restart=on-failure
-RestartSec=5
-[Install]
-WantedBy=multi-user.target
-```
-
-## Step 2: Create a Bash Script to Call The Service
-- *covid19-1.0.0-SNAPSHOT.jar* : jar file name
-```bash
-#!/bin/sh
-/usr/bin/java -jar covid19-1.0.0-SNAPSHOT.jar server application.yml
-```
-Give your script execute permission:
-```bash
-sudo chmod u+x service
-```
-
-## Step 3: Enable/Start/Stop the Service
-
-Enable
-```bash
-sudo systemctl daemon-reload
-sudo systemctl enable covid-19.service
-```
-
-start
-```bash
-sudo systemctl start covid-19
-```
-
-status
-```bash
-sudo systemctl status covid-19
-```
-stop
-```bash
-sudo systemctl stop covid-19
-```
-
 # Web Portal UI
 
 ## Getting started

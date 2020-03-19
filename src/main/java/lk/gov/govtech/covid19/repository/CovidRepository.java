@@ -2,10 +2,7 @@ package lk.gov.govtech.covid19.repository;
 
 import lk.gov.govtech.covid19.config.DatasourceConfiguration;
 import lk.gov.govtech.covid19.datasource.CovidDatasource;
-import lk.gov.govtech.covid19.dto.AlertNotificationRequest;
-import lk.gov.govtech.covid19.dto.CaseNotificationRequest;
-import lk.gov.govtech.covid19.dto.Location;
-import lk.gov.govtech.covid19.dto.StatusResponse;
+import lk.gov.govtech.covid19.dto.*;
 import lk.gov.govtech.covid19.model.AlertNotificationEntity;
 import lk.gov.govtech.covid19.model.CaseNotificationEntity;
 import lk.gov.govtech.covid19.model.StatusEntity;
@@ -127,6 +124,11 @@ public class CovidRepository {
         List<StatusEntity> statusList =  jdbcTemplate.query("select * from covid_status", new StatusEntityRowMapper());
         return statusList.isEmpty() ? null : statusList.get(0);
 
+    }
+
+    public void updateStatus(UpdateStatusRequest request) {
+        jdbcTemplate.update("update covid_status set lk_total_case=?, lk_recovered_case=?, lk_total_deaths=?, lk_total_suspect=? where id=?",
+                request.getLk_total_case() , request.getLk_recovered_case(), request.getLk_total_deaths(), request.getLk_total_suspect(), 1);
     }
 
 }
