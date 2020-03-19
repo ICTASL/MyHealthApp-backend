@@ -95,6 +95,23 @@ POST http://localhost:8000/notification/case/add
 }
 ```
 
+#### Get Status
+
+```
+GET http://localhost:8000/application/dashboard/status
+```
+
+If succeeded you should receive following JSON response with code `200`:
+
+```
+{
+    "lk_total_case": 99,
+    "lk_recovered_case": 99,
+    "lk_total_deaths": 99,
+    "lk_total_suspect": 99,
+    "last_update_time": "2020-03-17 15:10"
+}
+```
 ---
 
 ## FCM Testing
