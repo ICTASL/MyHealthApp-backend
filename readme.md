@@ -19,6 +19,7 @@ Please keep the following in mind when submitting your valuable contributions ðŸ
 ### Using the Maven Plugin
 - replace the `covid-19-lk-dev-firebase-adminsdk.json` file in `/src/main/resources/credentials/` with the private key from Firebase Admin SDK
 - run using: `mvn spring-boot:run`
+- change `firebase.topic` in `application.yml` accordingly. `mobile_message` is used for production and `mobile_message_test` is used for testing
 
 ### As a Packaged Application
 - build project using `mvn clean install`

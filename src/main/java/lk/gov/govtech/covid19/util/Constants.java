@@ -22,5 +22,4 @@ public class Constants {
     public static final String PUSH_NOTIFICATION_MESSAGE_TYPE_ALERT = "alert";
 
     public static final String PUSH_NOTIFICATION_MESSAGE_TYPE_CASE = "case";
-    public static final String PUSH_NOTIFICATION_TOPIC = "mobile_message";
 }

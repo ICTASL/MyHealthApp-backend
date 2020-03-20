@@ -1,5 +1,6 @@
 package lk.gov.govtech.covid19.service;
 
+import lk.gov.govtech.covid19.config.FirebaseConfiguration;
 import lk.gov.govtech.covid19.dto.AlertNotificationRequest;
 import lk.gov.govtech.covid19.dto.CaseNotificationRequest;
 import lk.gov.govtech.covid19.dto.PushNotificationRequest;
@@ -17,7 +18,6 @@ import java.util.concurrent.Executors;
 
 import static lk.gov.govtech.covid19.util.Constants.PUSH_NOTIFICATION_MESSAGE_TYPE_ALERT;
 import static lk.gov.govtech.covid19.util.Constants.PUSH_NOTIFICATION_MESSAGE_TYPE_CASE;
-import static lk.gov.govtech.covid19.util.Constants.PUSH_NOTIFICATION_TOPIC;
 
 @Service
 public class NotificationService {
@@ -29,6 +29,9 @@ public class NotificationService {
     PushNotificationService pushNotificationService;
 
     ExecutorService executorService;
+
+    @Autowired
+    FirebaseConfiguration firebaseConfiguration;
 
     @PostConstruct
     private void init() {
@@ -47,7 +50,7 @@ public class NotificationService {
 
         executorService.submit(() -> {
             PushNotificationRequest pushNotificationRequest = new PushNotificationRequest();
-            pushNotificationRequest.setTopic(PUSH_NOTIFICATION_TOPIC);
+            pushNotificationRequest.setTopic(firebaseConfiguration.getTopic());
             pushNotificationRequest.setTitle(request.getSource());
             pushNotificationRequest.setMessage(request.getTitle());
 
@@ -66,7 +69,7 @@ public class NotificationService {
 
         executorService.submit(() -> {
             PushNotificationRequest pushNotificationRequest = new PushNotificationRequest();
-            pushNotificationRequest.setTopic(PUSH_NOTIFICATION_TOPIC);
+            pushNotificationRequest.setTopic(firebaseConfiguration.getTopic());
 
             data.put("type", PUSH_NOTIFICATION_MESSAGE_TYPE_CASE);
             data.put("id", String.valueOf(id));

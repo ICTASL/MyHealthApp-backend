@@ -22,13 +22,6 @@ spring:
     googleapi:
         mapKey: abc
 
-firebase: 
-    configurations:
-        path: credentials/covid-19-lk-dev-firebase-adminsdk.json
-    notifications:
-       topic: 'mobile_message'
-       title: 'Common topic - Hello'
-       message: 'Sending test message'
-       token: ''
-       payloadMessageId: '123'
-       payloadData: 'Hello. This is payload content.'
+firebase:
+    config-path: credentials/covid-19-lk-dev-firebase-adminsdk.json
+    topic: 'mobile_message' #use mobile_message_test for test env
