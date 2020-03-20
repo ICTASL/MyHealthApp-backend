@@ -35,13 +35,7 @@ CREATE TABLE `epid_location` (
   `address` VARCHAR(100) NULL,
   `longitude` VARCHAR(45) NULL,
   `latitude` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_epid_location_1_idx` (`case_id` ASC),
-  CONSTRAINT `fk_epid_location_1`
-    FOREIGN KEY (`case_id`)
-    REFERENCES `epid_case` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+  PRIMARY KEY (`id`));
 
 CREATE TABLE `notification_message_type` (
   `id` INT NOT NULL AUTO_INCREMENT,
