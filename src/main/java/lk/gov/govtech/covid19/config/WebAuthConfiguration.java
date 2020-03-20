@@ -73,23 +73,12 @@ public class WebAuthConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth)
-            throws Exception {
-        auth.inMemoryAuthentication()
-                    .withUser(users.getUsername1())
-                    .password(passwordEncoder().encode(users.getPassword1()))
-                    .roles("USER")
-                .and()
-                    .withUser(users.getUsername2())
-                    .password(passwordEncoder().encode(users.getPassword2()))
-                    .roles("USER")
-                .and()
-                    .withUser(users.getUsername3())
-                    .password(passwordEncoder().encode(users.getPassword3()))
-                    .roles("USER")
-                .and()
-                    .withUser(users.getUsername4())
-                    .password(passwordEncoder().encode(users.getPassword4()))
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        for (String[] aUser : users.getUserCredentials()) {
+            auth.inMemoryAuthentication()
+                    .withUser(aUser[0])
+                    .password(passwordEncoder().encode(aUser[1]))
                     .roles("USER");
+        }
     }
 }
