@@ -16,6 +16,10 @@
     <fileSets>
         <fileSet>
             <directory>${project.basedir}/src/main/resources</directory>
+            <includes>
+                <include>application.yml</include>
+                <include>logback.xml</include>
+            </includes>
             <outputDirectory>/</outputDirectory>
         </fileSet>
 

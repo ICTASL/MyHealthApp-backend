@@ -112,7 +112,7 @@
                     <descriptors>
                         <descriptor>assembly.xml</descriptor>
                     </descriptors>
-                    <finalName>lk.gov.govtech.covid19-${project.version}</finalName>
+                    <finalName>covid19-${project.version}</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
                 <executions>
