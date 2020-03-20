@@ -128,8 +128,10 @@
                         <label class="px-4 text-base text-gray-700 w-full " for="caseNumber">Case Number(DHIS2)<span class="text-red-400">**</span></label>
                         <div class="px-4">
                             <input class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                   type="text" placeholder="Case Number" name="caseNumber" id="caseNumber"  v-model="$v.cases.caseNumber.$model" :class="{'border-red-500':$v.cases.caseNumber.$error}">
+                                   type="text" placeholder="Case Number" name="caseNumber" id="caseNumber"  v-model="$v.cases.caseNumber.$model" :class="{'border-red-500':$v.cases.caseNumber.$error}" required>
+                            <div v-if="$v.cases.caseNumber.$dirty">
                             <p class="text-red-500 text-xs italic" v-if="!$v.cases.caseNumber.required">Case Number is required</p>
+                            </div>
                         </div>
                     </div>
 
@@ -138,8 +140,10 @@
                         <label class="px-4 text-base text-gray-700 w-full" for="message_en">English Message<span class="text-red-400">**</span></label>
                         <div class="px-4">
                                     <textarea rows="2" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                              type="text" placeholder="Message in English" id="message_en" v-model="$v.cases.message_en.$model" required></textarea>
-                            <p class="text-red-500 text-xs italic" v-if="!$v.cases.message_en.required">English Message is required</p>
+                                              type="text" placeholder="Message in English" id="message_en" v-model="$v.cases.message_en.$model" :class="{'border-red-500':$v.cases.message_en.$error}" required></textarea>
+                            <div v-if="$v.cases.message_en.$dirty">
+                                <p class="text-red-500 text-xs italic" v-if="!$v.cases.message_en.required">English Message is required</p>
+                            </div>
                         </div>
                     </div>
 
@@ -147,9 +151,10 @@
                         <label class="px-4 text-base text-gray-700 w-full" for="message_si">Sinhala Message<span class="text-red-400">**</span></label>
                         <div class="px-4">
                                     <textarea rows="2" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                              type="text" name="message_si" placeholder="Message in English" id="message_si" v-model="$v.cases.message_si.$model" required></textarea>
+                                              type="text" name="message_si" placeholder="Message in English" id="message_si" v-model="$v.cases.message_si.$model":class="{'border-red-500':$v.cases.message_si.$error}"  required></textarea>
+                            <div v-if="$v.cases.message_si.$dirty">
                             <p class="text-red-500 text-xs italic" v-if="!$v.cases.message_si.required">Sinhala Message is required</p>
-
+                            </div>
                         </div>
                     </div>
 
@@ -157,8 +162,10 @@
                         <label class="px-4 text-base text-gray-700 w-full" for="message_ta">Tamil Message<span class="text-red-400">**</span></label>
                         <div class="px-4">
                                     <textarea rows="2" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                              type="text" name="message_ta" placeholder="Message in Tamil" id="message_ta"  v-model="$v.cases.message_ta.$model" required></textarea>
-                            <p class="text-red-500 text-xs italic" v-if="!$v.cases.message_ta.required">Tamil Message is required</p>
+                                              type="text" name="message_ta" placeholder="Message in Tamil" id="message_ta"  v-model="$v.cases.message_ta.$model" :class="{'border-red-500':$v.cases.message_ta.$error}"  required></textarea>
+                            <div v-if="$v.cases.message_ta.$dirty">
+                                <p class="text-red-500 text-xs italic" v-if="!$v.cases.message_ta.required">Tamil Message is required</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -242,7 +249,7 @@
                     Nice Job! You're almost done
                 </div>
                 <div>
-                    <button type="submit" :disabled="submitStatus === 'PENDING'" class="bg-white hover:bg-gray-100 text-blue-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                    <button type="submit"  :disabled="submitStatus" :class="{'opacity-50':submitStatus}" class="bg-white hover:bg-gray-100 text-blue-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
                         Add Case Report
                     </button>
                 </div>

@@ -16,14 +16,9 @@ spring:
     pid:
         file: application.pid
     portal:
-        username1: dev1@aaa.com
-        password1: dev
-        username2: dev2@aaa.com
-        password2: dev
-        username3: dev3@aaa.com
-        password3: dev
-        username4: dev4@aaa.com
-        password4: dev
+        userCredentials:
+            - [dev1@aaa.com, dev]
+            - [dev2@aaa.com, dev]
     googleapi:
         mapKey: abc
 
