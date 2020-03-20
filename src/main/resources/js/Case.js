@@ -24,10 +24,10 @@ var app = new Vue({
     data: {
         submitStatus: null,
         config: {
-            // noCalendar: false,
+            noCalendar: true,
             enableTime: true,
             time_24hr: true,
-            dateFormat:"Y-m-d H:i",
+            dateFormat: "H:i"
         },
         address: {
             'address':''
