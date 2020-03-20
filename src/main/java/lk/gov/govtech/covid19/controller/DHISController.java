@@ -34,7 +34,8 @@ public class DHISController {
     public ResponseEntity registerPatient(@RequestBody Patients patients) {
 
         DHISResponse response = dhis2Service.registerPatient(patients);
-        return ResponseEntity.status(response.getStatus()).body(response.getResponse());
+        return ResponseEntity.status(200).body("Error"); //TODO need to change this
+//        return ResponseEntity.status(response.getStatus()).body(response.getResponse());
     }
 
     @PostMapping(path = "/entity-instances", consumes = "application/json", produces = "application/json")

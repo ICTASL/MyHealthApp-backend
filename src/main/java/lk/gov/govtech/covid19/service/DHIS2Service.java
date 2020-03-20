@@ -24,6 +24,7 @@ import lk.gov.govtech.covid19.dto.LastDepartureInformation;
 import lk.gov.govtech.covid19.dto.PassengerInformation;
 
 import lk.gov.govtech.covid19.dto.Patients;
+import org.apache.catalina.util.URLEncoder;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethodBase;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
@@ -43,6 +44,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -171,72 +173,118 @@ public class DHIS2Service {
 
     public DHISResponse registerPatient(Patients patients) {
 
-        EntityInstance entityInstance = new EntityInstance();
-        entityInstance.setTrackedEntityType(DHIS2Constants.UID_PERSONTRACKEDENTITYTYPE);
-        String orgUnit = "dKl0ZJcEWbf"; //TODO Need to calculate and find this
-        entityInstance.setOrgUnit(orgUnit);
+        String orgUnit = getOrganization(patients.getAddress()) ; //TODO Need to calculate and find this
+        return  null;
 
-        Geometry geometry = new Geometry();
-        geometry.setType(DHIS2Constants.GEOMETRY_TYPE);
-        geometry.setCoordinates(new Double[]{Double.parseDouble(patients.getLattitude()), Double.parseDouble(patients.getLongitude())});
-        entityInstance.setGeometry(geometry);
+//        EntityInstance entityInstance = new EntityInstance();
+//        entityInstance.setTrackedEntityType(DHIS2Constants.UID_PERSONTRACKEDENTITYTYPE);
+//        String orgUnit = getOrganization(patients.getAddress()) ; //TODO Need to calculate and find this
+//        entityInstance.setOrgUnit(orgUnit);
+//
+//        Geometry geometry = new Geometry();
+//        geometry.setType(DHIS2Constants.GEOMETRY_TYPE);
+//        geometry.setCoordinates(new Double[]{Double.parseDouble(patients.getLattitude()), Double.parseDouble(patients.getLongitude())});
+//        entityInstance.setGeometry(geometry);
+//
+//        List<Attribute> attributes = new ArrayList<>();
+//
+//        Attribute name = new Attribute();
+//        name.setAttribute(DHIS2Constants.UID_ATTR_FULLNAME);
+//        name.setValue(patients.getName());
+//        attributes.add(name);
+//
+//        Attribute mobileNumber = new Attribute();
+//        mobileNumber.setAttribute(DHIS2Constants.UID_ATTR_TEL_SRILANKA);
+//        mobileNumber.setValue(patients.getMobileNumber());
+//        attributes.add(mobileNumber);
+//
+//        Attribute email = new Attribute();
+//        email.setAttribute(DHIS2Constants.UID_ATTR_EMAIL);
+//        email.setValue(patients.getEmail());
+//        attributes.add(email);
+//
+//        Attribute address = new Attribute();
+//        address.setAttribute(DHIS2Constants.UID_DEL_FULLADDRESS);
+//        address.setValue(patients.getAddress());
+//        attributes.add(address);
+//
+////TODO need to add
+////        Attribute mobileImei = new Attribute();
+////        mobileImei.setAttribute("mobileImei");
+////        mobileImei.setValue(patients.getMobileImei());
+////        attributes.add(mobileImei);
+//
+////TODO need to add case list
+//        entityInstance.setAttributes(attributes);
+//
+//        DHISResponse response = createEntityInstance(entityInstance);
+//        if (response.getStatus() == DHIS2Constants.OK_CODE) {
+//            JsonElement jelement = new JsonParser().parse(response.getResponse());
+//            JsonObject jobject = jelement.getAsJsonObject();
+//            jobject = jobject.getAsJsonObject("response");
+//            JsonArray jarray = jobject.getAsJsonArray("importSummaries");
+//            jobject = jarray.get(0).getAsJsonObject();
+//            String reference = jobject.get("reference").toString();
+//            reference = reference.replace("\"","");
+//            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//            String today = format.format(new Date());
+//
+//            Enrollment enrollment = new Enrollment();
+//            enrollment.setTrackedEntityInstance(reference);
+//            enrollment.setProgram(DHIS2Constants.UID_PROGRAM_SUSPECTED_CASE);
+//            enrollment.setStatus(DHIS2Constants.STATUS_ACTIVE);
+//            enrollment.setOrgUnit(orgUnit);
+//            enrollment.setEnrollmentDate(today);
+//            enrollment.setIncidentDate(today);
+//            DHISResponse enrollmentResponse = createEnrollment(enrollment);
+//            return enrollmentResponse;
+//        } else {
+//            return response;
+//        }
 
-        List<Attribute> attributes = new ArrayList<>();
+    }
 
-        Attribute name = new Attribute();
-        name.setAttribute(DHIS2Constants.UID_ATTR_FULLNAME);
-        name.setValue(patients.getName());
-        attributes.add(name);
+    private String getOrganization(String addresss){
 
-        Attribute mobileNumber = new Attribute();
-        mobileNumber.setAttribute(DHIS2Constants.UID_ATTR_TEL_SRILANKA);
-        mobileNumber.setValue(patients.getMobileNumber());
-        attributes.add(mobileNumber);
+        getCordinates(addresss);
+        return "dKl0ZJcEWbf";
+    }
 
-        Attribute email = new Attribute();
-        email.setAttribute(DHIS2Constants.UID_ATTR_EMAIL);
-        email.setValue(patients.getEmail());
-        attributes.add(email);
+    private Double[] getCordinates(String address){
 
-        Attribute address = new Attribute();
-        address.setAttribute(DHIS2Constants.UID_DEL_FULLADDRESS);
-        address.setValue(patients.getAddress());
-        attributes.add(address);
+        URLEncoder encoder = new URLEncoder();
+        String encodeaddress = encoder.encode(address, Charset.defaultCharset());
+        String url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + encodeaddress + "&key=xxxxxx";
+        GetMethod getRequest = new GetMethod(url);
 
-//TODO need to add
-//        Attribute mobileImei = new Attribute();
-//        mobileImei.setAttribute("mobileImei");
-//        mobileImei.setValue(patients.getMobileImei());
-//        attributes.add(mobileImei);
+        Double[] cordinates = null;
 
-//TODO need to add case list
-        entityInstance.setAttributes(attributes);
+        try {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Invoke getting programmes");
+            }
+            HttpClient httpClient = getHttpClient();
+            setAuthorizationHeader(getRequest);
+            int response = httpClient.executeMethod(getRequest);
+            if(response == DHIS2Constants.OK_CODE){
 
-        DHISResponse response = createEntityInstance(entityInstance);
-        if (response.getStatus() == DHIS2Constants.OK_CODE) {
-            JsonElement jelement = new JsonParser().parse(response.getResponse());
-            JsonObject jobject = jelement.getAsJsonObject();
-            jobject = jobject.getAsJsonObject("response");
-            JsonArray jarray = jobject.getAsJsonArray("importSummaries");
-            jobject = jarray.get(0).getAsJsonObject();
-            String reference = jobject.get("reference").toString();
-            reference = reference.replace("\"","");
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            String today = format.format(new Date());
+                JsonElement jelement = new JsonParser().parse(getRequest.getResponseBodyAsString());
+                JsonArray results = jelement.getAsJsonObject().getAsJsonArray("results");
+                if(results != null && results.size() > 0) {
+                    JsonElement result = results.get(0);
+                    JsonObject geometry = result.getAsJsonObject().getAsJsonObject("geometry");
+                    double lat = Double.parseDouble(geometry.get("bounds").getAsJsonObject().get("northeast").getAsJsonObject().get("lat").toString());
+                    double lng = Double.parseDouble(geometry.get("bounds").getAsJsonObject().get("northeast").getAsJsonObject().get("lng").toString());
+                    cordinates = new Double[]{lat, lng};
+                }
+            }
 
-            Enrollment enrollment = new Enrollment();
-            enrollment.setTrackedEntityInstance(reference);
-            enrollment.setProgram(DHIS2Constants.UID_PROGRAM_SUSPECTED_CASE);
-            enrollment.setStatus(DHIS2Constants.STATUS_ACTIVE);
-            enrollment.setOrgUnit(orgUnit);
-            enrollment.setEnrollmentDate(today);
-            enrollment.setIncidentDate(today);
-            DHISResponse enrollmentResponse = createEnrollment(enrollment);
-            return enrollmentResponse;
-        } else {
-            return response;
+        } catch (IOException e) {
+            LOGGER.error("Error while getting coordinates of the address.", e);
+        } finally {
+            getRequest.releaseConnection();
         }
-
+        return cordinates;
     }
 
     public DHISResponse createEntityInstance(EntityInstance entityInstance) {
