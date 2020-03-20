@@ -9,13 +9,14 @@
 
     <appender name="dailyRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender" createOnDemand="true">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/covid-19-%d{yyyy-MM-dd-HH-mm}.log</fileNamePattern>
+            <fileNamePattern>logs/covid-19-%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>14</maxHistory>
         </rollingPolicy>
 
         <encoder>
-            <Pattern>%d{HH:mm:ss.SSS}-${log.name}-[%thread] %-5level %logger{35} - %msg %n</Pattern>
+            <Pattern>[%d{HH:mm:ss.SSS}]-${log.name}-[%thread] %-5level %logger{35} - %msg %n</Pattern>
         </encoder>
+        <append>true</append>
     </appender>
 
     <logger name="lk.gov.govtech.covid19" level="INFO"  additivity="false"/>
