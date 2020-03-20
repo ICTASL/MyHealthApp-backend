@@ -8,13 +8,17 @@ import java.util.List;
 public class Patients {
 
     private String name;
-    private String mobileNumber;
     private String email;
     private String address;
     private String longitude;
     private String lattitude;
     private String mobileImei;
     private List<String> caseList;
+    private String nic;
+    private String passport;
+    private String country;
+    private String age;
+    private String gender;
 
     public String getName() {
 
@@ -24,16 +28,6 @@ public class Patients {
     public void setName(String name) {
 
         this.name = name;
-    }
-
-    public String getMobileNumber() {
-
-        return mobileNumber;
-    }
-
-    public void setMobileNumber(String mobileNumber) {
-
-        this.mobileNumber = mobileNumber;
     }
 
     public String getEmail() {
@@ -94,5 +88,55 @@ public class Patients {
     public void setCaseList(List<String> caseList) {
 
         this.caseList = caseList;
+    }
+
+    public String getNic() {
+
+        return nic;
+    }
+
+    public void setNic(String nic) {
+
+        this.nic = nic;
+    }
+
+    public String getPassport() {
+
+        return passport;
+    }
+
+    public void setPassport(String passport) {
+
+        this.passport = passport;
+    }
+
+    public String getCountry() {
+
+        return country;
+    }
+
+    public void setCountry(String country) {
+
+        this.country = country;
+    }
+
+    public String getAge() {
+
+        return age;
+    }
+
+    public void setAge(String age) {
+
+        this.age = age;
+    }
+
+    public String getGender() {
+
+        return gender;
+    }
+
+    public void setGender(String gender) {
+
+        this.gender = gender;
     }
 }
