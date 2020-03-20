@@ -27,8 +27,3 @@ firebase:
         path: credentials/covid-19-lk-dev-firebase-adminsdk.json
     notifications:
        topic: 'mobile_message'
-       title: 'Common topic - Hello'
-       message: 'Sending test message'
-       token: ''
-       payloadMessageId: '123'
-       payloadData: 'Hello. This is payload content.'
