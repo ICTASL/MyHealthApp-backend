@@ -24,6 +24,14 @@
         </fileSet>
 
         <fileSet>
+            <directory>${project.basedir}/src/main/resources/credentials</directory>
+            <includes>
+                <include>covid-19-lk-dev-firebase-adminsdk.json</include>
+            </includes>
+            <outputDirectory>/credentials</outputDirectory>
+        </fileSet>
+
+        <fileSet>
             <directory>${project.basedir}/scripts</directory>
             <outputDirectory>/</outputDirectory>
         </fileSet>
