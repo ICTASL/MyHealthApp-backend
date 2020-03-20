@@ -32,7 +32,11 @@
         </fileSet>
 
         <fileSet>
-            <directory>${project.basedir}/scripts</directory>
+            <directory>${project.build.directory}</directory>
+            <includes>
+                <include>start.sh</include>
+                <include>stop.sh</include>
+            </includes>
             <outputDirectory>/</outputDirectory>
         </fileSet>
     </fileSets>
@@ -41,7 +45,7 @@
         <file>
             <source>${project.basedir}/target/covid19-${project.version}.jar</source>
             <outputDirectory>/</outputDirectory>
-            <destName>covid19.jar</destName>
+            <destName>${project.artifactId}-${project.version}.jar</destName>
         </file>
     </files>
 
