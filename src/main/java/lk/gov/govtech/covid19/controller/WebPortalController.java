@@ -29,4 +29,9 @@ public class WebPortalController {
     public String cases(Model model) {
         return "casePortal";
     }
+
+    @GetMapping(DASHBOARD_PATH)
+    public String dashboard(Model model) {
+        return "dashboard";
+    }
 }
