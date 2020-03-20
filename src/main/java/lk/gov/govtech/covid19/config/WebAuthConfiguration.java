@@ -1,5 +1,6 @@
 package lk.gov.govtech.covid19.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,17 +9,33 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 
 import static lk.gov.govtech.covid19.util.Constants.*;
 
+@Slf4j
 @Configuration
 @EnableWebSecurity
 public class WebAuthConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     PortalUserConfiguration users;
+
+    @Autowired
+    private LoginSuccessHandler loginSuccessHandler;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -64,7 +81,7 @@ public class WebAuthConfiguration extends WebSecurityConfigurerAdapter {
             .formLogin()
                 .loginPage(PORTAL_API_CONTEXT)
                 .permitAll()
-                .defaultSuccessUrl(PORTAL_API_CONTEXT + NEWS_PATH) //redirects once successful
+                .successHandler(loginSuccessHandler)
                 .and()
             .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher(PORTAL_API_CONTEXT + "/logout")) //logs out with a GET
@@ -81,4 +98,23 @@ public class WebAuthConfiguration extends WebSecurityConfigurerAdapter {
                     .roles("USER");
         }
     }
+
+    @Component
+    protected class LoginSuccessHandler implements AuthenticationSuccessHandler {
+
+        protected LoginSuccessHandler() {
+            super();
+        }
+
+
+        @Override
+        public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+            User user = (User) authentication.getPrincipal();
+            log.info("Portal login success, username:{}", user.getUsername());
+            RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+            redirectStrategy.sendRedirect(request, response,
+                    PORTAL_API_CONTEXT + NEWS_PATH); //redirects once successful
+        }
+    }
+
 }
