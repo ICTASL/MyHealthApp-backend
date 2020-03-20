@@ -6,5 +6,5 @@ import lombok.Data;
 public class Geometry {
 
     private String type;
-    private double []coordinates;
+    private Double []coordinates;
 }

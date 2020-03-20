@@ -5,6 +5,7 @@ import lk.gov.govtech.covid19.dto.Enrollment;
 import lk.gov.govtech.covid19.dto.EntityInstance;
 import lk.gov.govtech.covid19.dto.Events;
 import lk.gov.govtech.covid19.dto.FlightPassengerInformation;
+import lk.gov.govtech.covid19.dto.Patients;
 import lk.gov.govtech.covid19.util.Constants;
 import lk.gov.govtech.covid19.service.DHIS2Service;
 
@@ -28,6 +29,13 @@ public class DHISController {
 
     @Autowired
     private DHIS2Service dhis2Service;
+
+    @PostMapping(path = "/patients", consumes = "application/json", produces = "application/json")
+    public ResponseEntity registerPatient(@RequestBody Patients patients) {
+
+        DHISResponse response = dhis2Service.registerPatient(patients);
+        return ResponseEntity.status(response.getStatus()).body(response.getResponse());
+    }
 
     @PostMapping(path = "/entity-instances", consumes = "application/json", produces = "application/json")
     public ResponseEntity createEntityInstance(@RequestBody EntityInstance entityInstance) {

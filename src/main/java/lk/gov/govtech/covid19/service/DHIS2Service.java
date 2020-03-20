@@ -2,7 +2,9 @@ package lk.gov.govtech.covid19.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import lk.gov.govtech.covid19.config.DHISConfiguration;
@@ -17,9 +19,11 @@ import lk.gov.govtech.covid19.dto.Event;
 import lk.gov.govtech.covid19.dto.Events;
 import lk.gov.govtech.covid19.dto.FlightInformation;
 import lk.gov.govtech.covid19.dto.FlightPassengerInformation;
+import lk.gov.govtech.covid19.dto.Geometry;
 import lk.gov.govtech.covid19.dto.LastDepartureInformation;
 import lk.gov.govtech.covid19.dto.PassengerInformation;
 
+import lk.gov.govtech.covid19.dto.Patients;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethodBase;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
@@ -55,16 +59,17 @@ public class DHIS2Service {
 
     @Autowired
     private DHISConfiguration dhisConfiguration;
-    
+
     private Gson gson = new Gson();
     private final static SimpleDateFormat FPI_DATETIMEFORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     //private final static SimpleDateFormat FPI_DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
     private final static SimpleDateFormat DHIS2_DATETIMEFORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
     private final static SimpleDateFormat DHIS2_DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
-    
+
     private HttpClient httpClient;
-    
+
     public DHIS2Service() {
+
         this.httpClient = new HttpClient(new MultiThreadedHttpConnectionManager());
         this.httpClient.getParams().setParameter("http.connection.stalecheck", new Boolean(true));
     }
@@ -164,6 +169,76 @@ public class DHIS2Service {
         return dhisResponse;
     }
 
+    public DHISResponse registerPatient(Patients patients) {
+
+        EntityInstance entityInstance = new EntityInstance();
+        entityInstance.setTrackedEntityType(DHIS2Constants.UID_PERSONTRACKEDENTITYTYPE);
+        String orgUnit = "dKl0ZJcEWbf"; //TODO Need to calculate and find this
+        entityInstance.setOrgUnit(orgUnit);
+
+        Geometry geometry = new Geometry();
+        geometry.setType(DHIS2Constants.GEOMETRY_TYPE);
+        geometry.setCoordinates(new Double[]{Double.parseDouble(patients.getLattitude()), Double.parseDouble(patients.getLongitude())});
+        entityInstance.setGeometry(geometry);
+
+        List<Attribute> attributes = new ArrayList<>();
+
+        Attribute name = new Attribute();
+        name.setAttribute(DHIS2Constants.UID_ATTR_FULLNAME);
+        name.setValue(patients.getName());
+        attributes.add(name);
+
+        Attribute mobileNumber = new Attribute();
+        mobileNumber.setAttribute(DHIS2Constants.UID_ATTR_TEL_SRILANKA);
+        mobileNumber.setValue(patients.getMobileNumber());
+        attributes.add(mobileNumber);
+
+        Attribute email = new Attribute();
+        email.setAttribute(DHIS2Constants.UID_ATTR_EMAIL);
+        email.setValue(patients.getEmail());
+        attributes.add(email);
+
+        Attribute address = new Attribute();
+        address.setAttribute(DHIS2Constants.UID_DEL_FULLADDRESS);
+        address.setValue(patients.getAddress());
+        attributes.add(address);
+
+//TODO need to add
+//        Attribute mobileImei = new Attribute();
+//        mobileImei.setAttribute("mobileImei");
+//        mobileImei.setValue(patients.getMobileImei());
+//        attributes.add(mobileImei);
+
+//TODO need to add case list
+        entityInstance.setAttributes(attributes);
+
+        DHISResponse response = createEntityInstance(entityInstance);
+        if (response.getStatus() == DHIS2Constants.OK_CODE) {
+            JsonElement jelement = new JsonParser().parse(response.getResponse());
+            JsonObject jobject = jelement.getAsJsonObject();
+            jobject = jobject.getAsJsonObject("response");
+            JsonArray jarray = jobject.getAsJsonArray("importSummaries");
+            jobject = jarray.get(0).getAsJsonObject();
+            String reference = jobject.get("reference").toString();
+            reference = reference.replace("\"","");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String today = format.format(new Date());
+
+            Enrollment enrollment = new Enrollment();
+            enrollment.setTrackedEntityInstance(reference);
+            enrollment.setProgram(DHIS2Constants.UID_PROGRAM_SUSPECTED_CASE);
+            enrollment.setStatus(DHIS2Constants.STATUS_ACTIVE);
+            enrollment.setOrgUnit(orgUnit);
+            enrollment.setEnrollmentDate(today);
+            enrollment.setIncidentDate(today);
+            DHISResponse enrollmentResponse = createEnrollment(enrollment);
+            return enrollmentResponse;
+        } else {
+            return response;
+        }
+
+    }
+
     public DHISResponse createEntityInstance(EntityInstance entityInstance) {
 
         PostMethod postRequest = new PostMethod(dhisConfiguration.getUrl() + "/trackedEntityInstances");
@@ -255,11 +330,12 @@ public class DHIS2Service {
     }
 
     private HttpClient getHttpClient() {
+
         return this.httpClient;
     }
     
     /* private List<FlightPassengerInformation> getInfoBorderPassengerList(String flightNo, 
-                                                                        String date) throws Exception {
+                                                                           String date) throws Exception {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Invoke getInfoBorderPassengerList");
         }
@@ -276,8 +352,9 @@ public class DHIS2Service {
             getRequest.releaseConnection();
         }
     } */
-    
+
     private String addFileResource(String fileName, byte[] data) throws Exception {
+
         if (data == null) {
             return null;
         }
@@ -285,7 +362,7 @@ public class DHIS2Service {
         try {
             HttpClient httpClient = getHttpClient();
             setAuthorizationHeader(postRequest);
-            Part[] parts = { new FilePart("file", new ByteArrayPartSource(fileName, data)) };
+            Part[] parts = {new FilePart("file", new ByteArrayPartSource(fileName, data))};
             postRequest.setRequestEntity(new MultipartRequestEntity(parts, new HttpMethodParams()));
             int response = httpClient.executeMethod(postRequest);
             String content = postRequest.getResponseBodyAsString();
@@ -302,8 +379,9 @@ public class DHIS2Service {
             postRequest.releaseConnection();
         }
     }
-    
+
     private String addFileResource(String name, String base64Data) throws Exception {
+
         if (base64Data == null) {
             return null;
         }
@@ -323,15 +401,17 @@ public class DHIS2Service {
         }
         return teIds;
     }
-    
+
     private Attribute attr(String id, String value) {
+
         Attribute attr = new Attribute();
         attr.setAttribute(id);
         attr.setValue(value);
         return attr;
     }
-    
+
     private String generateFullName(PassengerInformation pinfo) {
+
         List<String> comps = new ArrayList<>();
         if (StringUtils.isNotEmpty(pinfo.getInitials())) {
             comps.add(pinfo.getInitials());
@@ -351,8 +431,9 @@ public class DHIS2Service {
             return null;
         }
     }
-    
+
     private String generateAddressAttributeValue(FlightPassengerInformation fpInfo) {
+
         List<AddressInformation> addrInfos = fpInfo.getAddressInformation();
         if (addrInfos == null) {
             return null;
@@ -370,8 +451,9 @@ public class DHIS2Service {
             return null;
         }
     }
-    
+
     private boolean isNumberSriLankan(String number) {
+
         if (StringUtils.isEmpty(number)) {
             return false;
         }
@@ -385,8 +467,9 @@ public class DHIS2Service {
         // at the end, if it's just some ten digit number, our first guess it's Sri Lankan
         return number.length() == 10;
     }
-    
+
     private String[] generateLocalForeignTelNumberValues(FlightPassengerInformation fpInfo) {
+
         String[] telNos = new String[2]; // [0] - local, [1] - foreign
         // additional multiple numbers will be stored comma separated in the foreign phone number value
         List<ContactNumber> contactNumbers = fpInfo.getContactNumbers();
@@ -410,8 +493,9 @@ public class DHIS2Service {
         }
         return telNos;
     }
-        
+
     private List<Attribute> generateFPInfoAttrs(FlightPassengerInformation fpInfo) {
+
         List<Attribute> attrs = new ArrayList<Attribute>();
         PassengerInformation pinfo = fpInfo.getPassengerInformation();
         attrs.add(attr(DHIS2Constants.UID_ATTR_PASSPORT_NUMBER, pinfo.getPassportNumber()));
@@ -424,11 +508,12 @@ public class DHIS2Service {
         attrs.add(attr(DHIS2Constants.UID_ATTR_FULLADDRESS_SRILANKA, this.generateAddressAttributeValue(fpInfo)));
         String[] localForeignTelNos = this.generateLocalForeignTelNumberValues(fpInfo);
         attrs.add(attr(DHIS2Constants.UID_ATTR_TEL_SRILANKA, localForeignTelNos[0]));
-        attrs.add(attr(DHIS2Constants.UID_ATTR_TEL_FOREIGN, localForeignTelNos[1])); 
+        attrs.add(attr(DHIS2Constants.UID_ATTR_TEL_FOREIGN, localForeignTelNos[1]));
         return attrs;
     }
-    
+
     private String extractTEInstanceId(String content) throws Exception {
+
         JsonElement el = JsonParser.parseString(content);
         try {
             return el.getAsJsonObject().get("response").getAsJsonObject().get("importSummaries").
@@ -437,22 +522,25 @@ public class DHIS2Service {
             throw new Exception("Invalid JSON content for extracting TE instance id: " + content);
         }
     }
-    
+
     private DataElement del(String id, Object value) {
+
         DataElement result = new DataElement();
         result.setDataElement(id);
         result.setValue(value);
         return result;
     }
-    
+
     private String fpiToDHIS2DataTime(String datetime) throws Exception {
+
         if (datetime == null) {
             return null;
         }
         return DHIS2_DATETIMEFORMAT.format(FPI_DATETIMEFORMAT.parse(datetime));
     }
-    
+
     private List<DataElement> generateFlightInfoDataElements(FlightPassengerInformation fpInfo) throws Exception {
+
         FlightInformation finfo = fpInfo.getFlightInformation();
         if (finfo == null) {
             throw new Exception("The flight information is not available");
@@ -467,8 +555,9 @@ public class DHIS2Service {
         result.add(del(DHIS2Constants.UID_DEL_TRANSITPASSENGERCOUNT, finfo.getTransitPassengerCount()));
         return result;
     }
-    
+
     private List<DataElement> generateFPInfoDataElements(FlightPassengerInformation fpInfo) throws Exception {
+
         List<DataElement> result = new ArrayList<DataElement>();
         PassengerInformation pinfo = fpInfo.getPassengerInformation();
         result.add(del(DHIS2Constants.UID_DEL_COUNTRYOFRESIDENCE, pinfo.getCountryOfResidence()));
@@ -477,16 +566,17 @@ public class DHIS2Service {
         result.add(del(DHIS2Constants.UID_DEL_PURPOSEOFVISIT, pinfo.getPurposeOfVisit()));
         result.add(del(DHIS2Constants.UID_DEL_REQUESTEDVISADAYS, pinfo.getRequestedVisaDays()));
         result.add(del(DHIS2Constants.UID_DEL_DESTINATIONCITY, pinfo.getDestinationCity()));
-        result.add(del(DHIS2Constants.UID_DEL_ARRIVALCARDIMAGE, 
+        result.add(del(DHIS2Constants.UID_DEL_ARRIVALCARDIMAGE,
                 this.addFileResource(DHIS2Constants.ARRIVAL_CARD_IMG_NAME, pinfo.getArrivalCardImage())));
-        result.add(del(DHIS2Constants.UID_DEL_FACEIMAGE, 
+        result.add(del(DHIS2Constants.UID_DEL_FACEIMAGE,
                 this.addFileResource(DHIS2Constants.FACE_IMG_NAME, pinfo.getFaceImage())));
-        result.add(del(DHIS2Constants.UID_DEL_PASSPORTDATAPAGE, 
+        result.add(del(DHIS2Constants.UID_DEL_PASSPORTDATAPAGE,
                 this.addFileResource(DHIS2Constants.PASSPORTDATAPAGE_IMG_NAME, pinfo.getPassportDataPage())));
         return result;
     }
-    
+
     private void populateCommonEventValues(Event event, String teInstanceId) {
+
         event.setDueDate(this.getDHIS2CurrentDate());
         event.setProgram(DHIS2Constants.UID_PROGRAMPORTOFENTRYSURVEILLANCE);
         event.setProgramStage(DHIS2Constants.UID_PROGRAMSTAGEPORTOFENTRY);
@@ -494,15 +584,17 @@ public class DHIS2Service {
         event.setStatus(DHIS2Constants.STATUS_COMPLETED);
         event.setTrackedEntityInstance(teInstanceId);
     }
-    
+
     private Event generateFlightInfoEvent(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
+
         Event event = new Event();
         this.populateCommonEventValues(event, teInstanceId);
         event.setDataValues(this.generateFlightInfoDataElements(fpInfo));
         return event;
     }
-    
+
     private List<DataElement> generateLastDepartureDataElements(FlightPassengerInformation fpInfo) throws Exception {
+
         LastDepartureInformation ldInfo = fpInfo.getLastDepartureInformation();
         if (ldInfo == null) {
             throw new Exception("The last departure information is not available");
@@ -514,30 +606,34 @@ public class DHIS2Service {
         result.add(del(DHIS2Constants.UID_DEL_LASTDEPARTURECARDNO, ldInfo.getDepartureCardNo()));
         return result;
     }
-    
+
     private Event generateLastDepartureEvent(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
+
         Event event = new Event();
         this.populateCommonEventValues(event, teInstanceId);
         event.setDataValues(this.generateLastDepartureDataElements(fpInfo));
         return event;
     }
-    
+
     private Event generateFPInfoEvent(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
+
         Event event = new Event();
         this.populateCommonEventValues(event, teInstanceId);
         event.setDataValues(this.generateFPInfoDataElements(fpInfo));
         return event;
     }
-        
+
     private List<Event> generateEvents(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
+
         List<Event> result = new ArrayList<Event>();
         result.add(this.generateFlightInfoEvent(fpInfo, teInstanceId));
         result.add(this.generateFPInfoEvent(fpInfo, teInstanceId));
         result.add(this.generateLastDepartureEvent(fpInfo, teInstanceId));
         return result;
     }
-    
+
     private void createFPEvents(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
+
         Events events = new Events();
         events.setEvents(this.generateEvents(fpInfo, teInstanceId));
         DHISResponse resp = this.createEvents(events);
@@ -545,8 +641,9 @@ public class DHIS2Service {
             throw new Exception("Error in creating FP events: " + resp.getResponse());
         }
     }
-    
+
     private String createFPEntityInstance(FlightPassengerInformation fpInfo) throws Exception {
+
         EntityInstance entityInstance = new EntityInstance();
         entityInstance.setOrgUnit(DHIS2Constants.UID_ORGANIZATIONSRILANKA);
         entityInstance.setTrackedEntityType(DHIS2Constants.UID_PERSONTRACKEDENTITYTYPE);
@@ -557,9 +654,10 @@ public class DHIS2Service {
         }
         return this.extractTEInstanceId(resp.getResponse());
     }
-    
+
     private void createFPEnrollment(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
-        Enrollment enrollment = new Enrollment(); 
+
+        Enrollment enrollment = new Enrollment();
         enrollment.setOrgUnit(DHIS2Constants.UID_ORGANIZATIONSRILANKA);
         enrollment.setProgram(DHIS2Constants.UID_PROGRAMPORTOFENTRYSURVEILLANCE);
         String currentDate = this.getDHIS2CurrentDate();
@@ -572,8 +670,9 @@ public class DHIS2Service {
             throw new Exception("Error in creating FP enrollment: " + resp.getResponse());
         }
     }
-        
+
     private String saveFlightPassengerInformation(FlightPassengerInformation fpInfo) throws Exception {
+
         if (fpInfo.getPassengerInformation() == null) {
             throw new Exception("Passenger information is not available");
         }
@@ -634,7 +733,7 @@ public class DHIS2Service {
             pInfo.setPassportDataPage(DHIS2Constants.BIN_CLEAR_VAL);
         }
     }
-    
+  
     public DHISResponse pushFlightPassengerInformation(List<FlightPassengerInformation> fpInfos) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Invoke pushFlightPassengerInformation");
