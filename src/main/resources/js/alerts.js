@@ -2,7 +2,12 @@ import Vue from 'vue'
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 const axios = require('axios').default;
+import Vuelidate from 'vuelidate'
+
+Vue.use(Vuelidate);
 Vue.use(VueSweetalert2);
+import {required} from 'vuelidate/lib/validators';
+
 var app = new Vue({
 
     el: '#app',
@@ -18,6 +23,23 @@ var app = new Vue({
         }
 
     },
+
+    validations: {
+        alert: {
+            title: {
+                required
+            },
+
+            source: {
+                required
+            },
+
+            messageEn: {
+                required
+            }
+        }
+    },
+
 
     methods:{
         saveAlerts(){
@@ -53,6 +75,7 @@ var app = new Vue({
             })
         }
     }
+
 
 
 })
