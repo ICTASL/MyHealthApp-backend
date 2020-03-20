@@ -15,7 +15,7 @@ import java.io.IOException;
 @Service
 public class FCMInitializer {
 
-    @Value("${firebase.configurations.path}")
+    @Value("${firebase.config-path}")
     private String firebaseConfigPath;
 
     Logger logger = LoggerFactory.getLogger(FCMInitializer.class);
