@@ -50,10 +50,13 @@ CREATE TABLE `notification_message_type` (
   PRIMARY KEY (`id`));
   
 CREATE TABLE `covid_status` (
-  `id` INT NOT NULL PRIMARY KEY,
+  `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `lk_total_case` INT NOT NULL,
   `lk_recovered_case` INT NOT NULL,
   `lk_total_deaths` INT NOT NULL,
   `lk_total_suspect` INT NOT NULL,
   `last_update_time` timestamp default current_timestamp NOT NULL on update current_timestamp
+
+  INSERT INTO `covid_status` (`id`,`lk_total_case`,`lk_recovered_case`,`lk_total_deaths`,`lk_total_suspect`,`last_update_time`) VALUES (1,99,99,99,99, NOW());
+
 )

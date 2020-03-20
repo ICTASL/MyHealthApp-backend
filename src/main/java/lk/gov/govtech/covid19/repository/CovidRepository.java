@@ -115,7 +115,7 @@ public class CovidRepository {
     }
 
     public Integer getLastCaseNotificationId() {
-        List<Integer> idList = jdbcTemplate.query("select id from epid_case ORDER BY id DESC LIMIT 1", (rs, rowNum) -> rs.getInt("id"));
+        List<Integer> idList = jdbcTemplate.query("SELECT * FROM covid_status ORDER BY last_update_time DESC LIMIT 1", (rs, rowNum) -> rs.getInt("id"));
 
         return idList.isEmpty() ? 0 : idList.get(0);
     }
