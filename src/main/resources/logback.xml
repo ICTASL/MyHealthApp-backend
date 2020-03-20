@@ -19,8 +19,6 @@
         <append>true</append>
     </appender>
 
-    <logger name="lk.gov.govtech.covid19" level="INFO"  additivity="false"/>
-
     <root>
         <level value="INFO" />
         <appender-ref ref="dailyRollingFileAppender" />
