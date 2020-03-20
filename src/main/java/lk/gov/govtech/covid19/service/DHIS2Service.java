@@ -173,84 +173,119 @@ public class DHIS2Service {
 
     public DHISResponse registerPatient(Patients patients) {
 
-        String orgUnit = getOrganization(patients.getAddress()) ; //TODO Need to calculate and find this
-        return  null;
+        EntityInstance entityInstance = new EntityInstance();
+        entityInstance.setTrackedEntityType(DHIS2Constants.UID_PERSONTRACKEDENTITYTYPE);
+        String orgUnit = getOrganization(patients.getAddress()); //TODO Need to calculate and find this
+        entityInstance.setOrgUnit(orgUnit);
 
-//        EntityInstance entityInstance = new EntityInstance();
-//        entityInstance.setTrackedEntityType(DHIS2Constants.UID_PERSONTRACKEDENTITYTYPE);
-//        String orgUnit = getOrganization(patients.getAddress()) ; //TODO Need to calculate and find this
-//        entityInstance.setOrgUnit(orgUnit);
-//
-//        Geometry geometry = new Geometry();
-//        geometry.setType(DHIS2Constants.GEOMETRY_TYPE);
-//        geometry.setCoordinates(new Double[]{Double.parseDouble(patients.getLattitude()), Double.parseDouble(patients.getLongitude())});
-//        entityInstance.setGeometry(geometry);
-//
-//        List<Attribute> attributes = new ArrayList<>();
-//
-//        Attribute name = new Attribute();
-//        name.setAttribute(DHIS2Constants.UID_ATTR_FULLNAME);
-//        name.setValue(patients.getName());
-//        attributes.add(name);
-//
-//        Attribute mobileNumber = new Attribute();
-//        mobileNumber.setAttribute(DHIS2Constants.UID_ATTR_TEL_SRILANKA);
-//        mobileNumber.setValue(patients.getMobileNumber());
-//        attributes.add(mobileNumber);
-//
-//        Attribute email = new Attribute();
-//        email.setAttribute(DHIS2Constants.UID_ATTR_EMAIL);
-//        email.setValue(patients.getEmail());
-//        attributes.add(email);
-//
-//        Attribute address = new Attribute();
-//        address.setAttribute(DHIS2Constants.UID_DEL_FULLADDRESS);
-//        address.setValue(patients.getAddress());
-//        attributes.add(address);
-//
-////TODO need to add
-////        Attribute mobileImei = new Attribute();
-////        mobileImei.setAttribute("mobileImei");
-////        mobileImei.setValue(patients.getMobileImei());
-////        attributes.add(mobileImei);
-//
-////TODO need to add case list
-//        entityInstance.setAttributes(attributes);
-//
-//        DHISResponse response = createEntityInstance(entityInstance);
-//        if (response.getStatus() == DHIS2Constants.OK_CODE) {
-//            JsonElement jelement = new JsonParser().parse(response.getResponse());
-//            JsonObject jobject = jelement.getAsJsonObject();
-//            jobject = jobject.getAsJsonObject("response");
-//            JsonArray jarray = jobject.getAsJsonArray("importSummaries");
-//            jobject = jarray.get(0).getAsJsonObject();
-//            String reference = jobject.get("reference").toString();
-//            reference = reference.replace("\"","");
-//            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-//            String today = format.format(new Date());
-//
-//            Enrollment enrollment = new Enrollment();
-//            enrollment.setTrackedEntityInstance(reference);
-//            enrollment.setProgram(DHIS2Constants.UID_PROGRAM_SUSPECTED_CASE);
-//            enrollment.setStatus(DHIS2Constants.STATUS_ACTIVE);
-//            enrollment.setOrgUnit(orgUnit);
-//            enrollment.setEnrollmentDate(today);
-//            enrollment.setIncidentDate(today);
-//            DHISResponse enrollmentResponse = createEnrollment(enrollment);
-//            return enrollmentResponse;
-//        } else {
-//            return response;
-//        }
+        Geometry geometry = new Geometry();
+        geometry.setType(DHIS2Constants.GEOMETRY_TYPE);
+        geometry.setCoordinates(new Double[]{Double.parseDouble(patients.getLattitude()), Double.parseDouble(patients.getLongitude())});
+        entityInstance.setGeometry(geometry);
+        entityInstance.setAttributes(getPatientAtributes(patients));
 
+        DHISResponse response = createEntityInstance(entityInstance);
+        if (response.getStatus() == DHIS2Constants.OK_CODE) {
+            String reference = getReferenceNumber(response.getResponse());
+            String today = DHIS2_DATEFORMAT.format(new Date());
+
+            Enrollment enrollment = new Enrollment();
+            enrollment.setTrackedEntityInstance(reference);
+            enrollment.setProgram(DHIS2Constants.UID_PROGRAM_SUSPECTED_CASE);
+            enrollment.setStatus(DHIS2Constants.STATUS_ACTIVE);
+            enrollment.setOrgUnit(orgUnit);
+            enrollment.setEnrollmentDate(today);
+            enrollment.setIncidentDate(today);
+            DHISResponse enrollmentResponse = createEnrollment(enrollment);
+            if (enrollmentResponse.getStatus() == DHIS2Constants.OK_CODE) {
+                enrollmentResponse.setResponse(getPatientResponse(reference));
+            }
+            return enrollmentResponse;
+        } else {
+            return response;
+        }
     }
 
-    private String getOrganization(String addresss){
+    private String getReferenceNumber(String response) {
 
-        getCordinates(addresss);
+        JsonElement jelement = new JsonParser().parse(response);
+        JsonObject jobject = jelement.getAsJsonObject();
+        jobject = jobject.getAsJsonObject("response");
+        JsonArray jarray = jobject.getAsJsonArray("importSummaries");
+        jobject = jarray.get(0).getAsJsonObject();
+        String reference = jobject.get("reference").toString();
+        reference = reference.replace("\"", "");
+        return reference;
+    }
+
+    private List<Attribute> getPatientAtributes(Patients patients) {
+
+        List<Attribute> attributes = new ArrayList<>();
+        Attribute name = new Attribute();
+        name.setAttribute(DHIS2Constants.UID_ATTR_FULLNAME);
+        name.setValue(patients.getName());
+        attributes.add(name);
+
+        Attribute email = new Attribute();
+        email.setAttribute(DHIS2Constants.UID_ATTR_EMAIL);
+        email.setValue(patients.getEmail());
+        attributes.add(email);
+
+        Attribute address = new Attribute();
+        address.setAttribute(DHIS2Constants.UID_DEL_FULLADDRESS);
+        address.setValue(patients.getAddress());
+        attributes.add(address);
+
+        Attribute mobileImei = new Attribute();
+        mobileImei.setAttribute(DHIS2Constants.UID_ATTR_MOBILEIMIE);
+        mobileImei.setValue(patients.getMobileImei());
+        attributes.add(mobileImei);
+
+        Attribute caseIDs = new Attribute();
+        caseIDs.setAttribute(DHIS2Constants.UID_ATTR_CASEIDS);
+        caseIDs.setValue(patients.getCaseList());
+        attributes.add(caseIDs);
+
+        Attribute nic = new Attribute();
+        nic.setAttribute(DHIS2Constants.UID_ATTR_NIC);
+        nic.setValue(patients.getNic());
+        attributes.add(nic);
+
+        Attribute passport = new Attribute();
+        passport.setAttribute(DHIS2Constants.UID_ATTR_PASSPORT_NUMBER);
+        passport.setValue(patients.getPassport());
+        attributes.add(passport);
+
+        Attribute country = new Attribute();
+        country.setAttribute(DHIS2Constants.UID_DEL_COUNTRY);
+        country.setValue(patients.getCountry());
+        attributes.add(country);
+
+        Attribute age = new Attribute();
+        age.setAttribute(DHIS2Constants.UID_ATTR_AGE);
+        age.setValue(patients.getAge());
+        attributes.add(age);
+
+        Attribute gender = new Attribute();
+        gender.setAttribute(DHIS2Constants.UID_ATTR_GENDER);
+        gender.setValue(patients.getGender());
+        attributes.add(gender);
+
+        return attributes;
+    }
+
+    private String getPatientResponse(String reference) {
+
+        return "{\n" + "\"caseid\":" + reference + "\n" + "}";
+    }
+
+    private String getOrganization(String addresss) {
+
+        //getCordinates(addresss);
         return "dKl0ZJcEWbf";
     }
 
-    private Double[] getCordinates(String address){
+    private Double[] getCordinates(String address) {
 
         URLEncoder encoder = new URLEncoder();
         String encodeaddress = encoder.encode(address, Charset.defaultCharset());
@@ -266,11 +301,11 @@ public class DHIS2Service {
             HttpClient httpClient = getHttpClient();
             setAuthorizationHeader(getRequest);
             int response = httpClient.executeMethod(getRequest);
-            if(response == DHIS2Constants.OK_CODE){
+            if (response == DHIS2Constants.OK_CODE) {
 
                 JsonElement jelement = new JsonParser().parse(getRequest.getResponseBodyAsString());
                 JsonArray results = jelement.getAsJsonObject().getAsJsonArray("results");
-                if(results != null && results.size() > 0) {
+                if (results != null && results.size() > 0) {
                     JsonElement result = results.get(0);
                     JsonObject geometry = result.getAsJsonObject().getAsJsonObject("geometry");
                     double lat = Double.parseDouble(geometry.get("bounds").getAsJsonObject().get("northeast").getAsJsonObject().get("lat").toString());
@@ -441,8 +476,9 @@ public class DHIS2Service {
         }
         return this.addFileResource(name, data);
     }
-    
+
     private List<String> saveFlightPassengerInformation(List<FlightPassengerInformation> fpInfos) throws Exception {
+
         List<String> teIds = new ArrayList<String>();
         for (FlightPassengerInformation fpInfo : fpInfos) {
             teIds.add(this.saveFlightPassengerInformation(fpInfo));
@@ -762,18 +798,21 @@ public class DHIS2Service {
         Date date = FPI_DATETIMEFORMAT.parse(dateTime);
         return FPI_DATEFORMAT.format(date);
     } */
-    
+
     private synchronized String getDHIS2CurrentDate() {
+
         return DHIS2_DATEFORMAT.format(new Date());
     }
-    
+
     private void clearoutImages(List<FlightPassengerInformation> fpInfos) {
+
         for (FlightPassengerInformation fpInfo : fpInfos) {
             this.clearoutImages(fpInfo);
         }
     }
-    
+
     private void clearoutImages(FlightPassengerInformation fpInfo) {
+
         PassengerInformation pInfo = fpInfo.getPassengerInformation();
         if (pInfo != null) {
             pInfo.setArrivalCardImage(DHIS2Constants.BIN_CLEAR_VAL);
@@ -781,8 +820,9 @@ public class DHIS2Service {
             pInfo.setPassportDataPage(DHIS2Constants.BIN_CLEAR_VAL);
         }
     }
-  
+
     public DHISResponse pushFlightPassengerInformation(List<FlightPassengerInformation> fpInfos) {
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Invoke pushFlightPassengerInformation");
         }
