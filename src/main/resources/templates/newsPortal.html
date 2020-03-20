@@ -92,7 +92,10 @@
                         <label class="px-4 text-xl text-gray-800 w-full " for="title">Title<span class="text-red-400">**</span></label>
                         <div class="px-4">
                             <input class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                   type="text" placeholder="Title" name="title" id="title" v-model="alert.title" required>
+                                   type="text" placeholder="Title" name="title" id="title" v-model="$v.alert.title.$model" :class="{'border-red-500':$v.alert.title.$error}">
+                            <div v-if="$v.alert.title.$dirty">
+                                <p class="text-red-500 text-xs italic" v-if="!$v.alert.title.required">Title  is required</p>
+                            </div>
                         </div>
                     </div>
 
@@ -111,14 +114,20 @@
                         <label class="px-4 text-xl text-gray-800 w-full " for="source">Source<span class="text-red-400">**</span></label>
                         <div class="px-4">
                             <input class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                   type="text" placeholder="Source" id="source"   name="source"  required  v-model="alert.source">
+                                   type="text" placeholder="Source" id="source"   name="source"   v-model="$v.alert.source.$model" :class="{'border-red-500':$v.alert.source.$error}">
+                            <div v-if="$v.alert.source.$dirty">
+                                <p class="text-red-500 text-xs italic" v-if="!$v.alert.source.required">Source is required</p>
+                            </div>
                         </div>
                     </div>
                     <div class="mt-8">
                         <label class="px-4 text-xl text-gray-800 w-full" for="english_description">English Alerts<span class="text-red-400">**</span></label>
                         <div class="px-4">
                                     <textarea rows="3" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                              type="text" placeholder="English Alert" id="english_description" required name="messageEn"   v-model="alert.messageEn"></textarea>
+                                              type="text" placeholder="English Alert" id="english_description" required name="messageEn"   v-model="$v.alert.messageEn.$model" :class="{'border-red-500':$v.alert.messageEn.$error}"></textarea>
+                        </div>
+                        <div v-if="$v.alert.messageEn.$dirty">
+                            <p class="text-red-500 text-xs italic" v-if="!$v.alert.messageEn.required">English Alerts is required</p>
                         </div>
                     </div>
 
@@ -126,7 +135,7 @@
                         <label class="px-4 text-xl text-gray-800 w-full" for="sinhala_description">Sinhala Alerts</label>
                         <div class="px-4">
                                     <textarea rows="3" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                              type="text" placeholder="Sinhala Alert" id="sinhala_description"  name="messageSi"   v-model="alert.messageSi"></textarea>
+                                              type="text" placeholder="Sinhala Alert" id="sinhala_description"  name="messageSi"   v-model="alert.messageSi" ></textarea>
                         </div>
                     </div>
 
@@ -139,7 +148,8 @@
                     </div>
 
                     <div class="mt-8 flex justify-end px-4">
-                        <button type="submit"class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+
+                        <button type="submit" :disabled="submitStatus" :class="{'opacity-50':submitStatus}" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
                             Add New Alerts
                         </button>
                     </div>

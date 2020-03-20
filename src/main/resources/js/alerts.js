@@ -12,6 +12,7 @@ var app = new Vue({
 
     el: '#app',
     data: {
+        submitStatus: false,
 
         alert:{
             "title" : "",
@@ -43,36 +44,44 @@ var app = new Vue({
 
     methods:{
         saveAlerts(){
-            axios.post('/notification/alert/add',{
-                "title" : this.alert.title,
-                "subtitle":this.alert.subtitle,
-                "source":this.alert.source,
-                "messageEn":this.alert.messageEn,
-                "messageSi":this.alert.messageSi,
-                "messageTa":this.alert.messageTa,
-            },{
-                headers:
-                    {
-                        'content-type': 'application/json'
+            this.$v.$touch();
+            if (this.$v.$invalid){
+                return
+            }else{
+                this.submitStatus = true;
+                axios.post('/notification/alert/add',{
+                        "title" : this.alert.title,
+                        "subtitle":this.alert.subtitle,
+                        "source":this.alert.source,
+                        "messageEn":this.alert.messageEn,
+                        "messageSi":this.alert.messageSi,
+                        "messageTa":this.alert.messageTa,
+                    },{
+                        headers:
+                            {
+                                'content-type': 'application/json'
+                            }
                     }
-                }
-            ).then(response=>{
-                if(response.status == 202){
-                    Vue.swal({
-                       title: 'New Alert Was Created',
-                        icon: 'success'
-                    });
+                ).then(response=>{
+                    if(response.status == 202){
+                        Vue.swal({
+                            title: 'New Alert Was Created',
+                            icon: 'success'
+                        });
 
-                   this.alert.title ='',
-                   this.alert.subtitle='',
-                   this.alert.source='',
-                   this.alert.messageEn='',
-                   this.alert.messageSi='',
-                   this.alert.messageTa=''
-                }
-            }).catch(e=>{
-                console.log(e);
-            })
+                          this.alert.title ='',
+                            this.alert.subtitle='',
+                            this.alert.source='',
+                            this.alert.messageEn='',
+                            this.alert.messageSi='',
+                            this.alert.messageTa=''
+                        this.submitStatus = false;
+                    }
+                }).catch(e=>{
+                    console.log(e);
+                })
+            }
+
         }
     }
 
