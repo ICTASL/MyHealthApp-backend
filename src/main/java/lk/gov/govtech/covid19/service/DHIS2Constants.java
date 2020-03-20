@@ -70,6 +70,9 @@ public class DHIS2Constants {
     public final static String UID_DEL_LASTDEPARTUREFLIGHTDESTINATION = "tNrw7GMs0Vc";
     public final static String UID_DEL_LASTDEPARTURECARDNO = "GHOQ28kVq7i";
 
+    public final static String UID_ORGANIZATION_BIA = "kXS0JWLdHYS";
+
+
     public final static String GEOMETRY_TYPE = "Point";
 
 }

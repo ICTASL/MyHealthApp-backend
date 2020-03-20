@@ -175,7 +175,8 @@ public class DHIS2Service {
 
         EntityInstance entityInstance = new EntityInstance();
         entityInstance.setTrackedEntityType(DHIS2Constants.UID_PERSONTRACKEDENTITYTYPE);
-        String orgUnit = getOrganization(patients.getAddress()); //TODO Need to calculate and find this
+        String orgUnit = DHIS2Constants.UID_ORGANIZATION_BIA;
+        //getOrganization(patients.getAddress()); //TODO Need to improve to automatically get the organization
         entityInstance.setOrgUnit(orgUnit);
 
         Geometry geometry = new Geometry();
