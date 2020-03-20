@@ -97,7 +97,7 @@ public class CovidRepository {
 
         for (Location location : locations) {
             jdbcTemplate.update("INSERT INTO `epid_location` (`date`, `from`, `to`, `address`, `longitude`, `latitude`, `case_id`) VALUES (?,?,?,?,?,?,?)",
-                    location.getDate(), location.getFrom(), location.getTo(), location.getAddress(), location.getLongitude(), location.getLatitude(), caseId);
+                    location.getDate(),location.getDate() + " " + location.getFrom(), location.getDate() + " " + location.getTo(), location.getAddress(), location.getLongitude(), location.getLatitude(), caseId);
         }
 
     }
