@@ -43,15 +43,11 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * DHIS2 service implementation.
@@ -66,7 +62,7 @@ public class DHIS2Service {
 
     private Gson gson = new Gson();
     private final static SimpleDateFormat FPI_DATETIMEFORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    private final static SimpleDateFormat FPI_DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    //private final static SimpleDateFormat FPI_DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
     private final static SimpleDateFormat DHIS2_DATETIMEFORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
     private final static SimpleDateFormat DHIS2_DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -337,10 +333,9 @@ public class DHIS2Service {
 
         return this.httpClient;
     }
-
-    private List<FlightPassengerInformation> getInfoBorderPassengerList(String flightNo,
-                                                                        String date) throws Exception {
-
+    
+    /* private List<FlightPassengerInformation> getInfoBorderPassengerList(String flightNo, 
+                                                                           String date) throws Exception {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Invoke getInfoBorderPassengerList");
         }
@@ -356,7 +351,7 @@ public class DHIS2Service {
         } finally {
             getRequest.releaseConnection();
         }
-    }
+    } */
 
     private String addFileResource(String fileName, byte[] data) throws Exception {
 
@@ -398,9 +393,8 @@ public class DHIS2Service {
         }
         return this.addFileResource(name, data);
     }
-
-    private List<String> saveFlightPassengerInformation(Set<FlightPassengerInformation> fpInfos) throws Exception {
-
+    
+    private List<String> saveFlightPassengerInformation(List<FlightPassengerInformation> fpInfos) throws Exception {
         List<String> teIds = new ArrayList<String>();
         for (FlightPassengerInformation fpInfo : fpInfos) {
             teIds.add(this.saveFlightPassengerInformation(fpInfo));
@@ -687,18 +681,16 @@ public class DHIS2Service {
         this.createFPEvents(fpInfo, teInstanceId);
         return teInstanceId;
     }
-
-    private String extractFlightNumber(FlightInformation flightInfo) throws Exception {
-
+    
+    /* private String extractFlightNumber(FlightInformation flightInfo) throws Exception {
         String flightNumber = flightInfo.getFlightNumber();
         if (flightNumber == null) {
             throw new Exception("Flight number not available");
         }
         return flightNumber;
-    }
-
-    private String extractFlightDate(FlightInformation flightInfo) throws Exception {
-
+    } */
+    
+    /* private String extractFlightDate(FlightInformation flightInfo) throws Exception {
         String flightDateTime = flightInfo.getFlightDateTime();
         if (flightDateTime == null) {
             throw new Exception("Flight data/time not available");
@@ -708,30 +700,32 @@ public class DHIS2Service {
         } catch (ParseException e) {
             throw new Exception("Invalid flight date/time", e);
         }
-    }
-
-    private FlightInformation extractFlightInformation(FlightPassengerInformation fpInfo) throws Exception {
-
+    } */
+    
+    /* private FlightInformation extractFlightInformation(FlightPassengerInformation fpInfo) throws Exception {
         FlightInformation flightInfo = fpInfo.getFlightInformation();
         if (flightInfo == null) {
             throw new Exception("Flight information not available");
         }
         return flightInfo;
-    }
-
-    private synchronized String extractFPIDate(String dateTime) throws ParseException {
-
+    } */
+    
+    /* private synchronized String extractFPIDate(String dateTime) throws ParseException {
         Date date = FPI_DATETIMEFORMAT.parse(dateTime);
         return FPI_DATEFORMAT.format(date);
-    }
-
+    } */
+    
     private synchronized String getDHIS2CurrentDate() {
-
         return DHIS2_DATEFORMAT.format(new Date());
     }
-
+    
+    private void clearoutImages(List<FlightPassengerInformation> fpInfos) {
+        for (FlightPassengerInformation fpInfo : fpInfos) {
+            this.clearoutImages(fpInfo);
+        }
+    }
+    
     private void clearoutImages(FlightPassengerInformation fpInfo) {
-
         PassengerInformation pInfo = fpInfo.getPassengerInformation();
         if (pInfo != null) {
             pInfo.setArrivalCardImage(DHIS2Constants.BIN_CLEAR_VAL);
@@ -739,27 +733,19 @@ public class DHIS2Service {
             pInfo.setPassportDataPage(DHIS2Constants.BIN_CLEAR_VAL);
         }
     }
-
-    public DHISResponse pushFlightPassengerInformation(FlightPassengerInformation fpInfo) {
-
+  
+    public DHISResponse pushFlightPassengerInformation(List<FlightPassengerInformation> fpInfos) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Invoke pushFlightPassengerInformation");
         }
         DHISResponse result = new DHISResponse();
         try {
-            List<String> teIds = new ArrayList<String>();
-            FlightInformation flightInfo = this.extractFlightInformation(fpInfo);
-            String flightNo = this.extractFlightNumber(flightInfo);
-            String date = this.extractFlightDate(flightInfo);
-            /* the set is to eliminate similar records on insertion */
-            Set<FlightPassengerInformation> passengersInFlight = new HashSet<>(this.getInfoBorderPassengerList(flightNo, date));
-            passengersInFlight.add(fpInfo);
-            teIds.addAll(this.saveFlightPassengerInformation(passengersInFlight));
+            List<String> teIds = this.saveFlightPassengerInformation(fpInfos);
             result.setStatus(DHIS2Constants.OK_CODE);
             result.setResponse(this.gson.toJson(teIds));
         } catch (Exception e) {
-            this.clearoutImages(fpInfo);
-            String message = "Error in pushing flight passenger info: " + fpInfo;
+            this.clearoutImages(fpInfos);
+            String message = "Error in pushing flight passenger info: " + fpInfos;
             LOGGER.error(message, e);
             result.setStatus(DHIS2Constants.INTERNAL_ERROR_CODE);
             result.setResponse(message + " - " + e.getMessage());

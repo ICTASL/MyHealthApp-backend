@@ -36,4 +36,9 @@ public class WebPortalController {
         model.addAttribute("mapKey", gAPIConfig.getMapKey());
         return "casePortal";
     }
+
+    @GetMapping(DASHBOARD_PATH)
+    public String dashboard(Model model) {
+        return "dashboard";
+    }
 }
