@@ -22,7 +22,7 @@ var app = new Vue({
         VueGoogleAutocomplete
     },
     data: {
-        submitStatus: null,
+        submitStatus: false,
         config: {
             noCalendar: true,
             enableTime: true,
@@ -107,10 +107,10 @@ var app = new Vue({
 
             this.$v.$touch();
             if (this.$v.$invalid){
-                this.saveCasesStatus = 'ERROR'
+              return
             }
             else {
-                this.submitStatus = 'PENDING'
+                this.submitStatus =true;
                 axios.post(url,{
                         "caseNumber" : this.cases.caseNumber,
                         "message_en":this.cases.message_en,
@@ -146,6 +146,7 @@ var app = new Vue({
                             'longitude':'0',
                             'latitude':'0'
                         });
+                        this.submitStatus =false;
                         this.$refs.makeAddress.clear();
                     }else if(response.status == 500){
                         Vue.swal({
