@@ -21,6 +21,8 @@ import lk.gov.govtech.covid19.dto.FlightInformation;
 import lk.gov.govtech.covid19.dto.FlightPassengerInformation;
 import lk.gov.govtech.covid19.dto.Geometry;
 import lk.gov.govtech.covid19.dto.LastDepartureInformation;
+import lk.gov.govtech.covid19.dto.MultiPolygon;
+import lk.gov.govtech.covid19.dto.OrganizationUnit;
 import lk.gov.govtech.covid19.dto.PassengerInformation;
 
 import lk.gov.govtech.covid19.dto.Patients;
@@ -125,7 +127,7 @@ public class DHIS2Service {
 
     public DHISResponse getOrganizationUnits() {
 
-        GetMethod getRequest = new GetMethod(dhisConfiguration.getUrl() + "/organisationUnits?paging=false");
+        GetMethod getRequest = new GetMethod(dhisConfiguration.getUrl() + "/organisationUnits?paging=false&fields=id,displayName,path,geometry,level");
         DHISResponse dhisResponse = new DHISResponse();
 
         try {
@@ -244,9 +246,61 @@ public class DHIS2Service {
 
     }
 
+
+    // check if a given point is inside a polygon
+    public boolean insidePolygon(Double[][] points, Double[] test) {
+        int i;
+        int j;
+        boolean result = false;
+        for (i = 0, j = points.length - 1; i < points.length; j = i++) {
+            if ((points[i][0] > test[0]) != (points[j][0] > test[0]) &&
+                (test[1] < (points[j][1] - points[i][1]) * (test[0] - points[i][0]) / (points[j][0]-points[i][0]) + points[i][1])) {
+                result = !result;
+            }
+        }
+        return result;
+    }
+
     private String getOrganization(String addresss){
 
-        getCordinates(addresss);
+        Double[] selectedCordinates = getCordinates(addresss);
+        
+        // getOrganizationUnits()
+        // TODO: we need to convert the response from DHIS to Orgunits here
+        // getOrganizationUnits();
+        OrganizationUnit[] organizationUnits = new OrganizationUnit[100];
+
+        for(OrganizationUnit orgUnit: organizationUnits){
+            // we only select MOH level
+            if(orgUnit.level != 4){
+                continue;
+            }
+
+            // if no bounds are defined for MOH
+            if(orgUnit.geometry == null){
+                continue;
+            }
+
+            if(insidePolygon(orgUnit.geometry[0].getBounds(), selectedCordinates)){
+                boolean isInside = true;
+
+                // multipolygon scenario
+                if(orgUnit.geometry.length > 1){
+                    for(int p=1;p<orgUnit.geometry.length;p++){
+                        if(insidePolygon(orgUnit.geometry[p].getBounds(), selectedCordinates)){
+                            isInside = false;
+                            break;
+                        }
+                    }
+                }
+
+                if(isInside){
+                    return orgUnit.id;
+                }
+            }
+        }
+
+        // if we find nothing, return Sri Lanka orgUni id
         return "dKl0ZJcEWbf";
     }
 
