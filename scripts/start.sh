@@ -1,6 +1,6 @@
 #!/bin/bash
 
-java -jar ./covid19-1.0.0-SNAPSHOT.jar&
+nohup java -jar ./covid19.jar&
 
 if [ $? -eq 0 ]
 then
