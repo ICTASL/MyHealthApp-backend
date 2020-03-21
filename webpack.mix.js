@@ -16,6 +16,7 @@ require('laravel-mix-purgecss');
 mix
     .js('src/main/resources/js/alerts.js', 'src/main/resources/static/js/alerts.js')
     .js('src/main/resources/js/Case.js', 'src/main/resources/static/js/Case.js')
+    .js('src/main/resources/js/dashboard.js', 'src/main/resources/static/js/dashboard.js')
     .sass('src/main/resources/css/app.sass', 'src/main/resources/static/css/app.css')
     .options({
             processCssUrls: false,
