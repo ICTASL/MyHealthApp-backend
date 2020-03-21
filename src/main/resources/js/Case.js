@@ -33,9 +33,6 @@ var app = new Vue({
             time_24hr: true,
             dateFormat: "H:i"
         },
-        address: {
-            'address':''
-        },
         configDate:{
             enableTime: false,
         },
@@ -136,11 +133,11 @@ var app = new Vue({
 
             })
         },
+
         deleteLocation(index) {
             this.locations.splice(index, 1)
         },
         setSelected(inputId,value){
-
             let location = this.locations[inputId];
             location.area = value.name;
             location.longitude = value.lon;
