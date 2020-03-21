@@ -6,7 +6,7 @@
 
     <id>dist</id>
 
-    <baseDirectory>/covid19</baseDirectory>
+    <baseDirectory>/${project.artifactId}-${project.version}</baseDirectory>
 
     <formats>
         <format>zip</format>
@@ -32,7 +32,7 @@
         </fileSet>
 
         <fileSet>
-            <directory>${project.build.directory}</directory>
+            <directory>${project.basedir}/scripts</directory>
             <includes>
                 <include>start.sh</include>
                 <include>stop.sh</include>
@@ -45,7 +45,7 @@
         <file>
             <source>${project.basedir}/target/covid19-${project.version}.jar</source>
             <outputDirectory>/</outputDirectory>
-            <destName>${project.artifactId}-${project.version}.jar</destName>
+            <destName>${project.artifactId}.jar</destName>
         </file>
     </files>
 
