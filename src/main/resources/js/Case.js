@@ -16,6 +16,7 @@ Vue.component('v-select', vSelect,{
 const axios = require('axios').default;
 
 import {required,maxLength} from 'vuelidate/lib/validators';
+
 import cities from'./post_codes'
 
 var app = new Vue({
@@ -31,9 +32,6 @@ var app = new Vue({
             enableTime: true,
             time_24hr: true,
             dateFormat: "H:i"
-        },
-        address: {
-            'address':''
         },
         configDate:{
             enableTime: false,
@@ -59,41 +57,39 @@ var app = new Vue({
                 'latitude':'',
                  'locationA':'',
 
-
-
             }
         ]
     },
 
     validations:{
-        cases:{
-            caseNumber:{
+        cases: {
+            caseNumber: {
                 required,
                 maxLength: maxLength(100)
             },
 
 
-            isLocal:{
+            isLocal: {
                 required,
 
             },
 
-            detectedFrom:{
+            detectedFrom: {
                 required,
 
             },
 
 
-            message_en:{
+            message_en: {
                 required,
                 maxLength: maxLength(500)
             },
 
-            message_si:{
+            message_si: {
                 maxLength: maxLength(500)
             },
 
-            message_ta:{
+            message_ta: {
                 maxLength: maxLength(500)
             },
 
@@ -118,11 +114,8 @@ var app = new Vue({
                     required
                 }
 
-
-
             }
         }
-
 
 
     },
@@ -204,8 +197,7 @@ var app = new Vue({
 
                         });
                         this.submitStatus =false;
-                        this.$v.$reset();
-
+                        this.$v.$reset()
 
                     }else if(response.status == 500){
                         Vue.swal({
