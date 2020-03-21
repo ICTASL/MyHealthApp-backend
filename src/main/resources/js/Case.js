@@ -142,7 +142,6 @@ var app = new Vue({
                         });
                         this.submitStatus =false;
                         this.$v.$reset()
-                        console.log(this.$refs.autocomplete.clear())
                         this.$refs.autocomplete.clear()
 
                     }else if(response.status == 500){
