@@ -147,7 +147,9 @@ var app = new Vue({
                             'latitude':'0'
                         });
                         this.submitStatus =false;
+
                         this.$refs.makeAddress.clear();
+
                     }else if(response.status == 500){
                         Vue.swal({
                             title: 'Something Went Wrong!',
