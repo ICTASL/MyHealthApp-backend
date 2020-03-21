@@ -26,7 +26,7 @@ import java.io.IOException;
 
 import static lk.gov.govtech.covid19.util.Constants.*;
 
-@Slf4j
+@Slf4j(topic="PortalAccess")
 @Configuration
 @EnableWebSecurity
 public class WebAuthConfiguration extends WebSecurityConfigurerAdapter {

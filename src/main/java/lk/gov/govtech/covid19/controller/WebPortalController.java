@@ -15,7 +15,7 @@ import static lk.gov.govtech.covid19.util.Constants.*;
 /**
  * Controller class for all health promotion bureau related APIs. i.e: from web portal
  */
-@Slf4j
+@Slf4j(topic="PortalAccess")
 @Controller
 @RequestMapping(value = Constants.PORTAL_API_CONTEXT)
 public class WebPortalController {
@@ -30,20 +30,20 @@ public class WebPortalController {
 
     @GetMapping(NEWS_PATH)
     public String news(Model model, Principal principal) {
-        log.info("Page visit:{} username:{}", "/portal/news", principal.getName());
+        log.info("GET {} username:{}", "/portal/news", principal.getName());
         return "newsPortal";
     }
 
     @GetMapping(CASES_PATH)
     public String cases(Model model, Principal principal) {
-        log.info("Page visit:{} username:{}", "/portal/cases", principal.getName());
+        log.info("GET {} username:{}", "/portal/cases", principal.getName());
         model.addAttribute("mapKey", gAPIConfig.getMapKey());
         return "casePortal";
     }
 
     @GetMapping(DASHBOARD_PATH)
     public String dashboard(Model model, Principal principal) {
-        log.info("Page visit:{} username:{}", "/portal/cases", principal.getName());
+        log.info("GET {} username:{}", "/portal/cases", principal.getName());
         return "dashboard";
     }
 }

@@ -12,16 +12,27 @@
             <fileNamePattern>logs/covid-19-%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>14</maxHistory>
         </rollingPolicy>
-
         <encoder>
             <Pattern>[%d{HH:mm:ss.SSS}]-${log.name}-[%thread] %-5level %logger{35} - %msg %n</Pattern>
         </encoder>
         <append>true</append>
     </appender>
 
+    <appender name="ACCESS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/access/access.%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%d{HH:mm:ss.SSS}]-${log.name}-[%thread] %-5level %logger{35} - %msg %n</pattern>
+        </encoder>
+    </appender>
 
 
     <logger name="lk.gov.govtech.covid19" level="INFO"  additivity="true"/>
+
+    <logger name="PortalAccess" level="INFO" additivity="false">
+        <appender-ref ref="ACCESS"/>
+    </logger>
 
     <root>
         <level value="INFO" />
