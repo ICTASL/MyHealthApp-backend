@@ -36,6 +36,7 @@ var app = new Vue({
             enableTime: false,
         },
 
+
         cases:{
             'caseNumber':'',
             'isLocal':'',
@@ -54,21 +55,23 @@ var app = new Vue({
                 'area':'',
                 'longitude':'',
                 'latitude':'',
-                 'locationA':'',
+                'locationA':'',
+
+
 
             }
         ]
     },
 
     validations:{
-        cases: {
-            caseNumber: {
+        cases:{
+            caseNumber:{
                 required,
                 maxLength: maxLength(100)
             },
 
 
-            isLocal: {
+            isLocal:{
                 required,
 
             },
@@ -78,18 +81,19 @@ var app = new Vue({
 
             },
 
+
             message_en:{
                 required,
                 maxLength: maxLength(500)
             },
-            message_si: {
+
+            message_si:{
                 maxLength: maxLength(500)
             },
 
-            message_ta: {
+            message_ta:{
                 maxLength: maxLength(500)
             },
-
 
         },
 
@@ -112,8 +116,11 @@ var app = new Vue({
                     required
                 }
 
+
+
             }
         }
+
 
 
     },
@@ -135,8 +142,11 @@ var app = new Vue({
 
         deleteLocation(index) {
             this.locations.splice(index, 1)
+
         },
         setSelected(inputId,value){
+
+
             let location = this.locations[inputId];
             location.area = value.name;
             location.longitude = value.lon;
@@ -156,8 +166,8 @@ var app = new Vue({
                 axios.post(url,{
                         "caseNumber" : this.cases.caseNumber,
                         "isLocal" : this.cases.isLocal,
-                    "detectedFrom" : this.cases.detectedFrom,
-                    "message_en":this.cases.message_en,
+                        "detectedFrom" : this.cases.detectedFrom,
+                        "message_en":this.cases.message_en,
                         "message_si":this.cases.message_si,
                         "message_ta":this.cases.message_ta,
                         "locations": this.locations
