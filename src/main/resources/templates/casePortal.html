@@ -63,8 +63,8 @@
             <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <h4 class="text-lg font-bold text-white">MyHealth Sri Lanka Management Portal</h4>
                 <div class="flex-shrink-0">
-<!--                    <img class="block lg:hidden h-8 w-auto" th:src="@{/Covid-19.png}" alt="Covid-19"  />-->
-<!--                    <img class="hidden lg:block h-8 w-auto" th:src="@{/Covid-19.png}"alt="Covid-19" />-->
+                    <!--                    <img class="block lg:hidden h-8 w-auto" th:src="@{/Covid-19.png}" alt="Covid-19"  />-->
+                    <!--                    <img class="hidden lg:block h-8 w-auto" th:src="@{/Covid-19.png}"alt="Covid-19" />-->
                 </div>
                 <div class="hidden sm:block sm:ml-6">
                     <div class="flex">
@@ -227,7 +227,7 @@
                             <label class="px-4 text-base text-gray-700 w-full" for="date">Date<span class="text-red-400">*</span></label>
                             <div class="px-4">
                                 <flat-pickr class="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                           v-model="v.date.$model" :config="configDate" placeholder="Select a date" :name="`locations[${index}][date]`"></flat-pickr>
+                                            v-model="v.date.$model" :config="configDate" placeholder="Select a date" :name="`locations[${index}][date]`"></flat-pickr>
 
                                 <div v-if="v.date.$dirty">
                                     <p class="text-red-500 text-xs italic" v-if="!v.date.required">Date  is required</p>
