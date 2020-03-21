@@ -1,23 +1,18 @@
 import Vue from 'vue'
 import flatPickr from 'vue-flatpickr-component';
+import 'flatpickr/dist/flatpickr.css';
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import VueGoogleAutocomplete from './GoogleAutoComplete'
 import Vuelidate from 'vuelidate'
-import vSelect from 'vue-select'
 
 Vue.use(Vuelidate);
 
 Vue.use(VueSweetalert2);
 
-Vue.component('v-select', vSelect,{
-    props:['inputId']
-})
-
 const axios = require('axios').default;
 
 import {required} from 'vuelidate/lib/validators';
-import cities from'./post_codes'
 
 var app = new Vue({
 
@@ -27,7 +22,6 @@ var app = new Vue({
         VueGoogleAutocomplete
     },
     data: {
-        attributes:'',
         submitStatus: false,
         config: {
             noCalendar: true,
@@ -35,28 +29,29 @@ var app = new Vue({
             time_24hr: true,
             dateFormat: "H:i"
         },
+        address: {
+            'address':''
+        },
         configDate:{
             enableTime: false,
         },
-
-        search:'',
         cases:{
             'caseNumber':'',
-            'isLocal':'',
-            'detectedFrom':'',
             'message_en':'',
             'message_si':'',
             'message_ta':''
         },
-
-        sl_postal_code: cities,
-
         locations:[
             {
                 'date':'',
-                'area':'',
+                'from':'',
+                'to':'',
+                'address':'',
                 'longitude':'',
-                'latitude':''
+                'latitude':'',
+                'from_date':'',
+                'to_date':'',
+
 
             }
         ]
@@ -70,6 +65,14 @@ var app = new Vue({
 
             message_en:{
                 required
+            },
+
+            message_si:{
+                required
+            },
+
+            message_ta:{
+                required
             }
         },
 
@@ -79,27 +82,24 @@ var app = new Vue({
 
 
     methods:{
-
         addLocation(){
             this.locations.push({
                 'date':'',
-                'area':'',
-                'longitude':'',
-                'latitude':''
-
+                'from':'',
+                'to':'',
+                'address':'',
+                'longitude':'0',
+                'latitude':'0'
             })
         },
-        deleteLocation(index){
-          this.locations.splice(index,1)
-        },
 
-        setSelected(inputId,value){
+        getAddressData: function (addressData, placeResultData, id ,index) {
 
-            let location = this.locations[inputId];
-            location.area = value.name;
-            location.longitude = value.lon;
-            location.latitude = value.lat;
-            this.locations[inputId] = location;
+            let location = this.locations[id];
+            location.address = placeResultData.formatted_address;
+            location.longitude = addressData.longitude;
+            location.latitude = addressData.latitude;
+            this.locations[id] = location;
         },
 
         saveCases(){
@@ -113,9 +113,7 @@ var app = new Vue({
                 this.submitStatus =true;
                 axios.post(url,{
                         "caseNumber" : this.cases.caseNumber,
-                        "isLocal" : this.cases.isLocal,
-                    "detectedFrom" : this.cases.detectedFrom,
-                    "message_en":this.cases.message_en,
+                        "message_en":this.cases.message_en,
                         "message_si":this.cases.message_si,
                         "message_ta":this.cases.message_ta,
                         "locations": this.locations
@@ -142,12 +140,15 @@ var app = new Vue({
                         this.locations = [];
                         this.locations.push({
                             'date':'',
-                            'area':'',
-                            'longitude':'',
-                            'latitude':''
+                            'from':'',
+                            'to':'',
+                            'address':'',
+                            'longitude':'0',
+                            'latitude':'0'
                         });
                         this.submitStatus =false;
-                        this.$v.$reset()
+
+                        this.$refs.makeAddress.clear();
 
                     }else if(response.status == 500){
                         Vue.swal({
@@ -157,7 +158,7 @@ var app = new Vue({
 
                     }
                 }).catch(e=>{
-                   console.log(e)
+                    console.log(e);
                 })
             }
 

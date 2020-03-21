@@ -105,6 +105,7 @@ new Vue({
 
        Update(){
            let url= "/application/dashboard/status";
+           this.submitStatus =true;
 
            axios.put(url,{
                    "lk_total_case" : this.lk_total_case,
@@ -130,8 +131,9 @@ new Vue({
                        icon: 'success'
                    });
 
+                   this.truesubmitStatus = true
                    this.fetchData();
-
+                   this.submitStatus =false;
 
 
                }else if(response.status == 500){

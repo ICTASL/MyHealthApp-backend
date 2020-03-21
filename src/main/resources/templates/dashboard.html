@@ -73,9 +73,8 @@
 
 <div id="app" class="flex flex-col container max-w-6xl  mx-auto bg-gray-50 py-12 px-3 sm:px-6 lg:px-8">
     <div class="w-full flex flex-col mt-10">
-        <div class="flex flex-row justify-between items-center">
+        <div>
             <h1 class="text-4xl font-bold">Dashboard</h1>
-            <h3><span class="font-medium">Last Updated:</span>{{last_update_time}}</h3>
         </div>
     </div>
 
@@ -260,9 +259,8 @@
     <!--    //recover Cases-->
     <modal name="deaths-cases" height="auto">
         <div class="p-4">
-            <div class="flex flex-row justify-between items-center">
+            <div>
                 <h2 class="text-lg font-normal">Update the "Deaths" Records</h2>
-
             </div>
             <form @submit.prevent="DDsubmit" method="post">
                 <div class="flex justify-between items-center mt-3">
