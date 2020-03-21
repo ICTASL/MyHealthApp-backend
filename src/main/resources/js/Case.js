@@ -33,6 +33,9 @@ var app = new Vue({
             time_24hr: true,
             dateFormat: "H:i"
         },
+        address: {
+            'address':''
+        },
         configDate:{
             enableTime: false,
         },
@@ -92,7 +95,6 @@ var app = new Vue({
             message_ta: {
                 maxLength: maxLength(500)
             },
-
         },
 
         locations:{
@@ -136,7 +138,6 @@ var app = new Vue({
         },
         deleteLocation(index) {
             this.locations.splice(index, 1)
-
         },
         setSelected(inputId,value){
 
