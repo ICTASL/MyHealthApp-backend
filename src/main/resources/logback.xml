@@ -7,7 +7,7 @@
         </encoder>
     </appender>
 
-    <appender name="dailyRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender" createOnDemand="true">
+    <appender name="DAILYROLLINGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender" createOnDemand="true">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>logs/covid-19-%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>14</maxHistory>
@@ -19,11 +19,13 @@
         <append>true</append>
     </appender>
 
-    <logger name="lk.gov.govtech.covid19" level="INFO"  additivity="false"/>
+
+
+    <logger name="lk.gov.govtech.covid19" level="INFO"  additivity="true"/>
 
     <root>
         <level value="INFO" />
-        <appender-ref ref="dailyRollingFileAppender" />
+        <appender-ref ref="DAILYROLLINGFILE" />
         <appender-ref ref="STDOUT" />
     </root>
 
