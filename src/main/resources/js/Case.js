@@ -32,10 +32,12 @@ var app = new Vue({
             time_24hr: true,
             dateFormat: "H:i"
         },
+        address: {
+            'address':''
+        },
         configDate:{
             enableTime: false,
         },
-
 
         cases:{
             'caseNumber':'',
@@ -139,13 +141,11 @@ var app = new Vue({
 
             })
         },
-
         deleteLocation(index) {
             this.locations.splice(index, 1)
 
         },
         setSelected(inputId,value){
-
 
             let location = this.locations[inputId];
             location.area = value.name;
@@ -204,7 +204,8 @@ var app = new Vue({
 
                         });
                         this.submitStatus =false;
-                        this.$v.$reset()
+                        this.$v.$reset();
+
 
                     }else if(response.status == 500){
                         Vue.swal({
