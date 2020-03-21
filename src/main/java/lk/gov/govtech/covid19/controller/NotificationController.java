@@ -24,7 +24,7 @@ public class NotificationController {
 
     @PostMapping(path = "/alert/add", consumes = "application/json", produces = "application/json")
     public ResponseEntity addNewAlert(@RequestBody AlertNotificationRequest request, Principal principal){
-        log.info("POST {} username:{}", "/alert/add", principal.getName());
+        log.info("POST {} username:{}", "/notification/alert/add", principal.getName());
         notificationService.addAlertNotificaiton(request);
 
         return ResponseEntity.accepted().build();
@@ -32,7 +32,7 @@ public class NotificationController {
 
     @PostMapping(path = "/case/add", consumes = "application/json", produces = "application/json")
     public ResponseEntity addNewCase(@RequestBody CaseNotificationRequest request, Principal principal){
-        log.info("POST {} username:{}", "/case/add", principal.getName());
+        log.info("POST {} username:{}", "/notification/case/add", principal.getName());
         notificationService.addCaseNotification(request);
 
         return ResponseEntity.accepted().build();
