@@ -76,9 +76,13 @@ var app = new Vue({
                             this.alert.messageSi='',
                             this.alert.messageTa=''
                         this.submitStatus = false;
+                        this.$v.$reset()
                     }
                 }).catch(e=>{
-                    console.log(e);
+                    Vue.swal({
+                        title: 'Something Went Wrong!',
+                        icon: 'error'
+                    });
                 })
             }
 

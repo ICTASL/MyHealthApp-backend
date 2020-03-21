@@ -29,12 +29,11 @@ var app = new Vue({
             time_24hr: true,
             dateFormat: "H:i"
         },
-        address: {
-            'address':''
-        },
         configDate:{
             enableTime: false,
         },
+
+        search:'',
         cases:{
             'caseNumber':'',
             'message_en':'',
@@ -65,14 +64,6 @@ var app = new Vue({
 
             message_en:{
                 required
-            },
-
-            message_si:{
-                required
-            },
-
-            message_ta:{
-                required
             }
         },
 
@@ -91,6 +82,9 @@ var app = new Vue({
                 'longitude':'0',
                 'latitude':'0'
             })
+        },
+        clearField(){
+            this.search = null
         },
 
         getAddressData: function (addressData, placeResultData, id ,index) {
@@ -147,8 +141,9 @@ var app = new Vue({
                             'latitude':'0'
                         });
                         this.submitStatus =false;
-
-                        this.$refs.makeAddress.clear();
+                        this.$v.$reset()
+                        console.log(this.$refs.autocomplete.clear())
+                        this.$refs.autocomplete.clear()
 
                     }else if(response.status == 500){
                         Vue.swal({
@@ -158,7 +153,7 @@ var app = new Vue({
 
                     }
                 }).catch(e=>{
-                    console.log(e);
+                   console.log(e)
                 })
             }
 
