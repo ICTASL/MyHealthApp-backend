@@ -9,6 +9,8 @@ import java.util.List;
 public class CaseNotificationEntity {
     private String id;
     private String caseNumber;
+    private boolean isLocal;
+    private String detectedFrom;
     private List<Location> locations;
     private String messageEn;
     private String messageSi;

@@ -12,6 +12,8 @@ public class CaseNotificationEntityRowMapper implements RowMapper<CaseNotificati
         CaseNotificationEntity entity = new CaseNotificationEntity();
         entity.setId(rs.getString("id"));
         entity.setCaseNumber(rs.getString("case_number"));
+        entity.setLocal(rs.getBoolean("is_local"));
+        entity.setDetectedFrom(rs.getString("detected_from"));
         entity.setMessageEn(rs.getString("message_en"));
         entity.setMessageSi(rs.getString("message_si"));
         entity.setMessageTa(rs.getString("message_ta"));

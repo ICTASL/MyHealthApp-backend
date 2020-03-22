@@ -48,7 +48,7 @@ public class NotificationService {
         int id = repository.addAlertNotification(request);
         Map<String, String> data = new HashMap<>();
 
-        executorService.submit(() -> {
+            executorService.submit(() -> {
             PushNotificationRequest pushNotificationRequest = new PushNotificationRequest();
             pushNotificationRequest.setTopic(firebaseConfiguration.getTopic());
             pushNotificationRequest.setTitle(request.getSource());
