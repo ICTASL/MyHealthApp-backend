@@ -47,6 +47,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -670,14 +671,6 @@ public class DHIS2Service {
         event.setTrackedEntityInstance(teInstanceId);
     }
 
-    private Event generateFlightInfoEvent(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
-
-        Event event = new Event();
-        this.populateCommonEventValues(event, teInstanceId);
-        event.setDataValues(this.generateFlightInfoDataElements(fpInfo));
-        return event;
-    }
-
     private List<DataElement> generateLastDepartureDataElements(FlightPassengerInformation fpInfo) throws Exception {
 
         LastDepartureInformation ldInfo = fpInfo.getLastDepartureInformation();
@@ -692,29 +685,16 @@ public class DHIS2Service {
         return result;
     }
 
-    private Event generateLastDepartureEvent(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
-
-        Event event = new Event();
-        this.populateCommonEventValues(event, teInstanceId);
-        event.setDataValues(this.generateLastDepartureDataElements(fpInfo));
-        return event;
-    }
-
-    private Event generateFPInfoEvent(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
-
-        Event event = new Event();
-        this.populateCommonEventValues(event, teInstanceId);
-        event.setDataValues(this.generateFPInfoDataElements(fpInfo));
-        return event;
-    }
-
     private List<Event> generateEvents(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
-
-        List<Event> result = new ArrayList<Event>();
-        result.add(this.generateFlightInfoEvent(fpInfo, teInstanceId));
-        result.add(this.generateFPInfoEvent(fpInfo, teInstanceId));
-        result.add(this.generateLastDepartureEvent(fpInfo, teInstanceId));
-        return result;
+        // at this moment, we will put all the data elements to a single event
+        Event event = new Event();
+        this.populateCommonEventValues(event, teInstanceId);
+        List<DataElement> dataElements = new ArrayList<>();
+        dataElements.addAll(this.generateFlightInfoDataElements(fpInfo));
+        dataElements.addAll(this.generateFPInfoDataElements(fpInfo));
+        dataElements.addAll(this.generateLastDepartureDataElements(fpInfo));
+        event.setDataValues(dataElements);
+        return Arrays.asList(event);
     }
 
     private void createFPEvents(FlightPassengerInformation fpInfo, String teInstanceId) throws Exception {
