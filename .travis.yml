@@ -1,5 +1,8 @@
 language: java
 
+script:
+    - ./mvnw clean install -B
+
 branches:
     only:
     - master
