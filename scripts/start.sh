@@ -9,4 +9,4 @@ fi
 
 sleep 2
 
-tail -150f logs/`ls -alh logs| head -n 4 | tail -n 1 | awk '{print $9}'`
+tail -150f logs/`ls -alt logs  | grep covid-19 | head -n 1 | awk '{print $9}'`
