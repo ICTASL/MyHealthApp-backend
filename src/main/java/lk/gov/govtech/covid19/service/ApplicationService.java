@@ -1,6 +1,5 @@
 package lk.gov.govtech.covid19.service;
 
-import com.sun.corba.se.impl.ior.NewObjectKeyTemplateBase;
 import lk.gov.govtech.covid19.dto.AlertNotificationResponse;
 import lk.gov.govtech.covid19.dto.CaseNotificationResponse;
 import lk.gov.govtech.covid19.dto.StatusResponse;
