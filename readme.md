@@ -31,6 +31,8 @@ and add the private key from Firebase Admin SDK.
   (if the value of `firebase.configurations.path` is not changed, the json file bundled in the jar will be referred)
 - go into the folder where the jar is (eg. `cd target`)
 - run `java -jar covid19-1.0.0-SNAPSHOT.jar`. Check if the jar version matches.
+- NOTE: access logs will get stored in the tomcat folder (tomcat/access/).
+ These logs can be disabled from the application.yml
 
 ## APIs 
 ----
