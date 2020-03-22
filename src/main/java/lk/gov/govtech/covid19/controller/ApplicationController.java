@@ -28,8 +28,10 @@ public class ApplicationController {
         AlertNotificationResponse response = applicationService.getAlertNotification(messageId, lang);
 
         if (response == null) {
+            log.error("Invalid alert id");
             return ResponseEntity.notFound().build();
         } else {
+            log.info("Alert obtained with alert id {} and language {}",messageId,lang);
             return ResponseEntity.ok().body(response);
         }
 
@@ -37,7 +39,7 @@ public class ApplicationController {
 
     @GetMapping(path = "/alert/latest", produces = "application/json")
     public ResponseEntity getLastAlertId() {
-
+        log.info("Latest alert obtained");
         return ResponseEntity.ok().body(applicationService.getLastAlertNotificationId());
 
     }
@@ -47,8 +49,10 @@ public class ApplicationController {
         CaseNotificationResponse response = applicationService.getCaseNotification(caseId, lang);
 
         if (response == null) {
+            log.error("Invalid case Id");
             return ResponseEntity.notFound().build();
         } else {
+            log.info("Case obtained with case ID {} and language {}",caseId,lang);
             return ResponseEntity.ok().body(response);
         }
 
@@ -56,6 +60,7 @@ public class ApplicationController {
 
     @GetMapping(path = "/case/latest")
     public ResponseEntity getLastCaseId(){
+        log.info("Latest case obtained");
         return ResponseEntity.ok().body(applicationService.getLastCaseNotificationId());
     }
 
@@ -65,8 +70,10 @@ public class ApplicationController {
         StatusResponse response = applicationService.getStatus();
 
         if (response == null) {
+            log.error("Dashboard status not found");
             return ResponseEntity.notFound().build();
         } else {
+            log.info("Dashboard status obtained");
             return ResponseEntity.ok().body(response);
         }
 
@@ -77,8 +84,10 @@ public class ApplicationController {
     public ResponseEntity updateStatus(@RequestBody UpdateStatusRequest request){
 
         if(request==null){
+            log.error("Empty request found");
             return ResponseEntity.noContent().build();
         }else {
+            log.info("Dashboard status updated");
             applicationService.updateStatus(request);
             return ResponseEntity.accepted().build();
         }

@@ -22,7 +22,7 @@ public class NotificationController {
 
     @PostMapping(path = "/alert/add", consumes = "application/json", produces = "application/json")
     public ResponseEntity addNewAlert(@RequestBody AlertNotificationRequest request){
-
+        log.info("New alert added with title {}",request.getTitle());
         notificationService.addAlertNotificaiton(request);
 
         return ResponseEntity.accepted().build();
@@ -30,7 +30,7 @@ public class NotificationController {
 
     @PostMapping(path = "/case/add", consumes = "application/json", produces = "application/json")
     public ResponseEntity addNewCase(@RequestBody CaseNotificationRequest request){
-
+        log.info("New case added with case number {}",request.getCaseNumber());
         notificationService.addCaseNotification(request);
 
         return ResponseEntity.accepted().build();
