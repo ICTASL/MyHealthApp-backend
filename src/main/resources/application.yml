@@ -1,5 +1,10 @@
 server:
     port: 8000
+    tomcat:
+        basedir: "tomcat"
+        accesslog:
+            enabled: true
+            directory: access
 
 spring:
     application:
