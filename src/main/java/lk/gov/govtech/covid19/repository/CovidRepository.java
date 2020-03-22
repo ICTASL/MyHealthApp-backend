@@ -2,7 +2,10 @@ package lk.gov.govtech.covid19.repository;
 
 import lk.gov.govtech.covid19.config.DatasourceConfiguration;
 import lk.gov.govtech.covid19.datasource.CovidDatasource;
-import lk.gov.govtech.covid19.dto.*;
+import lk.gov.govtech.covid19.dto.AlertNotificationRequest;
+import lk.gov.govtech.covid19.dto.CaseNotificationRequest;
+import lk.gov.govtech.covid19.dto.Location;
+import lk.gov.govtech.covid19.dto.UpdateStatusRequest;
 import lk.gov.govtech.covid19.model.AlertNotificationEntity;
 import lk.gov.govtech.covid19.model.CaseNotificationEntity;
 import lk.gov.govtech.covid19.model.StatusEntity;
@@ -78,12 +81,14 @@ public class CovidRepository {
 
         KeyHolder holder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO `epid_case` (`case_number`, `message_en`, `message_si`, `message_ta`) VALUES (?,?,?,?)",
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO `epid_case` (`case_number`, `is_local`, `detected_from`, `message_en`, `message_si`, `message_ta`) VALUES (?,?,?,?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, request.getCaseNumber());
-            ps.setString(2, request.getMessage_en());
-            ps.setString(3, request.getMessage_si());
-            ps.setString(4, request.getMessage_ta());
+            ps.setBoolean(2, request.isLocal());
+            ps.setString(3, request.getDetectedFrom());
+            ps.setString(4, request.getMessage_en());
+            ps.setString(5, request.getMessage_si());
+            ps.setString(6, request.getMessage_ta());
 
             return ps;
         }, holder);
@@ -96,8 +101,8 @@ public class CovidRepository {
     private void addCaseLocation(List<Location> locations, Integer caseId) {
 
         for (Location location : locations) {
-            jdbcTemplate.update("INSERT INTO `epid_location` (`date`, `from`, `to`, `address`, `longitude`, `latitude`, `case_id`) VALUES (?,?,?,?,?,?,?)",
-                    location.getDate(),location.getDate() + " " + location.getFrom(), location.getDate() + " " + location.getTo(), location.getAddress(), location.getLongitude(), location.getLatitude(), caseId);
+            jdbcTemplate.update("INSERT INTO `epid_location` (`case_id`, `date`, `area`, `longitude`, `latitude`) VALUES (?,?,?,?,?)",
+                    caseId, location.getDate(), location.getArea(), location.getLongitude(), location.getLatitude());
         }
 
     }

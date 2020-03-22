@@ -19,6 +19,8 @@ CREATE TABLE `notification` (
 CREATE TABLE `epid_case` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `case_number` VARCHAR(100) NULL,
+  `is_local` TINYINT(1) NULL,
+  `detected_from` VARCHAR(45) NULL,
   `message_en` VARCHAR(500) NULL,
   `message_si` VARCHAR(500) NULL,
   `message_ta` VARCHAR(500) NULL,
@@ -30,9 +32,7 @@ CREATE TABLE `epid_location` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `case_id` INT NULL,
   `date` DATE NULL,
-  `from` DATETIME NULL,
-  `to` DATETIME NULL,
-  `address` VARCHAR(100) NULL,
+  `area` VARCHAR(100) NULL,
   `longitude` VARCHAR(45) NULL,
   `latitude` VARCHAR(45) NULL,
   PRIMARY KEY (`id`));

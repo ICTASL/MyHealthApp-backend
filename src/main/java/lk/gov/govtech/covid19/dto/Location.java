@@ -8,9 +8,7 @@ import java.util.Date;
 @Data
 public class Location {
     private String date;
-    private String from;
-    private String to;
-    private String address;
+    private String area;
     private String longitude;
     private String latitude;
 }

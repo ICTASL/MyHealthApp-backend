@@ -14,9 +14,7 @@ public class CaseNotificationLocationMapper implements RowMapper<Location> {
         Location location = new Location();
 
         location.setDate(rs.getString("date"));
-        location.setFrom(rs.getString("from"));
-        location.setTo(rs.getString("to"));
-        location.setAddress(rs.getString("address"));
+        location.setArea(rs.getString("area"));
         location.setLongitude(rs.getString("longitude"));
         location.setLatitude(rs.getString("latitude"));
 
