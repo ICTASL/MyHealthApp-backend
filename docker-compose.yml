@@ -1,0 +1,53 @@
+version: "2.1"
+
+volumes:
+  files:
+    driver: local
+  mysql:
+    driver: local
+  backup:
+    driver: local
+
+services:
+  covid19-service:
+    build: ./
+    expose:
+      - "8000"
+    restart: always
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    environment:
+      - COVID19_SERVICE_DOMAIN="localhost"
+    healthcheck:
+      test: ["CMD", "/usr/bin/healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - files:/mnt/data
+
+  db:
+    image: webhippie/mariadb:latest
+    restart: always
+    expose:
+      - "3306"
+    ports:
+      - 3306:3306
+    environment:
+      - MARIADB_ROOT_PASSWORD=root
+      - MARIADB_USERNAME=root
+      - MARIADB_PASSWORD=root
+      - MARIADB_DATABASE=covid19_db
+      - MARIADB_MAX_ALLOWED_PACKET=128M
+      - MARIADB_INNODB_LOG_FILE_SIZE=64M
+    healthcheck:
+      test: ["CMD", "/usr/bin/mysql --user=root --password=root--execute \"SHOW DATABASES;\""]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - mysql:/var/lib/mysql
+      - backup:/var/lib/backup
+
