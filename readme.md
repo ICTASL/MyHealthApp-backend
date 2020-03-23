@@ -24,11 +24,7 @@ Please keep the following in mind when submitting your valuable contributions ðŸ
 ### As a Packaged Application
 - build project using `mvn clean install`
 - copy `application.yml` to the folder where the jar is (`target` if it has not been moved)
-- create a new file `fcm.json` in the same folder, and copy 
-contents of file `covid-19-lk-dev-firebase-adminsdk.json` in `/src/main/resources/credentials/` into the new `fcm.json`,
-and add the private key from Firebase Admin SDK.
-- change the value of `firebase.configurations.path` in application.yml to `file:fcm.json` or `file:<absolute path of fcm.json>` 
-  (if the value of `firebase.configurations.path` is not changed, the json file bundled in the jar will be referred)
+- Replace `/src/main/resources/credentials/covid-19-lk-dev-firebase-adminsdk.json` with a valid credential file.
 - go into the folder where the jar is (eg. `cd target`)
 - run `java -jar covid19-1.0.0-SNAPSHOT.jar`. Check if the jar version matches.
 - NOTE: access logs will get stored in the tomcat folder (tomcat/access/).
