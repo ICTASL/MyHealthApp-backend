@@ -1,26 +1,27 @@
 <template>
     <input
-        ref="autocomplete"
-        type="text"
-        :class="classname"
-        :id="id"
-        :placeholder="placeholder"
-        v-model="autocompleteText"
-        @focus="onFocus()"
-        @blur="onBlur()"
-        @change="onChange"
-        @keypress="onKeyPress"
-        @keyup="onKeyUp"
+            ref="autocomplete"
+            type="text"
+            :class="classname"
+            :id="id"
+            :placeholder="placeholder"
+            v-model="autocompleteText"
+            @focus="onFocus()"
+            @blur="onBlur()"
+            @change="onChange"
+            @keypress="onKeyPress"
+            @keyup="onKeyUp"
     />
 </template>
 
 <script>
     const ADDRESS_COMPONENTS = {
+        subpremise : 'short_name',
         street_number: 'short_name',
         route: 'long_name',
         locality: 'long_name',
         administrative_area_level_1: 'short_name',
-        administrative_area_level_2: 'county',
+        administrative_area_level_2: 'long_name',
         country: 'long_name',
         postal_code: 'short_name'
     };
@@ -33,37 +34,37 @@
         name: 'VueGoogleAutocomplete',
 
         props: {
-          id: {
-            type: String,
-            required: true
-          },
+            id: {
+                type: String,
+                required: true
+            },
 
-          classname: String,
+            classname: String,
 
-          placeholder: {
-            type: String,
-            default: 'Start typing'
-          },
+            placeholder: {
+                type: String,
+                default: 'Start typing'
+            },
 
-          types: {
-            type: String,
-            default: 'address'
-          },
+            types: {
+                type: String,
+                default: 'address'
+            },
 
-          country: {
-            type: [String, Array],
-            default: null
-          },
+            country: {
+                type: [String, Array],
+                default: null
+            },
 
-          enableGeolocation: {
-            type: Boolean,
-            default: false
-          },
+            enableGeolocation: {
+                type: Boolean,
+                default: false
+            },
 
-          geolocationOptions: {
-            type: Object,
-            default: null
-          }
+            geolocationOptions: {
+                type: Object,
+                default: null
+            }
         },
 
         data() {
@@ -109,32 +110,34 @@
 
         watch: {
             autocompleteText: function (newVal, oldVal) {
-	            this.$emit('inputChange', { newVal, oldVal }, this.id);
+                this.$emit('inputChange', { newVal, oldVal }, this.id);
             },
             country: function(newVal, oldVal) {
-              this.autocomplete.setComponentRestrictions({
-                country: this.country === null ? [] : this.country
-              });
+                this.autocomplete.setComponentRestrictions({
+                    country: this.country === null ? [] : this.country
+                });
             }
         },
 
         mounted: function() {
-          const options = {};
+            const options = {};
 
+            if (this.types) {
+                options.types = [this.types];
+            }
 
+            if (this.country) {
+                options.componentRestrictions = {
+                    country: this.country
+                };
+            }
 
-          if (this.country) {
-            options.componentRestrictions = {
-              country: this.country
-            };
-          }
-
-          this.autocomplete = new google.maps.places.Autocomplete(
+            this.autocomplete = new google.maps.places.Autocomplete(
                 document.getElementById(this.id),
                 options
             );
 
-          this.autocomplete.addListener('place_changed', this.onPlaceChanged);
+            this.autocomplete.addListener('place_changed', this.onPlaceChanged);
         },
 
         methods: {
@@ -143,11 +146,12 @@
              */
             onPlaceChanged() {
                 let place = this.autocomplete.getPlace();
+
                 if (!place.geometry) {
-                  // User entered the name of a Place that was not suggested and
-                  // pressed the Enter key, or the Place Details request failed.
-                  this.$emit('no-results-found', place, this.id);
-                  return;
+                    // User entered the name of a Place that was not suggested and
+                    // pressed the Enter key, or the Place Details request failed.
+                    this.$emit('no-results-found', place, this.id);
+                    return;
                 }
 
                 if (place.address_components !== undefined) {
@@ -164,22 +168,22 @@
              * When the input gets focus
              */
             onFocus() {
-              this.biasAutocompleteLocation();
-              this.$emit('focus');
+                this.biasAutocompleteLocation();
+                this.$emit('focus');
             },
 
             /**
              * When the input loses focus
              */
             onBlur() {
-              this.$emit('blur');
+                this.$emit('blur');
             },
 
             /**
              * When the input got changed
              */
             onChange() {
-              this.$emit('change', this.autocompleteText);
+                this.$emit('change', this.autocompleteText);
             },
 
             /**
@@ -187,7 +191,7 @@
              * @param  {Event} event A keypress event
              */
             onKeyPress(event) {
-              this.$emit('keypress', event);
+                this.$emit('keypress', event);
             },
 
             /**
@@ -195,28 +199,28 @@
              * @param  {Event} event A keyup event
              */
             onKeyUp(event) {
-              this.$emit('keyup', event);
+                this.$emit('keyup', event);
             },
 
             /**
              * Clear the input
              */
             clear() {
-              this.autocompleteText = ''
+                this.autocompleteText = ''
             },
 
             /**
              * Focus the input
              */
             focus() {
-              this.$refs.autocomplete.focus()
+                this.$refs.autocomplete.focus()
             },
 
             /**
              * Blur the input
              */
             blur() {
-              this.$refs.autocomplete.blur()
+                this.$refs.autocomplete.blur()
             },
 
             /**
@@ -224,7 +228,7 @@
              * @param  {String} value
              */
             update (value) {
-              this.autocompleteText = value
+                this.autocompleteText = value
             },
 
             /**

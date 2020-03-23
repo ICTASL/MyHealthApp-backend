@@ -16,6 +16,7 @@
 
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/vue-select@3.0.0/dist/vue-select.css">
     <link th:href="@{/css/app.css}" rel="stylesheet">
 
 
@@ -136,6 +137,31 @@
                         </div>
                     </div>
 
+                    <div class="mt-8 flex flex-row">
+                        <!--From Input-->
+                        <div class="w-1/2">
+                            <label class="px-4 text-base text-gray-700 w-full" for="from">Local<span class="text-red-400">**</span></label>
+                            <div class="px-4">
+                                <label class="inline-flex items-center">
+                                    <input v-model="cases.isLocal" type="checkbox" class="form-checkbox" checked required>
+                                    <span class="ml-2">Local</span>
+                                </label>
+                            </div>
+                        </div>
+                        <!--To Input-->
+                        <div class="w-1/2">
+                            <label class="px-4 text-base text-gray-700 w-full" for="to">Detected From<span class="text-red-400">**</span></label>
+                            <div class="px-4">
+                                <select v-model="cases.detectedFrom" class="form-select block w-full mt-1" required>
+                                    <option value="quarantine facility">Quarantine Facility</option>
+                                    <option value="home">Home</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+
                     <!-- English Input-->
                     <div class="mt-8">
                         <label class="px-4 text-base text-gray-700 w-full" for="message_en">English Message<span class="text-red-400">**</span></label>
@@ -172,19 +198,27 @@
             <!--   Form-Part-2 Locations-->
             <!-- ===============================================-->
             <div class="border box-border rounded shadow-md pt-2 mt-8">
+
                 <h2 class= "bg-white mt-2 px-8 text-left text-2xl leading-9 font-semibold text-gray-900">
                     Add Locations
                 </h2>
                 <div class="flex mt-2  py-4 flex-col w-full bg-gray-200 px-4"
                      v-for="(location , index) in locations" :key="index">
 
-                    <div class="mt-8 flex-row flex-row item-center justifiy-center">
-                        <label class="px-4 text-base text-gray-700 w-full" for="location">Location {{location.address}}</label>
+                    <div class="mt-8 flex flex-row item-center justify-between">
+                            <div class="px-4">
+                                <button @click="addLocation" type="button" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                                    <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
+                                    <span>Add Location</span>
+                                </button>
+                                <label class="px-4 text-base text-gray-700 w-full" for="location">Location {{location.area}}</label>
+                            </div>
 
-                        <button @click="addLocation" type="button" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
-                            <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
-                            <span>Add Location</span>
-                        </button>
+                            <div v-if="index > 0">
+                                <span class="cursor-pointer px-4 text-2xl text-red-700" @click="deleteLocation(index)">
+                                    X
+                                </span>
+                            </div>
 
                     </div>
 
@@ -197,41 +231,18 @@
                         </div>
                     </div>
 
-
-                    <div class="mt-8 flex flex-row">
-                        <!--From Input-->
-                        <div class="w-1/2">
-                            <label class="px-4 text-base text-gray-700 w-full" for="from">From<span class="text-red-400">**</span></label>
-                            <div class="px-4">
-                                <flat-pickr class="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                            v-model="location.from" :config="config" placeholder="Select a from Time" :name="`locations[${index}][from]`"></flat-pickr>
-                            </div>
-                        </div>
-                        <!--To Input-->
-                        <div class="w-1/2">
-                            <label class="px-4 text-base text-gray-700 w-full" for="to">To<span class="text-red-400">**</span></label>
-                            <div class="px-4">
-                                <flat-pickr class="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                            v-model="location.to" :config="config" placeholder="Select a end Time" :name="`locations[${index}][to]`"></flat-pickr>
-                            </div>
-                        </div>
-                    </div>
-
                     <!--Address Input-->
                     <div class="mt-8">
                         <label class="px-4 text-base text-gray-700 w-full" for="address">Address<span class="text-red-400">**</span></label>
                         <div class="px-4">
-                            <vue-google-autocomplete
-                                    class="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                    ref="autocomplete"
-                                    :id="`${index}`"
-                                    classname="form-control"
-                                    placeholder="Please type your address"
-                                    v-on:placechanged="getAddressData"
-                                    country="lk"
+                            <v-select id="index"
+                                      class="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
+                                      label="name" :options="sl_postal_code"
+                                      :input-id="`${index}`"
+                                      @input="(value) => setSelected(index, value)"
                             >
-                            </vue-google-autocomplete>
 
+                            </v-select>
                         </div>
                     </div>
                 </div>
