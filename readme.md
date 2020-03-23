@@ -29,6 +29,14 @@ Please keep the following in mind when submitting your valuable contributions ðŸ
 - run `java -jar covid19-1.0.0-SNAPSHOT.jar`. Check if the jar version matches.
 - NOTE: access logs will get stored in the tomcat folder (tomcat/access/).
  These logs can be disabled from the application.yml
+ 
+### with Docker
+- build project using `mvn clean install`
+- unzip the `target/covid19-1.0.0-SNAPSHOT.zip` to `target/covid19-1.0.0-SNAPSHOT`
+- modify the db url in the application.yml (replace localhose with container name) as below  (FIXME: automate with spring profiles)
+- `url: jdbc:mysql://db:3306/covid19_db?useUnicode=yes&characterEncoding=UTF-8`
+- run ` docker-compose up -d`  , make sure that ports 8000 and 3306 are not used in the local machine
+- connect to dockerized mysql localhost:3306/covid19_db and execute `covid19.sql` on server (execute `covid19_test.sql` to add test data)
 
 ## APIs 
 ----
