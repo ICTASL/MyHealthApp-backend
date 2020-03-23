@@ -32,14 +32,14 @@ public class ApplicationService {
                     response.setMessage(notification.getMessageEn());
                     break;
                 case "si":
-                    if (notification.getMessageSi() == null) {
+                    if (notification.getMessageSi().isEmpty()) {
                         response.setMessage(notification.getMessageEn());
                     } else {
                         response.setMessage(notification.getMessageSi());
                     }
                     break;
                 case "ta":
-                    if (notification.getMessageTa() == null) {
+                    if (notification.getMessageTa().isEmpty()) {
                         response.setMessage(notification.getMessageEn());
                     } else {
                         response.setMessage(notification.getMessageTa());
@@ -75,14 +75,14 @@ public class ApplicationService {
                     response.setMessage(notification.getMessageEn());
                     break;
                 case "si":
-                    if (notification.getMessageSi() == null) {
+                    if (notification.getMessageSi().isEmpty()) {
                         response.setMessage(notification.getMessageEn());
                     } else {
                         response.setMessage(notification.getMessageSi());
                     }
                     break;
                 case "ta":
-                    if (notification.getMessageTa() == null) {
+                    if (notification.getMessageTa().isEmpty()) {
                         response.setMessage(notification.getMessageEn());
                     } else {
                         response.setMessage(notification.getMessageTa());
