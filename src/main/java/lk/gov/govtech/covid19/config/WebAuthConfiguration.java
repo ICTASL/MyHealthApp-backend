@@ -64,7 +64,7 @@ public class WebAuthConfiguration extends WebSecurityConfigurerAdapter {
             .formLogin()
                 .loginPage(PORTAL_API_CONTEXT)
                 .permitAll()
-                .defaultSuccessUrl(PORTAL_API_CONTEXT + NEWS_PATH) //redirects once successful
+                .defaultSuccessUrl(PORTAL_API_CONTEXT + DASHBOARD_PATH) //redirects once successful
                 .and()
             .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher(PORTAL_API_CONTEXT + "/logout")) //logs out with a GET
