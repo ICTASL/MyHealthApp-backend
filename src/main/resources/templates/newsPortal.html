@@ -76,9 +76,6 @@
         <div>
             <h1 class="text-4xl font-bold">Alerts Portal</h1>
         </div>
-        <div class="mt-2">
-            <span class="text-base text-gray-600">Add Alerts Regarding Corona Virus</span>
-        </div>
         <hr class="mt-5">
     </div>
     <form @submit.prevent="saveAlerts" method="post">
@@ -96,7 +93,10 @@
                                    type="text" placeholder="Title" name="title" id="title" v-model="$v.alert.title.$model" :class="{'border-red-500':$v.alert.title.$error}">
                             <div v-if="$v.alert.title.$dirty">
                                 <p class="text-red-500 text-xs italic" v-if="!$v.alert.title.required">Title  is required</p>
+                                <p class="text-red-500 text-xs italic" v-if="!$v.alert.title.maxLength">Title must have at most 100 characters</p>
+
                             </div>
+
                         </div>
                     </div>
 
@@ -107,6 +107,10 @@
                             <input
                                     class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
                                     type="text" placeholder="Sub title"  name="subtitle" id="sub_title" v-model="alert.subtitle">
+
+                            <div v-if="$v.alert.title.$dirty">
+                                <p class="text-red-500 text-xs italic" v-if="!$v.alert.subtitle.maxLength">Sub Title must have at most 100 characters</p>
+                            </div>
                         </div>
                     </div>
 
@@ -118,6 +122,8 @@
                                    type="text" placeholder="Source" id="source"   name="source"   v-model="$v.alert.source.$model" :class="{'border-red-500':$v.alert.source.$error}">
                             <div v-if="$v.alert.source.$dirty">
                                 <p class="text-red-500 text-xs italic" v-if="!$v.alert.source.required">Source is required</p>
+                                <p class="text-red-500 text-xs italic" v-if="!$v.alert.source.maxLength">Source must have at most 45 characters</p>
+
                             </div>
                         </div>
                     </div>
@@ -126,18 +132,25 @@
                         <div class="px-4">
                                     <textarea rows="3" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
                                               type="text" placeholder="English Alert" id="english_description" required name="messageEn"   v-model="$v.alert.messageEn.$model" :class="{'border-red-500':$v.alert.messageEn.$error}"></textarea>
+
+                            <div v-if="$v.alert.messageEn.$dirty">
+                                <p class="text-red-500 text-xs italic" v-if="!$v.alert.messageEn.required">English Alerts is required</p>
+                                <p class="text-red-500 text-xs italic" v-if="!$v.alert.messageEn.maxLength">English Alerts must have at most 500 characters</p>
+                            </div>
                         </div>
-                        <div v-if="$v.alert.messageEn.$dirty">
-                            <p class="text-red-500 text-xs italic" v-if="!$v.alert.messageEn.required">English Alerts is required</p>
-                        </div>
+
                     </div>
 
                     <div class="mt-8">
                         <label class="px-4 text-xl text-gray-800 w-full" for="sinhala_description">Sinhala Alerts</label>
                         <div class="px-4">
                                     <textarea rows="3" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                              type="text" placeholder="Sinhala Alert" id="sinhala_description"  name="messageSi"   v-model="alert.messageSi" ></textarea>
+                                              type="text" placeholder="Sinhala Alert" id="sinhala_description"  name="messageSi"   v-model="$v.alert.messageSi.$model" ></textarea>
+                            <div v-if="$v.alert.messageSi.$dirty">
+                                <p class="text-red-500 text-xs italic" v-if="!$v.alert.messageSi.maxLength">Sinhala Alerts must have at most 500 characters</p>
+                            </div>
                         </div>
+
                     </div>
 
                     <div class="mt-8">
@@ -145,6 +158,9 @@
                         <div class="px-4">
                                     <textarea rows="3" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
                                               type="text" placeholder="description" id="Tamil Alert" v-model="alert.messageTa"  name="messageTa" ></textarea>
+                            <div v-if="$v.alert.messageSi.$dirty">
+                                <p class="text-red-500 text-xs italic" v-if="!$v.alert.messageTa.maxLength">Tamil Alerts must have at most 500 characters</p>
+                            </div>
                         </div>
                     </div>
 

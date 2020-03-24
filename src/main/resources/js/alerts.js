@@ -6,7 +6,7 @@ import Vuelidate from 'vuelidate'
 
 Vue.use(Vuelidate);
 Vue.use(VueSweetalert2);
-import {required} from 'vuelidate/lib/validators';
+import {required,maxLength} from 'vuelidate/lib/validators';
 
 var app = new Vue({
 
@@ -28,21 +28,38 @@ var app = new Vue({
     validations: {
         alert: {
             title: {
-                required
+                required,
+                maxLength: maxLength(100)
+            },
+            subtitle: {
+                maxLength: maxLength(100)
             },
 
             source: {
-                required
+                required,
+                maxLength: maxLength(45)
             },
 
             messageEn: {
-                required
-            }
+                required,
+                maxLength: maxLength(500)
+            },
+
+            messageSi: {
+                maxLength: maxLength(500)
+            },
+
+            messageTa: {
+                maxLength: maxLength(500)
+            },
+
+
         }
     },
 
 
     methods:{
+
         saveAlerts(){
             this.$v.$touch();
             if (this.$v.$invalid){
