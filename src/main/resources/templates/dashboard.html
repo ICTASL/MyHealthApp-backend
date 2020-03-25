@@ -39,25 +39,10 @@
                 </div>
             </div>
             <!--Mobile Wrapper-->
-            <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button class="p-1 border-2 border-transparent text-gray-400 rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                    </svg>
-                </button>
-                <div @click.away="open = false" class="ml-3 relative" x-data="{ open: false }">
-                    <div>
-                        <button @click="open = !open" class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-white transition duration-150 ease-in-out">
-                            <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-                        </button>
-                    </div>
-                    <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg">
-                        <div class="py-1 rounded-md bg-white shadow-xs">
-                            <a href="/portal/logout" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">Sign out</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          <div>
+              <a href="/portal/logout" class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Sign out</a>
+
+          </div>
         </div>
     </div>
     <div :class="{'block': open, 'hidden': !open}" class="hidden sm:hidden">
@@ -118,7 +103,7 @@
         <div class="w-full mt-5">
             <div class="border box-border bg-green-700 rounded shadow-md pt-2  px-4">
                 <div class="flex flex-row justify-between pt-4">
-                    <h3 class="text-lg font-medium text-white uppercase">Recover</h3>
+                    <h3 class="text-lg font-medium text-white uppercase">Recovered</h3>
                     <button type="button" @click="RRshow">
                         <svg class="h-5 fill-current text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M82.6 2c-4 0-8 1.6-10.8 4.4L56.4 22H14C7.4 22 2 27.4 2 34v52c0 6.6 5.4 12 12 12h52c6.6 0 12-5.4 12-12V43.6L93.6 28c6-6 6-15.6 0-21.6-3-2.8-6.8-4.4-11-4.4zM70 86c0 2.2-1.8 4-4 4H14c-2.2 0-4-1.8-4-4V34c0-2.2 1.8-4 4-4h34.4L34.6 43.8c-8 8-12.6 18.8-12.4 30.2 0 2.2 1.8 4 4 4 11.4 0 22.2-4.4 30.2-12.4l13.8-13.8V86H70zm17.8-63.6L50.4 59.8c-5.4 5.4-12.6 9-20.2 9.8 1-7.6 4.4-14.8 9.8-20.2L77.4 12c3-2.8 7.6-2.4 10.4.4 2.6 3 2.6 7.2 0 10z"/>
 
@@ -168,7 +153,7 @@
                     </div>
                     <div class="w-1/2">
                         <input class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                               type="number" placeholder="lk_total_case" value="lk_total_case" name="title" id="title" v-model="lk_total_case" required >
+                               type="number" placeholder="lk_total_case" value="lk_total_case" name="title" id="title" v-model="lk_total_case" v-on:keypress="isNumber()"  required >
                     </div>
                 </div>
                 <hr class="mt-4">
@@ -202,7 +187,7 @@
                     </div>
                     <div class="w-1/2">
                         <input class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                               type="number" placeholder="lk_total_suspect" value="lk_total_suspect" name="title" id="ss" v-model="lk_total_suspect" required >
+                               type="number" placeholder="lk_total_suspect" value="lk_total_suspect" name="title" id="ss" v-model="lk_total_suspect" v-on:keypress="isNumber()"  required >
                     </div>
                 </div>
                 <hr class="mt-4">
@@ -236,7 +221,7 @@
                     </div>
                     <div class="w-1/2">
                         <input class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                               type="number" placeholder="lk_total_suspect" value="lk_recovered_case" name="title" id="rr" v-model="lk_recovered_case" required >
+                               type="number" placeholder="lk_total_suspect" value="lk_recovered_case" name="title" id="rr" v-on:keypress="isNumber()"  v-model="lk_recovered_case" required >
                     </div>
                 </div>
                 <hr class="mt-4">
@@ -271,7 +256,7 @@
                     </div>
                     <div class="w-1/2">
                         <input class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                               type="number" placeholder="lk_total_suspect" value="lk_recovered_case" name="title" id="rr" v-model="lk_total_deaths" required >
+                               type="number" placeholder="lk_total_suspect" value="lk_recovered_case" name="title" id="rr" v-model="lk_total_deaths" v-on:keypress="isNumber()" required >
                     </div>
                 </div>
                 <hr class="mt-4">
