@@ -1,0 +1,20 @@
+version: "3.1"
+
+services:
+  covid19-service:
+    image: govtechlk/covid19:latest
+    expose:
+      - "8000"
+    restart: always
+    ports:
+      - 8000:8000
+    environment:
+      - COVID19_SERVICE_DOMAIN="localhost"
+    healthcheck:
+      test: ["CMD", "/usr/bin/healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - /home/covid/application.yml:/tmp/target/application.yml
+      
