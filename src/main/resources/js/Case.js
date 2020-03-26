@@ -16,7 +16,6 @@ Vue.component('v-select', vSelect,{
 const axios = require('axios').default;
 
 import {required,maxLength} from 'vuelidate/lib/validators';
-
 import cities from'./post_codes'
 
 var app = new Vue({
@@ -74,17 +73,15 @@ var app = new Vue({
 
             },
 
-            detectedFrom: {
+            detectedFrom:{
                 required,
 
             },
 
-
-            message_en: {
+            message_en:{
                 required,
                 maxLength: maxLength(500)
             },
-
             message_si: {
                 maxLength: maxLength(500)
             },
@@ -92,6 +89,8 @@ var app = new Vue({
             message_ta: {
                 maxLength: maxLength(500)
             },
+
+
         },
 
         locations:{
