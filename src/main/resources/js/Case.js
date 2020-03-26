@@ -190,6 +190,9 @@ var app = new Vue({
                         this.cases.message_en= '';
                         this.cases.message_si= '';
                         this.cases.message_ta= '';
+                        this.cases.detectedFrom='';
+                        this.cases.isLocal=''
+
 
                         this.locations = [];
                         this.locations.push({
