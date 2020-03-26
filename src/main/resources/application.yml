@@ -12,17 +12,17 @@ spring:
     datasource:
         url: jdbc:mysql://127.0.0.1:3306/covid19_db?useUnicode=yes&characterEncoding=UTF-8
         username: root
-        password: root
-        hikari.maximumPoolSize: 25
+        password: keshan
+        driver-class: com.mysql.cj.jdbc.Driver
     idhs:
         url: http://43.224.124.234:7080/api
         username: dev
-        password: Dev12345#
+        password: Dev1234#
     pid:
         file: application.pid
     portal:
         userCredentials:
-            - [dev, dev]
+            - [dev1@aaa.com, dev]
             - [dev2@aaa.com, dev]
     googleapi:
         mapKey: abc
