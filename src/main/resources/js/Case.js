@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import flatPickr from 'vue-flatpickr-component';
-import 'flatpickr/dist/flatpickr.css';
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import Vuelidate from 'vuelidate'
@@ -16,7 +15,7 @@ Vue.component('v-select', vSelect,{
 
 const axios = require('axios').default;
 
-import {required} from 'vuelidate/lib/validators';
+import {required,maxLength} from 'vuelidate/lib/validators';
 import cities from'./post_codes'
 
 var app = new Vue({
@@ -26,7 +25,6 @@ var app = new Vue({
         flatPickr,
     },
     data: {
-        attributes:'',
         submitStatus: false,
         config: {
             noCalendar: true,
@@ -38,14 +36,14 @@ var app = new Vue({
             enableTime: false,
         },
 
-        search:'',
+
         cases:{
             'caseNumber':'',
             'isLocal':'',
             'detectedFrom':'',
             'message_en':'',
             'message_si':'',
-            'message_ta':''
+
         },
 
         sl_postal_code: cities,
@@ -55,7 +53,9 @@ var app = new Vue({
                 'date':'',
                 'area':'',
                 'longitude':'',
-                'latitude':''
+                'latitude':'',
+                 'locationA':'',
+
 
             }
         ]
@@ -64,13 +64,60 @@ var app = new Vue({
     validations:{
         cases:{
             caseNumber:{
-                required
+                required,
+                maxLength: maxLength(100)
             },
 
+
+            isLocal:{
+                required,
+
+            },
+
+            detectedFrom:{
+                required,
+
+            },
+
+
             message_en:{
-                required
-            }
+                required,
+                maxLength: maxLength(500)
+            },
+
+            message_si:{
+                maxLength: maxLength(500)
+            },
+
+            message_ta:{
+                maxLength: maxLength(500)
+            },
+
         },
+
+        locations:{
+            $each:{
+                date:{
+                    required
+                },
+
+                locationA:{
+                    required
+                },
+                area:{
+                    required
+                },
+                longitude:{
+                    required
+                },
+                latitude:{
+                    required
+                }
+
+
+
+            }
+        }
 
 
 
@@ -84,7 +131,9 @@ var app = new Vue({
                 'date':'',
                 'area':'',
                 'longitude':'',
-                'latitude':''
+                'latitude':'',
+                'locationA':'',
+
 
             })
         },
@@ -145,7 +194,9 @@ var app = new Vue({
                             'date':'',
                             'area':'',
                             'longitude':'',
-                            'latitude':''
+                            'latitude':'',
+                            'locationA':'',
+
                         });
                         this.submitStatus =false;
                         this.$v.$reset()
