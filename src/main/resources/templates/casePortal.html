@@ -179,7 +179,7 @@
                         <label class="px-4 text-base text-gray-700 w-full" for="message_si">Sinhala Message</label>
                         <div class="px-4">
                                     <textarea rows="2" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                              type="text" name="message_si" placeholder="Message in English" id="message_si" :class="{'border-red-500':$v.cases.message_si.$error}"  v-model="$v.cases.message_si.$model"></textarea>
+                                              v-model="$v.cases.message_si.$model"   type="text" name="message_si" placeholder="Message in English" id="message_si" :class="{'border-red-500':$v.cases.message_si.$error}" ></textarea>
 
                             <div v-if="$v.cases.message_si.$dirty">
                                 <p class="text-red-500 text-xs italic" v-if="!$v.cases.message_si.maxLength">Sinhala Message must have at most 500 characters</p>
@@ -191,8 +191,10 @@
                     <div class="mt-8">
                         <label class="px-4 text-base text-gray-700 w-full" for="message_ta">Tamil Message</label>
                         <div class="px-4">
-                                    <textarea rows="2" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                              type="text" name="message_ta" placeholder="Message in Tamil" id="message_ta" :class="{'border-red-500':$v.cases.message_ta.$error}"    v-model="$v.cases.message_ta.$model" ></textarea>
+
+
+                        <textarea rows="2" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
+                                  v-model="$v.cases.message_ta.$model" type="text" name="message_ta" placeholder="Message in Tamil" id="message_ta" :class="{'border-red-500':$v.cases.message_ta.$error}"  ></textarea>
 
                             <div v-if="$v.cases.message_ta.$dirty">
                                 <p class="text-red-500 text-xs italic" v-if="!$v.cases.message_ta.maxLength">Tamil Message must have at most 500 characters</p>

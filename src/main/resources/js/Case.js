@@ -43,6 +43,7 @@ var app = new Vue({
             'detectedFrom':'',
             'message_en':'',
             'message_si':'',
+            'message_ta':'',
 
         },
 
@@ -55,6 +56,7 @@ var app = new Vue({
                 'longitude':'',
                 'latitude':'',
                  'locationA':'',
+
 
 
             }
