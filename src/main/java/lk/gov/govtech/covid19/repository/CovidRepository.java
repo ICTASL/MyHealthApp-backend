@@ -1,7 +1,5 @@
 package lk.gov.govtech.covid19.repository;
 
-import lk.gov.govtech.covid19.config.DatasourceConfiguration;
-import lk.gov.govtech.covid19.datasource.CovidDatasource;
 import lk.gov.govtech.covid19.dto.AlertNotificationRequest;
 import lk.gov.govtech.covid19.dto.CaseNotificationRequest;
 import lk.gov.govtech.covid19.dto.Location;
@@ -13,13 +11,13 @@ import lk.gov.govtech.covid19.model.mapper.AlertNotificationEntityRowMapper;
 import lk.gov.govtech.covid19.model.mapper.CaseNotificationEntityRowMapper;
 import lk.gov.govtech.covid19.model.mapper.CaseNotificationLocationMapper;
 import lk.gov.govtech.covid19.model.mapper.StatusEntityRowMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.PostConstruct;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
@@ -27,17 +25,12 @@ import java.util.List;
 /**
  * repository class for accessing any tables from covid19_db
  */
+@Slf4j
 @Repository
 public class CovidRepository {
-    private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    private DatasourceConfiguration datasourceConfiguration;
-
-    @PostConstruct
-    private void init() {
-        jdbcTemplate = new JdbcTemplate(CovidDatasource.getDatasource(datasourceConfiguration));
-    }
+    private JdbcTemplate jdbcTemplate;
 
     public AlertNotificationEntity getAlertNotificationById(String alertId) {
         List<AlertNotificationEntity> notificationList = jdbcTemplate.query("SELECT * FROM notification where " +
@@ -86,6 +79,11 @@ public class CovidRepository {
             ps.setString(1, request.getCaseNumber());
             ps.setBoolean(2, request.isLocal());
             ps.setString(3, request.getDetectedFrom());
+
+
+
+
+
             ps.setString(4, request.getMessage_en());
             ps.setString(5, request.getMessage_si());
             ps.setString(6, request.getMessage_ta());

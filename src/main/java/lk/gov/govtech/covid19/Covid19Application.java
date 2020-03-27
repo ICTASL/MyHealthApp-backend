@@ -4,6 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.ApplicationPidFileWriter;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.annotation.PostConstruct;
 import java.net.InetAddress;
@@ -13,6 +16,9 @@ import java.util.TimeZone;
 
 @Slf4j
 @SpringBootApplication
+@ComponentScan
+@EnableCaching
+@EnableScheduling
 public class Covid19Application {
 
     @PostConstruct

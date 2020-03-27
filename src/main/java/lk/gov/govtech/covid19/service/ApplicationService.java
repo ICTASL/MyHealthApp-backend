@@ -9,6 +9,7 @@ import lk.gov.govtech.covid19.model.CaseNotificationEntity;
 import lk.gov.govtech.covid19.model.StatusEntity;
 import lk.gov.govtech.covid19.repository.CovidRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -19,6 +20,7 @@ public class ApplicationService {
     @Autowired
     CovidRepository repository;
 
+    @Cacheable(value = "alerts")
     public AlertNotificationResponse getAlertNotification(String messageId, String lang) {
 
         AlertNotificationEntity notification = repository.getAlertNotificationById(messageId);
@@ -63,6 +65,7 @@ public class ApplicationService {
         return repository.getLastAlertNotificationId();
     }
 
+    @Cacheable(value = "cases")
     public CaseNotificationResponse getCaseNotification(String caseId, String lang) {
         CaseNotificationEntity notification = repository.getCaseNotificationById(caseId);
         CaseNotificationResponse response = null;
