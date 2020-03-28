@@ -24,6 +24,12 @@ public class WebPortalController {
     GAPIConfigurations gAPIConfig;
 
     @GetMapping
+    public String portal(Model model) {
+        log.info("Portal/Login ");
+        return "login";
+    }
+
+    @GetMapping("/login")
     public String login(Model model) {
         log.info("Portal/Login ");
         return "login";
