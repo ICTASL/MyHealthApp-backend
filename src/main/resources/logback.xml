@@ -14,7 +14,7 @@
         </rollingPolicy>
 
         <encoder>
-            <Pattern>[%d{HH:mm:ss.SSS}]-${log.name}-[%thread] %-5level %logger - %msg %n</Pattern>
+            <Pattern>[%d{HH:mm:ss.SSS}]-[%thread] %-5level %logger - %msg %n</Pattern>
         </encoder>
         <append>true</append>
     </appender>

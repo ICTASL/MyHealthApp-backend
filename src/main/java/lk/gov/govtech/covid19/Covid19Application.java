@@ -29,7 +29,6 @@ public class Covid19Application {
     }
 
     public static void main(String[] args) throws UnknownHostException {
-        System.setProperty("log.name", InetAddress.getLocalHost().getHostAddress());
         SpringApplication springApplication = new SpringApplication(Covid19Application.class);
         springApplication.addListeners(new ApplicationPidFileWriter());
         springApplication.run(args);
