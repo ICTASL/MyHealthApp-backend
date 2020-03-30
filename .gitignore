@@ -36,3 +36,6 @@ target
 *.pid
 /node_modules
 /node_modules/.cache
+
+*.LICENSE.txt
+.DS_Store
