@@ -66,7 +66,7 @@ var app = new Vue({
                 return
             }else{
                 this.submitStatus = true;
-                axios.post('/notification/alert/add',{
+                axios.post('/api/notification/alert/add',{
                         "title" : this.alert.title,
                         "subtitle":this.alert.subtitle,
                         "source":this.alert.source,

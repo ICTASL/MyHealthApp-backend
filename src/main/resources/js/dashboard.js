@@ -27,7 +27,7 @@ new Vue({
    methods:{
 
        fetchData(){
-           axios.get('/application/dashboard/status')
+           axios.get('/api/application/dashboard/status')
                .then(response => (
                  this.lk_total_case = response.data.lk_total_case,
                  this.lk_recovered_case = response.data.lk_recovered_case,
@@ -104,7 +104,7 @@ new Vue({
 
 
        Update(){
-           let url= "/application/dashboard/status";
+           let url= "/api/application/dashboard/status";
 
            axios.put(url,{
                    "lk_total_case" : this.lk_total_case,

@@ -155,7 +155,7 @@ var app = new Vue({
         },
 
         saveCases(){
-            let url= "/notification/case/add";
+            let url= "/api/notification/case/add";
 
             this.$v.$touch();
             if (this.$v.$invalid){
