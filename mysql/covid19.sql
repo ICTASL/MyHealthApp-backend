@@ -21,9 +21,9 @@ CREATE TABLE `epid_case` (
   `case_number` VARCHAR(100) NULL,
   `is_local` TINYINT(1) NULL,
   `detected_from` VARCHAR(45) NULL,
-  `message_en` VARCHAR(500) NULL,
-  `message_si` VARCHAR(500) NULL,
-  `message_ta` VARCHAR(500) NULL,
+  `message_en` VARCHAR(1500) NULL,
+  `message_si` VARCHAR(1500) NULL,
+  `message_ta` VARCHAR(1500) NULL,
   `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`))
   ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
