@@ -169,7 +169,7 @@
                                               type="text" placeholder="Message in English" id="message_en" v-model="$v.cases.message_en.$model" :class="{'border-red-500':$v.cases.message_en.$error}" required></textarea>
                             <div v-if="$v.cases.message_en.$dirty">
                                 <p class="text-red-500 text-xs italic" v-if="!$v.cases.message_en.required">English Message is required</p>
-                                <p class="text-red-500 text-xs italic" v-if="!$v.cases.message_en.maxLength">English Message must have at most 500 characters</p>
+                                <p class="text-red-500 text-xs italic" v-if="!$v.cases.message_en.maxLength">English Message must have at most 1500 characters</p>
 
                             </div>
                         </div>
@@ -182,7 +182,7 @@
                                               v-model="$v.cases.message_si.$model"   type="text" name="message_si" placeholder="Message in English" id="message_si" :class="{'border-red-500':$v.cases.message_si.$error}" ></textarea>
 
                             <div v-if="$v.cases.message_si.$dirty">
-                                <p class="text-red-500 text-xs italic" v-if="!$v.cases.message_si.maxLength">Sinhala Message must have at most 500 characters</p>
+                                <p class="text-red-500 text-xs italic" v-if="!$v.cases.message_si.maxLength">Sinhala Message must have at most 1500 characters</p>
 
                             </div>
                         </div>
@@ -197,7 +197,7 @@
                                   v-model="$v.cases.message_ta.$model" type="text" name="message_ta" placeholder="Message in Tamil" id="message_ta" :class="{'border-red-500':$v.cases.message_ta.$error}"  ></textarea>
 
                             <div v-if="$v.cases.message_ta.$dirty">
-                                <p class="text-red-500 text-xs italic" v-if="!$v.cases.message_ta.maxLength">Tamil Message must have at most 500 characters</p>
+                                <p class="text-red-500 text-xs italic" v-if="!$v.cases.message_ta.maxLength">Tamil Message must have at most 1500 characters</p>
                             </div>
                         </div>
                     </div>

@@ -84,15 +84,15 @@ var app = new Vue({
 
             message_en:{
                 required,
-                maxLength: maxLength(500)
+                maxLength: maxLength(1500)
             },
 
             message_si:{
-                maxLength: maxLength(500)
+                maxLength: maxLength(1500)
             },
 
             message_ta:{
-                maxLength: maxLength(500)
+                maxLength: maxLength(1500)
             },
 
         },
