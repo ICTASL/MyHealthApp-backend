@@ -42,7 +42,8 @@ public class WebAuthConfiguration extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .mvcMatchers( // to exclude auth for GETs
                         APPLICATION_API_CONTEXT +"/**",
-                        DHIS_API_CONTEXT + "/**")
+                        DHIS_API_CONTEXT + "/**",
+                        DOCUMENTS_API_CONTEXT + "/**")
                 .permitAll()
                 .and()
             .authorizeRequests()

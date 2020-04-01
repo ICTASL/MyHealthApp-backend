@@ -1,0 +1,29 @@
+{
+	"info": {
+		"_postman_id": "9a531431-9577-4170-8850-59eeedfd612e",
+		"name": "COVID-19-Documents",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8000/documents/privacy-policy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8000/documents/privacy-policy",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"documents",
+						"privacy-policy"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
