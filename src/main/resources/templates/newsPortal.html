@@ -135,7 +135,7 @@
 
                             <div v-if="$v.alert.messageEn.$dirty">
                                 <p class="text-red-500 text-xs italic" v-if="!$v.alert.messageEn.required">English Alerts is required</p>
-                                <p class="text-red-500 text-xs italic" v-if="!$v.alert.messageEn.maxLength">English Alerts must have at most 500 characters</p>
+                                <p class="text-red-500 text-xs italic" v-if="!$v.alert.messageEn.maxLength">English Alerts must have at most 1500 characters</p>
                             </div>
                         </div>
 
@@ -147,7 +147,7 @@
                                     <textarea rows="3" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
                                               type="text" placeholder="Sinhala Alert" id="sinhala_description"  name="messageSi"   v-model="$v.alert.messageSi.$model" ></textarea>
                             <div v-if="$v.alert.messageSi.$dirty">
-                                <p class="text-red-500 text-xs italic" v-if="!$v.alert.messageSi.maxLength">Sinhala Alerts must have at most 500 characters</p>
+                                <p class="text-red-500 text-xs italic" v-if="!$v.alert.messageSi.maxLength">Sinhala Alerts must have at most 1500 characters</p>
                             </div>
                         </div>
 
@@ -159,7 +159,7 @@
                                     <textarea rows="3" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
                                               type="text" placeholder="description" id="Tamil Alert" v-model="$v.alert.messageTa.$model"  name="messageTa" ></textarea>
                             <div v-if="$v.alert.messageSi.$dirty">
-                                <p class="text-red-500 text-xs italic" v-if="!$v.alert.messageTa.maxLength">Tamil Alerts must have at most 500 characters</p>
+                                <p class="text-red-500 text-xs italic" v-if="!$v.alert.messageTa.maxLength">Tamil Alerts must have at most 1500 characters</p>
                             </div>
                         </div>
                     </div>

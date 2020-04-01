@@ -42,15 +42,15 @@ var app = new Vue({
 
             messageEn: {
                 required,
-                maxLength: maxLength(500)
+                maxLength: maxLength(1500)
             },
 
             messageSi: {
-                maxLength: maxLength(500)
+                maxLength: maxLength(1500)
             },
 
             messageTa: {
-                maxLength: maxLength(500)
+                maxLength: maxLength(1500)
             },
 
 
