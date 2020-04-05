@@ -25,6 +25,13 @@ spring:
         - [dev2@aaa.com, dev]
     googleapi:
         mapKey: abc
+    session:
+        timeout: 3600
+        jdbc:
+            initialize-schema: always
+            schema: classpath:session/schema-mysql.sql
+            initializer:
+                enabled: true
 
 firebase:
     config-path: credentials/covid-19-lk-dev-firebase-adminsdk.json
