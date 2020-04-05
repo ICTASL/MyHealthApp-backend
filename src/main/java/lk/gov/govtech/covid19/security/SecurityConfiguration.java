@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.savedrequest.NullRequestCache;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
@@ -36,7 +37,6 @@ public class SecurityConfiguration {
      * Endpoints with auth: either http basic auth or login (/portal) based can be used
      * - /notification/alert/add
      * - /notification/case/add
-     * - /portal/**
      *
      * */
 
@@ -107,9 +107,8 @@ public class SecurityConfiguration {
         /*
          *  This section
          *       - adds auth to some paths, that are common to both basic-auth & auth-token (i.e. stateless and stateful)
-         *       - specifies where the login-page is
-         *       - creates a POST endpoint at path /auth (for form login)
-         *       - created a GET endpoint at path /auth/logout (to logout)
+         *       - creates a POST endpoint at path /auth (to get a token)
+         *       - created a GET endpoint at path /auth/logout (to immediately delete session)
          *       - stops saving anonymous requests in sessions
          * */
         @Override
@@ -120,24 +119,25 @@ public class SecurityConfiguration {
                 .authorizeRequests() // Common to both: stateless & stateful. Only the paths and the authority matters
                     .mvcMatchers(
                             "/notification/alert/add",
-                            "/notification/case/add",
-                            PORTAL_API_CONTEXT + "/**")
+                            "/notification/case/add")
                     .hasAuthority(AUTHORITY_NOTIFICATION)
                     .and()
-                .formLogin()
-                    .loginPage(PORTAL_API_CONTEXT) //While specifying the login-page, this also creates a POST endpoint at path /portal (to send username password)
-                    .loginProcessingUrl(AUTH_API_CONTEXT)
-                    .successHandler(new SessionAuthenticationSuccessHandler()) //overriding the default handler to avoid redirect
-                    .failureHandler(new SimpleUrlAuthenticationFailureHandler())
-                    .permitAll()
-                    .and()
+                .addFilter(getPasswordFilter())
                 .requestCache() // stops saving anonymous requests in sessions
                     .requestCache(new NullRequestCache())
                     .and()
                 .logout()
-                    .logoutRequestMatcher(new AntPathRequestMatcher(AUTH_API_CONTEXT + "/logout")) //logs out with a GET
-                    .permitAll()
-                    .logoutSuccessUrl(PORTAL_API_CONTEXT); //redirects once successful
+                    .logoutRequestMatcher(new AntPathRequestMatcher(AUTH_API_CONTEXT + "/logout")) //deletes session immediately
+                    .permitAll();
+        }
+
+        private UsernamePasswordAuthenticationFilter getPasswordFilter() throws Exception {
+            UsernamePasswordAuthenticationFilter filter = new UsernamePasswordAuthenticationFilter();
+            filter.setFilterProcessesUrl(AUTH_API_CONTEXT);
+            filter.setAuthenticationSuccessHandler(new SessionAuthenticationSuccessHandler());
+            filter.setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler());
+            filter.setAuthenticationManager(this.authenticationManagerBean());
+            return filter;
         }
     }
 }
