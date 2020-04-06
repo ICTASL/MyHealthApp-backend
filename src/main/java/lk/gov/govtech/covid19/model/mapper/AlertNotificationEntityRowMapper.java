@@ -11,9 +11,10 @@ public class AlertNotificationEntityRowMapper implements RowMapper<AlertNotifica
     public AlertNotificationEntity mapRow(ResultSet rs, int i) throws SQLException {
         AlertNotificationEntity entity = new AlertNotificationEntity();
         entity.setId(rs.getString("id"));
-        entity.setTitle(rs.getString("title"));
-        entity.setSubtitle(rs.getString("subtitle"));
         entity.setSource(rs.getString("source"));
+        entity.setTitleEn(rs.getString("title_en"));
+        entity.setTitleSi(rs.getString("title_si"));
+        entity.setTitleTa(rs.getString("title_ta"));
         entity.setMessageEn(rs.getString("message_en"));
         entity.setMessageSi(rs.getString("message_si"));
         entity.setMessageTa(rs.getString("message_ta"));

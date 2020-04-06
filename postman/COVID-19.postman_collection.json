@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "41628007-ef36-472e-a759-36ed7ba362f0",
+		"_postman_id": "67ded18b-3074-4a1e-a9dd-e2ea4650463a",
 		"name": "COVID-19",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -15,16 +15,16 @@
 						"name": "Content-Type",
 						"value": "application/json",
 						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic ZGV2OmRldg==",
+						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n   \"title\":\"Test title\",\n   \"subtitle\":\"Test subtitle\",\n   \"source\":\"MOH\",\n   \"messageEn\":\"This is a test message2\",\n   \"messageSi\":\"මෙය පරීක්ෂණ පණිවිඩයකි\",\n   \"messageTa\":\"இது ஒரு சோதனை செய்தி\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					"raw": "{\n   \"source\":\"HPB - Sri Lanka\",\n   \"title\":{\n      \"english\":\"Welcome\",\n      \"sinhala\":\"ආයුබෝවන්\",\n      \"tamil\":\" வணக்கம\"\n   },\n   \"message\":{\n      \"english\":\"This is a test message\",\n      \"sinhala\":\"මෙය \\\"පරීක්\\\"ෂණ පණිවිඩයකි\",\n      \"tamil\":\"இது ஒரு சோதனை சய்தி\"\n   }\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8000/notification/alert/add",
