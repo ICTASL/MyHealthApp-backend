@@ -6,9 +6,10 @@ use covid19_db;
 
 CREATE TABLE `notification` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(100) NULL,
-  `subtitle` VARCHAR(100) NULL,
   `source` VARCHAR(45) NULL,
+  `title_en` VARCHAR(100) NULL,
+  `title_si` VARCHAR(100) NULL,
+  `title_ta` VARCHAR(100) NULL,
   `message_en` VARCHAR(500) NULL,
   `message_si` VARCHAR(500) NULL,
   `message_ta` VARCHAR(500) NULL,

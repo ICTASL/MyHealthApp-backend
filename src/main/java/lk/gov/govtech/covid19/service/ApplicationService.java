@@ -31,30 +31,24 @@ public class ApplicationService {
             //assumes that english is always set (default language)
             switch (lang) {
                 case "en":
-                    response.setMessage(notification.getMessageEn());
+                    alertResponseSetEnglishTitle(response, notification);
+                    alertResponseSetEnglishMessage(response, notification);
                     break;
                 case "si":
-                    if (notification.getMessageSi().isEmpty()) {
-                        response.setMessage(notification.getMessageEn());
-                    } else {
-                        response.setMessage(notification.getMessageSi());
-                    }
+                    alertResponseSetSinhalaTitleOrElseEnglish(response, notification);
+                    alertResponseSetSinhalaMessageOrElseEnglish(response, notification);
                     break;
                 case "ta":
-                    if (notification.getMessageTa().isEmpty()) {
-                        response.setMessage(notification.getMessageEn());
-                    } else {
-                        response.setMessage(notification.getMessageTa());
-                    }
+                    alertResponseSetTamilTitleOrElseEnglish(response, notification);
+                    alertResponseSetTamilMessageOrElseEnglish(response, notification);
                     break;
                 default:
-                    response.setMessage(notification.getMessageEn());
+                    alertResponseSetEnglishTitle(response, notification);
+                    alertResponseSetEnglishMessage(response, notification);
                     break;
             }
 
             response.setId(notification.getId());
-            response.setTitle(notification.getTitle());
-            response.setSubtitle(notification.getSubtitle());
             response.setSource(notification.getSource());
             response.setCreatedTime(notification.getCreatedTime());
         }
@@ -132,6 +126,48 @@ public class ApplicationService {
     public void updateStatus(UpdateStatusRequest request) {
         repository.updateStatus(request);
 
+    }
+
+    /*
+     *  Set alert response title
+     * */
+    private void alertResponseSetEnglishTitle(AlertNotificationResponse response, AlertNotificationEntity notification) {
+        response.setTitle(notification.getTitleEn());
+    }
+    private void alertResponseSetSinhalaTitleOrElseEnglish(AlertNotificationResponse response, AlertNotificationEntity notification) {
+        if (notification.getTitleSi().isEmpty()) {
+            alertResponseSetEnglishTitle(response, notification);
+        } else {
+            response.setTitle(notification.getTitleSi());
+        }
+    }
+    private void alertResponseSetTamilTitleOrElseEnglish(AlertNotificationResponse response, AlertNotificationEntity notification) {
+        if (notification.getTitleTa().isEmpty()) {
+            alertResponseSetEnglishTitle(response, notification);
+        } else {
+            response.setTitle(notification.getTitleTa());
+        }
+    }
+
+    /*
+    *  Set alert response message
+    * */
+    private void alertResponseSetEnglishMessage(AlertNotificationResponse response, AlertNotificationEntity notification) {
+        response.setMessage(notification.getMessageEn());
+    }
+    private void alertResponseSetSinhalaMessageOrElseEnglish(AlertNotificationResponse response, AlertNotificationEntity notification) {
+        if (notification.getMessageSi().isEmpty()) {
+            alertResponseSetEnglishMessage(response, notification);
+        } else {
+            response.setMessage(notification.getMessageSi());
+        }
+    }
+    private void alertResponseSetTamilMessageOrElseEnglish(AlertNotificationResponse response, AlertNotificationEntity notification) {
+        if (notification.getMessageTa().isEmpty()) {
+            alertResponseSetEnglishMessage(response, notification);
+        } else {
+            response.setMessage(notification.getMessageTa());
+        }
     }
 }
 

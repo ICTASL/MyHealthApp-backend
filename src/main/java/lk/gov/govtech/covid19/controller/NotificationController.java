@@ -22,7 +22,7 @@ public class NotificationController {
 
     @PostMapping(path = "/alert/add", consumes = "application/json", produces = "application/json")
     public ResponseEntity addNewAlert(@RequestBody AlertNotificationRequest request){
-        log.info("New alert added with title {}",request.getTitle());
+        log.info("New alert added with title {}", request.getTitle().getEnglish());
         notificationService.addAlertNotificaiton(request);
 
         return ResponseEntity.accepted().build();

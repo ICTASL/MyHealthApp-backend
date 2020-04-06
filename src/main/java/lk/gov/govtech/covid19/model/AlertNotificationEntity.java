@@ -9,9 +9,10 @@ import lombok.Data;
 @Data
 public class AlertNotificationEntity {
     private String id;
-    private String title;
-    private String subtitle;
     private String source;
+    private String titleEn;
+    private String titleSi;
+    private String titleTa;
     private String messageEn;
     private String messageSi;
     private String messageTa;

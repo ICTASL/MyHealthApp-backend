@@ -52,7 +52,7 @@ public class NotificationService {
             PushNotificationRequest pushNotificationRequest = new PushNotificationRequest();
             pushNotificationRequest.setTopic(firebaseConfiguration.getTopic());
             pushNotificationRequest.setTitle(request.getSource());
-            pushNotificationRequest.setMessage(request.getTitle());
+            pushNotificationRequest.setMessage(request.getTitle().getEnglish());
 
             data.put("type", PUSH_NOTIFICATION_MESSAGE_TYPE_ALERT);
             data.put("id", String.valueOf(id));

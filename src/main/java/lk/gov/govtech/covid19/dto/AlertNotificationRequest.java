@@ -4,10 +4,21 @@ import lombok.Data;
 
 @Data
 public class AlertNotificationRequest {
-    private String title;
-    private String subtitle;
     private String source;
-    private String messageEn;
-    private String messageSi;
-    private String messageTa;
+    private Title title;
+    private Message message;
+
+    @Data
+    public static class Title {
+        private String english;
+        private String sinhala;
+        private String tamil;
+    }
+
+    @Data
+    public static class Message {
+        private String english;
+        private String sinhala;
+        private String tamil;
+    }
 }
