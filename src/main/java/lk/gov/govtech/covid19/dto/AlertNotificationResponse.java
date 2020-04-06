@@ -6,7 +6,6 @@ import lombok.Data;
 public class AlertNotificationResponse {
     private String id;
     private String title;
-    private String subtitle;
     private String source;
     private String message;
     private String createdTime;
