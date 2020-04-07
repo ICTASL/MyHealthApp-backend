@@ -1,60 +1,161 @@
 import Vue from 'vue'
+import ElementUI from "element-ui";
+import { ElementTiptapPlugin } from "element-tiptap";
+import "element-tiptap/lib/index.css";
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 const axios = require('axios').default;
-import Vuelidate from 'vuelidate'
-
+import Vuelidate from 'vuelidate';
 Vue.use(Vuelidate);
 Vue.use(VueSweetalert2);
 import {required,maxLength} from 'vuelidate/lib/validators';
 
+import { Editor, EditorContent ,EditorMenuBar } from 'tiptap';
+
+import {
+    Blockquote,
+    HardBreak,
+    Heading,
+    HorizontalRule,
+    OrderedList,
+    BulletList,
+    ListItem,
+    Bold,
+    Italic,
+    Link,
+    Strike,
+    Underline,
+    History,
+} from 'element-tiptap'
+
+
 var app = new Vue({
 
     el: '#app',
-    data: {
-        submitStatus: false,
-
-        alert:{
-            "title" : "",
-            "subtitle":"",
-            "source":"",
-            "messageEn":"",
-            "messageSi":"",
-            "messageTa":""
-        }
-
+    components: {
+        EditorContent,
+        EditorMenuBar,
     },
+    data() {
+        return {
+            submitStatus: false,
+            english: new Editor({
+                extensions: [
+                    new Blockquote(),
+                    new BulletList(),
+                    new HardBreak(),
+                    new Heading({levels: [1, 2, 3]}),
+                    new HorizontalRule(),
+                    new ListItem(),
+                    new OrderedList(),
+                    new Link(),
+                    new Bold(),
+                    new Italic(),
+                    new Strike(),
+                    new Underline(),
+                    new History(),
+                ],
+                onUpdate: ({getJSON, getHTML}) => {
+                    this.message.english = getHTML()
+                },
+            }),
 
-    validations: {
-        alert: {
-            title: {
-                required,
-                maxLength: maxLength(100)
-            },
-            subtitle: {
-                maxLength: maxLength(100)
+            sinhala: new Editor({
+                extensions: [
+                    new Blockquote(),
+                    new BulletList(),
+                    new HardBreak(),
+                    new Heading({levels: [1, 2, 3]}),
+                    new HorizontalRule(),
+                    new ListItem(),
+                    new OrderedList(),
+                    new Link(),
+                    new Bold(),
+                    new Italic(),
+                    new Strike(),
+                    new Underline(),
+                    new History(),
+                ],
+                onUpdate: ({getJSON, getHTML}) => {
+                    this.message.sinhala = getHTML()
+                },
+            }),
+
+            tamil: new Editor({
+                extensions: [
+                    new Blockquote(),
+                    new BulletList(),
+                    new HardBreak(),
+                    new Heading({levels: [1, 2, 3]}),
+                    new HorizontalRule(),
+                    new ListItem(),
+                    new OrderedList(),
+                    new Link(),
+                    new Bold(),
+                    new Italic(),
+                    new Strike(),
+                    new Underline(),
+                    new History(),
+                ],
+                onUpdate: ({getJSON, getHTML}) => {
+                    this.message.tamil = getHTML()
+                },
+            }),
+
+            "source":'',
+
+            title:{
+               "english":"",
+               "sinhala":"",
+               "tamil":"",
             },
 
-            source: {
-                required,
-                maxLength: maxLength(45)
-            },
-
-            messageEn: {
-                required,
-                maxLength: maxLength(1500)
-            },
-
-            messageSi: {
-                maxLength: maxLength(1500)
-            },
-
-            messageTa: {
-                maxLength: maxLength(1500)
-            },
-
+            message:{
+                "english":"",
+                "sinhala":"",
+                "tamil":"",
+            }
 
         }
+    },
+    validations: {
+        source: {
+            required,
+            maxLength: maxLength(45)
+        },
+
+        title:{
+
+              english:{
+                  required,
+                  maxLength: maxLength(100)
+              },
+
+              sinhala:{
+                  maxLength: maxLength(100)
+              },
+
+            tamil:{
+                maxLength: maxLength(100)
+            },
+
+        },
+
+        message:{
+
+            english:{
+                required,
+                maxLength: maxLength(1500)
+            },
+
+            sinhala:{
+                maxLength: maxLength(1500)
+            },
+
+            tamil:{
+                maxLength: maxLength(1500)
+            },
+        },
     },
 
 
@@ -67,12 +168,23 @@ var app = new Vue({
             }else{
                 this.submitStatus = true;
                 axios.post('/notification/alert/add',{
-                        "title" : this.alert.title,
-                        "subtitle":this.alert.subtitle,
-                        "source":this.alert.source,
-                        "messageEn":this.alert.messageEn,
-                        "messageSi":this.alert.messageSi,
-                        "messageTa":this.alert.messageTa,
+
+
+                    "source":this.source,
+
+                    title:{
+                        "english":this.title.english,
+                        "sinhala":this.title.sinhala,
+                        "tamil":this.title.tamil,
+                    },
+
+                    message:{
+                        "english":this.message.english,
+                        "sinhala":this.message.sinhala,
+                        "tamil":this.message.tamil,
+                    }
+
+
                     },{
                         headers:
                             {
@@ -86,14 +198,16 @@ var app = new Vue({
                             icon: 'success'
                         });
 
-                          this.alert.title ='',
-                            this.alert.subtitle='',
-                            this.alert.source='',
-                            this.alert.messageEn='',
-                            this.alert.messageSi='',
-                            this.alert.messageTa=''
-                        this.submitStatus = false;
-                        this.$v.$reset()
+                           this.source ='';
+                            this.title.english='';
+                            this.title.sinhala='';
+                            this.title.tamil='';
+                            this.message.english='';
+                            this.message.sinhala='';
+                            this.message.tamil='';
+                          this.submitStatus = false;
+                         this.$v.$reset();
+                        this.beforeDestroy;
                     }
                 }).catch(e=>{
                     Vue.swal({
@@ -103,8 +217,16 @@ var app = new Vue({
                 })
             }
 
-        }
-    }
+        },
+
+    },
+
+
+    beforeDestroy() {
+        this.sinhala.destroy()
+        this.tamil.destroy()
+        this.english.destroy()
+    },
 
 
 
