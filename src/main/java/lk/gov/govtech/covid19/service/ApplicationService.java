@@ -135,17 +135,17 @@ public class ApplicationService {
         response.setTitle(notification.getTitleEn());
     }
     private void alertResponseSetSinhalaTitleOrElseEnglish(AlertNotificationResponse response, AlertNotificationEntity notification) {
-        if (notification.getTitleSi() != null) {
-            response.setTitle(notification.getTitleSi());
-        } else {
+        if (notification.getTitleSi() == null || notification.getTitleSi().isEmpty()) {
             alertResponseSetEnglishTitle(response, notification);
+        } else {
+            response.setTitle(notification.getTitleSi());
         }
     }
     private void alertResponseSetTamilTitleOrElseEnglish(AlertNotificationResponse response, AlertNotificationEntity notification) {
-        if (notification.getTitleTa() != null) {
-            response.setTitle(notification.getTitleTa());
-        } else {
+        if (notification.getTitleTa() == null || notification.getTitleTa().isEmpty()) {
             alertResponseSetEnglishTitle(response, notification);
+        } else {
+            response.setTitle(notification.getTitleTa());
         }
     }
 
@@ -156,17 +156,17 @@ public class ApplicationService {
         response.setMessage(notification.getMessageEn());
     }
     private void alertResponseSetSinhalaMessageOrElseEnglish(AlertNotificationResponse response, AlertNotificationEntity notification) {
-        if (notification.getMessageSi() != null) {
-            response.setMessage(notification.getMessageSi());
-        } else {
+        if (notification.getMessageSi() == null || notification.getMessageSi().isEmpty()) {
             alertResponseSetEnglishMessage(response, notification);
+        } else {
+            response.setMessage(notification.getMessageSi());
         }
     }
     private void alertResponseSetTamilMessageOrElseEnglish(AlertNotificationResponse response, AlertNotificationEntity notification) {
-        if (notification.getMessageTa() != null) {
-            response.setMessage(notification.getMessageTa());
-        } else {
+        if (notification.getMessageTa() == null || notification.getMessageTa().isEmpty()) {
             alertResponseSetEnglishMessage(response, notification);
+        } else {
+            response.setMessage(notification.getMessageTa());
         }
     }
 }
