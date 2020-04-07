@@ -1,0 +1,47 @@
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
+
+h1{
+    @apply text-2xl font-black leading-relaxed
+}
+h2{
+    @apply text-xl font-bold leading-relaxed
+}
+
+h3{
+    @apply text-lg font-medium leading-relaxed
+}
+
+p{
+    @apply text-base font-normal leading-normal
+}
+
+.ProseMirror{
+    @apply bg-white appearance-none border-2 border-gray-200 rounded-t-none w-full py-2 mt-2 px-4 text-gray-700 leading-tight
+}
+.ProseMirror:focus{
+    @apply  shadow-outline outline-none border-blue-300 z-10
+}
+
+.ProseMirror > ul{
+    @apply list-disc ml-5 mb-3
+}
+
+.ProseMirror > ol{
+    @apply list-decimal ml-5 mb-3
+}
+.menubar__button{
+    @apply py-1 pl-2  font-bold  rounded inline-flex items-center mr-3 bg-white shadow
+}
+.menubar_button:hover{
+    @apply bg-gray-400
+}
+.menubar__button.is-active{
+    @apply py-1 pl-2  bg-blue-400 font-bold
+}
+.menubar{
+    @apply flex justify-start mt-3
+ }

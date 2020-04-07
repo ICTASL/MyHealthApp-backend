@@ -17,13 +17,7 @@ mix
     .js('src/main/resources/js/alerts.js', 'src/main/resources/static/js/alerts.js')
     .js('src/main/resources/js/Case.js', 'src/main/resources/static/js/Case.js')
     .js('src/main/resources/js/dashboard.js', 'src/main/resources/static/js/dashboard.js')
-    .sass('src/main/resources/css/app.sass', 'src/main/resources/static/css/app.css')
-    .options({
-            processCssUrls: false,
-            postCss: [ tailwindcss('covid-config.js') ],
-    })
-    .purgeCss({
-        enabled: false,
-        folders: ['/src/main/resources/css/','/src/main/resources/templates/'],
-        extensions: ['html'],
-    });
+    .postCss('src/main/resources/css/app.css', 'src/main/resources/static/css/app.css',[
+        require('tailwindcss')('./covid-config.js')
+    ])
+
