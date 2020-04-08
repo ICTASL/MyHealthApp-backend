@@ -78,7 +78,8 @@ var app = new Vue({
                     new History(),
                 ],
                 onUpdate: ({getJSON, getHTML}) => {
-                    this.message.sinhala = getHTML()
+                    this.message.sinhala = getHTML();
+                    this.sinhalaChar();
                 },
             }),
 
@@ -99,7 +100,8 @@ var app = new Vue({
                     new History(),
                 ],
                 onUpdate: ({getJSON, getHTML}) => {
-                    this.message.tamil = getHTML()
+                    this.message.tamil = getHTML();
+                    this.tamilChar();
                 },
             }),
 
@@ -116,8 +118,6 @@ var app = new Vue({
                 "bullet_list":"Bullet List",
                 "redo":"Redo",
                 "undo":"UnDo",
-
-
             },
             "source":'',
 
@@ -135,10 +135,12 @@ var app = new Vue({
             charcount:{
                 "englishChar":0,
                 "sinhalaChar":0,
-                "TamilChar":0,
-            }
+                "tamilChar":0,
+            },
 
         }
+
+
     },
     validations: {
         source: {
@@ -219,17 +221,85 @@ var app = new Vue({
                             title: 'New Alert Was Created',
                             icon: 'success'
                         });
-
-                           this.source ='';
+                            this.source ='';
                             this.title.english='';
                             this.title.sinhala='';
                             this.title.tamil='';
                             this.message.english='';
                             this.message.sinhala='';
+                            this.charcount.sinhalaChar ='';
+                            this.charcount.englishChar ='';
+                            this.charcount.tamilChar ='';
                             this.message.tamil='';
-                          this.submitStatus = false;
-                         this.$v.$reset();
-                        this.beforeDestroy;
+                            this.submitStatus = false;
+                            this.$v.$reset();
+                            this.english.destroy();
+                            this.sinhala.destroy();
+                            this.tamil.destroy();
+                            this.english =new Editor({
+                                extensions: [
+                                    new Blockquote(),
+                                    new BulletList(),
+                                    new HardBreak(),
+                                    new Heading({levels: [1, 2, 3]}),
+                                    new HorizontalRule(),
+                                    new ListItem(),
+                                    new OrderedList(),
+                                    new Link(),
+                                    new Bold(),
+                                    new Italic(),
+                                    new Strike(),
+                                    new Underline(),
+                                    new History(),
+                                ],
+                                onUpdate: ({getJSON, getHTML}) => {
+                                    this.message.english =  getHTML();
+                                    this.englishChar();
+                                },
+                            });
+                            this.sinhala =new Editor({
+                                extensions: [
+                                    new Blockquote(),
+                                    new BulletList(),
+                                    new HardBreak(),
+                                    new Heading({levels: [1, 2, 3]}),
+                                    new HorizontalRule(),
+                                    new ListItem(),
+                                    new OrderedList(),
+                                    new Link(),
+                                    new Bold(),
+                                    new Italic(),
+                                    new Strike(),
+                                    new Underline(),
+                                    new History(),
+                                ],
+                                onUpdate: ({getJSON, getHTML}) => {
+                                    this.message.english =  getHTML();
+                                    this.englishChar();
+                                },
+                            });
+                            this.tamil =new Editor({
+                                extensions: [
+                                    new Blockquote(),
+                                    new BulletList(),
+                                    new HardBreak(),
+                                    new Heading({levels: [1, 2, 3]}),
+                                    new HorizontalRule(),
+                                    new ListItem(),
+                                    new OrderedList(),
+                                    new Link(),
+                                    new Bold(),
+                                    new Italic(),
+                                    new Strike(),
+                                    new Underline(),
+                                    new History(),
+                                ],
+                                onUpdate: ({getJSON, getHTML}) => {
+                                    this.message.english =  getHTML();
+                                    this.englishChar();
+                                },
+                            });
+
                     }
                 }).catch(e=>{
                     Vue.swal({
@@ -243,27 +313,22 @@ var app = new Vue({
 
         sinhalaChar()
         {
-            this.charcount.sinhalaChar = this.message.sinhala;
+            this.charcount.sinhalaChar = (this.message.sinhala.length)-7;
         },
         englishChar()
         {
-            this.charcount.englishChar = this.message.english;
+            this.charcount.englishChar = (this.message.english.length)-7;
         },
 
         tamilChar()
         {
-            this.charcount.tamilChar = this.message.tamil;
+            this.charcount.tamilChar = (this.message.tamil.length)-7;
         }
 
 
     },
 
 
-    beforeDestroy() {
-        this.sinhala.destroy()
-        this.tamil.destroy()
-        this.english.destroy()
-    },
 
 
 

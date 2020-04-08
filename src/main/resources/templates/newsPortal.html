@@ -261,7 +261,7 @@
                                 <editor-content class="editor__content" :class="{'border-red-500':$v.message.english.$error}" :editor="english"></editor-content>
                             </div>
                             <div class="my-3">
-                                <p class="text-base text-blue-400">{{ charcount.englishChar }} characters</p>
+                                <p class="text-base text-blue-400 text-right">{{ charcount.englishChar }} characters</p>
                             </div>
                             <div v-if="$v.message.english.$dirty">
                                 <p class="text-red-500 text-xs italic" v-if="!$v.message.english.required">English Alerts is required</p>
@@ -431,6 +431,9 @@
                             </editor-menu-bar>
 
                             <editor-content class="editor__content" :class="{'border-red-500':$v.message.sinhala.$error}" :editor="sinhala"></editor-content>
+                            <div class="my-3">
+                                <p class="text-base text-blue-400 text-right">{{ charcount.sinhalaChar }} characters</p>
+                            </div>
                             <div v-if="$v.message.sinhala.$dirty">
                                 <p class="text-red-500 text-xs italic" v-if="!$v.message.sinhala.maxLength">Sinhala Alerts must have at most 1500 characters</p>
                             </div>
@@ -597,6 +600,9 @@
                             </editor-menu-bar>
 
                             <editor-content class="editor__content" :class="{'border-red-500':$v.message.tamil.$error}" :editor="tamil"></editor-content>
+                            <div class="my-3">
+                                <p class="text-base text-blue-400 text-right">{{ charcount.tamilChar }} characters</p>
+                            </div>
                             <div v-if="$v.message.tamil.$dirty">
                                 <p class="text-red-500 text-xs italic" v-if="!$v.message.tamil.maxLength">Tamil Alerts must have at most 1500 characters</p>
                             </div>
