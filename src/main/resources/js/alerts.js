@@ -227,10 +227,10 @@ var app = new Vue({
                             this.title.tamil='';
                             this.message.english='';
                             this.message.sinhala='';
-                            this.charcount.sinhalaChar ='';
-                            this.charcount.englishChar ='';
-                            this.charcount.tamilChar ='';
                             this.message.tamil='';
+                            this.charcount.sinhalaChar =0;
+                            this.charcount.englishChar =0;
+                            this.charcount.tamilChar =0;
                             this.submitStatus = false;
                             this.$v.$reset();
                             this.english.destroy();
