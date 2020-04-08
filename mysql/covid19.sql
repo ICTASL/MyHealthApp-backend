@@ -10,9 +10,9 @@ CREATE TABLE `notification` (
   `title_en` VARCHAR(100) NULL,
   `title_si` VARCHAR(100) NULL,
   `title_ta` VARCHAR(100) NULL,
-  `message_en` VARCHAR(500) NULL,
-  `message_si` VARCHAR(500) NULL,
-  `message_ta` VARCHAR(500) NULL,
+  `message_en` VARCHAR(2000) NULL,
+  `message_si` VARCHAR(2000) NULL,
+  `message_ta` VARCHAR(2000) NULL,
   `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`))
   ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
