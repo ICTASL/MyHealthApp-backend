@@ -55012,10 +55012,10 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
             _this2.title.tamil = '';
             _this2.message.english = '';
             _this2.message.sinhala = '';
-            _this2.charcount.sinhalaChar = '';
-            _this2.charcount.englishChar = '';
-            _this2.charcount.tamilChar = '';
             _this2.message.tamil = '';
+            _this2.charcount.sinhalaChar = 0;
+            _this2.charcount.englishChar = 0;
+            _this2.charcount.tamilChar = 0;
             _this2.submitStatus = false;
 
             _this2.$v.$reset();
