@@ -95,7 +95,7 @@ public class ApplicationService {
             response.setLocal(notification.isLocal());
             response.setDetectedFrom(notification.getDetectedFrom());
             response.setCreated(notification.getCreated());
-            response.setLocations(repository.getCaseNotificationLocations(caseId));
+            response.setLocations(repository.getCaseNotificationLocations(notification.getCaseNumber()));
 
         }
 
