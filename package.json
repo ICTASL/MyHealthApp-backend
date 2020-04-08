@@ -5,12 +5,11 @@
   "main": "index.js",
   "dependencies": {
     "axios": "^0.19.2",
-    "element-tiptap": "^1.18.0",
-    "element-ui": "^1.4.13",
     "node-sass": "^4.13.1",
     "tailwindcss": "^1.2.0",
     "tiptap": "^1.26.8",
     "tiptap-extensions": "^1.28.8",
+    "v-tooltip": "^2.0.3",
     "vue": "^2.6.11",
     "vue-flatpickr-component": "^8.1.5",
     "vue-google-autocomplete": "^1.1.0",

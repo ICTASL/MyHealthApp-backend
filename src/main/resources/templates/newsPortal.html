@@ -99,7 +99,7 @@
                         </div>
                     </div>
 
-                    <div class="">
+                    <div class="mt-8">
                         <label class="px-4 text-xl text-gray-800 w-full " for="title">English Title<span class="text-red-400">*</span></label>
                         <div class="px-4">
                             <input class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
@@ -117,10 +117,13 @@
                         <div class="px-4">
 
                             <div class="editor">
-                                <editor-menu-bar :editor="english" v-slot="{ commands, isActive }">
+                                <editor-menu-bar class="mt-4 mb-4" :editor="english" v-slot="{ commands, isActive }">
                                     <div class="menubar">
 
-                                        <button type="button"
+                                        <button v-tooltip.top-center="{
+                                            content:buttons.bold,
+                                             placement: 'top-center',
+                                        }" type="button"
                                                 class="menubar__button"
                                                 :class="{ 'is-active': isActive.bold() }"
                                                 @click="commands.bold"
@@ -128,7 +131,10 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" class="fill-current w-4 h-4 mr-2" viewBox="0 0 281.332 281.332"><path d="M198.102 134.449c15.233-11.431 28.497-29.829 28.497-59.239v-.753c0-18.694-6.274-34.93-18.649-48.258a8.073 8.073 0 00-.181-.189C191.021 8.994 165.96 0 135.294 0H49.656a9 9 0 00-9 9v263.332a9 9 0 009 9h90.331c29.385 0 54.297-7.214 72.043-20.863 18.741-14.414 28.647-35.157 28.647-59.988v-.753c0-29.502-14.634-51.788-42.575-65.279zm-57.393 102.175H86.813v-74.919h48.842c19.735 0 35.34 3.551 45.129 10.27 8.757 6.011 13.015 14.474 13.015 25.872v.752c0 34.32-37.128 38.025-53.09 38.025zM130.58 117.372H86.813V44.709h45.955c29.839 0 46.952 12.351 46.952 33.886v.752c-.001 33.085-30.788 38.025-49.14 38.025z"/></svg>
                                         </button>
 
-                                        <button type="button"
+                                        <button  v-tooltip.top-center="{
+                                            content:buttons.italic,
+                                             placement: 'top-center',
+                                        }" type="button"
                                                 class="menubar__button"
                                                 :class="{ 'is-active': isActive.italic() }"
                                                 @click="commands.italic"
@@ -137,7 +143,10 @@
 
                                         </button>
 
-                                        <button type="button"
+                                        <button v-tooltip.top-center="{
+                                            content:buttons.strike,
+                                             placement: 'top-center',
+                                        }"type="button"
                                                 class="menubar__button"
                                                 :class="{ 'is-active': isActive.strike() }"
                                                 @click="commands.strike"
@@ -146,7 +155,10 @@
 
                                         </button>
 
-                                        <button type="button"
+                                        <button v-tooltip.top-center="{
+                                            content:buttons.underline,
+                                             placement: 'top-center',
+                                        }"type="button"
                                                 class="menubar__button"
                                                 :class="{ 'is-active': isActive.underline() }"
                                                 @click="commands.underline"
@@ -155,7 +167,10 @@
                                         </button>
 
 
-                                        <button type="button"
+                                        <button v-tooltip.top-center="{
+                                            content:buttons.paragraph,
+                                             placement: 'top-center',
+                                        }"type="button"
                                                 class="menubar__button"
                                                 :class="{ 'is-active': isActive.paragraph() }"
                                                 @click="commands.paragraph"
@@ -163,7 +178,10 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" class="fill-current w-4 h-4 mr-2" viewBox="0 0 333 333"><path d="M294.769 0H127.752c-.457 0-.902.047-1.336.126A7.443 7.443 0 00125.08 0H95.685C59.869 0 30.731 29.139 30.731 64.954s29.138 64.954 64.954 64.954h24.567V325.5a7.5 7.5 0 007.5 7.5 7.5 7.5 0 007.5-7.5V15h10.386v310.5a7.5 7.5 0 007.5 7.5 7.5 7.5 0 007.5-7.5V15h94.564v310.5a7.5 7.5 0 007.5 7.5c4.143 0 7.5-3.357 7.5-7.5V15h24.566c4.142 0 7.5-3.357 7.5-7.5S298.911 0 294.769 0zM95.685 114.908c-27.545 0-49.954-22.409-49.954-49.954S68.14 15 95.685 15h24.567v99.908H95.685z"/></svg>
                                         </button>
 
-                                        <button type="button"
+                                        <button v-tooltip.top-center="{
+                                            content:buttons.H1,
+                                             placement: 'top-center',
+                                        }"type="button"
                                                 class="menubar__button pr-2"
                                                 :class="{ 'is-active': isActive.heading({ level: 1 }) }"
                                                 @click="commands.heading({ level: 1 })"
@@ -171,7 +189,10 @@
                                             H1
                                         </button>
 
-                                        <button type="button"
+                                        <button v-tooltip.top-center="{
+                                            content:buttons.H2,
+                                             placement: 'top-center',
+                                        }"type="button"
                                                 class="menubar__button pr-2"
                                                 :class="{ 'is-active': isActive.heading({ level: 2 }) }"
                                                 @click="commands.heading({ level: 2 })"
@@ -179,7 +200,10 @@
                                             H2
                                         </button>
 
-                                        <button type="button"
+                                        <button v-tooltip.top-center="{
+                                            content:buttons.H3,
+                                             placement: 'top-center',
+                                        }" type="button"
                                                 class="menubar__button pr-2"
                                                 :class="{ 'is-active': isActive.heading({ level: 3 }) }"
                                                 @click="commands.heading({ level: 3 })"
@@ -187,7 +211,10 @@
                                             H3
                                         </button>
 
-                                        <button type="button"
+                                        <button v-tooltip.top-center="{
+                                            content:buttons.bullet_list,
+                                             placement: 'top-center',
+                                        }"type="button"
                                                 class="menubar__button"
                                                 :class="{ 'is-active': isActive.bullet_list() }"
                                                 @click="commands.bullet_list"
@@ -195,7 +222,10 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" class="fill-current w-4 h-4 mr-2" viewBox="0 0 290.5 290.5"><path d="M74 66.001h209c4.143 0 7.5-3.358 7.5-7.5s-3.357-7.5-7.5-7.5H74a7.5 7.5 0 000 15zM283 138H74a7.5 7.5 0 000 15h209a7.5 7.5 0 007.5-7.5 7.5 7.5 0 00-7.5-7.5zM283 224.999H74a7.5 7.5 0 000 15h209c4.143 0 7.5-3.358 7.5-7.5s-3.357-7.5-7.5-7.5zM26 32.501c-14.336 0-26 11.664-26 26s11.664 26 26 26 26-11.664 26-26-11.664-26-26-26zm0 37c-6.075 0-11-4.925-11-11s4.925-11 11-11 11 4.925 11 11-4.925 11-11 11zM26 119.5c-14.336 0-26 11.664-26 26s11.664 26 26 26 26-11.664 26-26-11.664-26-26-26zm0 37c-6.075 0-11-4.925-11-11s4.925-11 11-11 11 4.925 11 11-4.925 11-11 11zM26 205.999c-14.336 0-26 11.664-26 26s11.664 26 26 26 26-11.664 26-26-11.664-26-26-26zm0 37c-6.075 0-11-4.925-11-11s4.925-11 11-11 11 4.925 11 11-4.925 11-11 11z"/></svg>
                                         </button>
 
-                                        <button type="button"
+                                        <button v-tooltip.top-center="{
+                                            content:buttons.order_list,
+                                             placement: 'top-center',
+                                        }"type="button"
                                                 class="menubar__button"
                                                 :class="{ 'is-active': isActive.ordered_list() }"
                                                 @click="commands.ordered_list"
@@ -205,14 +235,20 @@
 
 
 
-                                        <button type="button"
+                                        <button v-tooltip.top-center="{
+                                            content:buttons.undo,
+                                             placement: 'top-center',
+                                        }"type="button"
                                                 class="menubar__button"
                                                 @click="commands.undo"
                                         >
                                             <svg xmlns="http://www.w3.org/2000/svg" class="fill-current w-4 h-4 mr-2"  viewBox="0 0 332.114 332.114"><path d="M324.614 176.5h-26.506c-.272-73.383-60.049-133-133.494-133-73.612 0-133.5 59.888-133.5 133.5v86.007l-18.31-18.31a7.502 7.502 0 00-10.608 0 7.5 7.5 0 000 10.606l31.113 31.113.03.027c.166.165.339.321.52.47.084.069.173.129.26.194.109.082.217.167.331.243.103.069.208.128.313.19.106.064.208.129.316.188.107.057.218.105.328.158.111.053.222.109.337.156.107.044.217.081.326.12.121.044.241.09.366.128.109.033.221.058.332.085.126.032.251.067.379.092.129.026.26.041.389.06.112.016.223.038.336.049a7.623 7.623 0 001.48 0c.113-.011.224-.033.336-.049.129-.019.26-.034.389-.06.128-.025.253-.061.379-.092.111-.028.223-.052.332-.085.125-.038.245-.084.367-.128.108-.039.218-.075.325-.119.115-.048.226-.104.338-.157.109-.052.22-.1.327-.157.108-.058.211-.124.317-.188.105-.063.211-.122.313-.19.114-.076.222-.161.331-.243.087-.065.176-.125.26-.194.181-.148.354-.305.52-.47l.03-.027 31.113-31.113a7.5 7.5 0 00-10.607-10.606l-18.31 18.31V177c0-65.341 53.159-118.5 118.5-118.5 65.174 0 118.223 52.888 118.494 118h-26.494a7.5 7.5 0 00-7.5 7.5 7.5 7.5 0 007.5 7.5h68a7.5 7.5 0 007.5-7.5 7.497 7.497 0 00-7.498-7.5z"/></svg>
                                         </button>
 
-                                        <button type="button"
+                                        <button v-tooltip.top-center="{
+                                            content:buttons.redo,
+                                             placement: 'top-center',
+                                        }"type="button"
                                                 class="menubar__button"
                                                 @click="commands.redo"
                                         >
@@ -223,9 +259,9 @@
                                 </editor-menu-bar>
 
                                 <editor-content class="editor__content" :class="{'border-red-500':$v.message.english.$error}" :editor="english"></editor-content>
-
-<!--                            <textarea rows="3" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"-->
-<!--                                      type="text" placeholder="English Alert" id="english_description" required name="messageEn"   v-model="$v.alert.messageEn.$model" :class="{'border-red-500':$v.alert.messageEn.$error}"></textarea>-->
+                            </div>
+                            <div class="my-3">
+                                <p class="text-base text-blue-400">{{ charcount.englishChar }} characters</p>
                             </div>
                             <div v-if="$v.message.english.$dirty">
                                 <p class="text-red-500 text-xs italic" v-if="!$v.message.english.required">English Alerts is required</p>
@@ -256,7 +292,10 @@
                             <editor-menu-bar :editor="sinhala" v-slot="{ commands, isActive }">
                                 <div class="menubar">
 
-                                    <button type="button"
+                                    <button v-tooltip.top-center="{
+                                            content:buttons.bold,
+                                             placement: 'top-center',
+                                        }" type="button"
                                             class="menubar__button"
                                             :class="{ 'is-active': isActive.bold() }"
                                             @click="commands.bold"
@@ -264,16 +303,22 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" class="fill-current w-4 h-4 mr-2" viewBox="0 0 281.332 281.332"><path d="M198.102 134.449c15.233-11.431 28.497-29.829 28.497-59.239v-.753c0-18.694-6.274-34.93-18.649-48.258a8.073 8.073 0 00-.181-.189C191.021 8.994 165.96 0 135.294 0H49.656a9 9 0 00-9 9v263.332a9 9 0 009 9h90.331c29.385 0 54.297-7.214 72.043-20.863 18.741-14.414 28.647-35.157 28.647-59.988v-.753c0-29.502-14.634-51.788-42.575-65.279zm-57.393 102.175H86.813v-74.919h48.842c19.735 0 35.34 3.551 45.129 10.27 8.757 6.011 13.015 14.474 13.015 25.872v.752c0 34.32-37.128 38.025-53.09 38.025zM130.58 117.372H86.813V44.709h45.955c29.839 0 46.952 12.351 46.952 33.886v.752c-.001 33.085-30.788 38.025-49.14 38.025z"/></svg>
                                     </button>
 
-                                    <button type="button"
-                                            class="menubar__button"
-                                            :class="{ 'is-active': isActive.italic() }"
-                                            @click="commands.italic"
+                                    <button  v-tooltip.top-center="{
+                                            content:buttons.italic,
+                                             placement: 'top-center',
+                                        }" type="button"
+                                             class="menubar__button"
+                                             :class="{ 'is-active': isActive.italic() }"
+                                             @click="commands.italic"
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" class="fill-current w-4 h-4 mr-2" viewBox="0 0 306.001 306.001"><path d="M249.142 0H120.713a7.5 7.5 0 000 15h54.958l-58.527 276H56.859a7.5 7.5 0 000 15h66.339l.028.001.017-.001h62.044a7.5 7.5 0 000-15h-52.811l58.527-276h58.138a7.5 7.5 0 00.001-15z"/></svg>
 
                                     </button>
 
-                                    <button type="button"
+                                    <button v-tooltip.top-center="{
+                                            content:buttons.strike,
+                                             placement: 'top-center',
+                                        }"type="button"
                                             class="menubar__button"
                                             :class="{ 'is-active': isActive.strike() }"
                                             @click="commands.strike"
@@ -282,7 +327,10 @@
 
                                     </button>
 
-                                    <button type="button"
+                                    <button v-tooltip.top-center="{
+                                            content:buttons.underline,
+                                             placement: 'top-center',
+                                        }"type="button"
                                             class="menubar__button"
                                             :class="{ 'is-active': isActive.underline() }"
                                             @click="commands.underline"
@@ -291,7 +339,10 @@
                                     </button>
 
 
-                                    <button type="button"
+                                    <button v-tooltip.top-center="{
+                                            content:buttons.paragraph,
+                                             placement: 'top-center',
+                                        }"type="button"
                                             class="menubar__button"
                                             :class="{ 'is-active': isActive.paragraph() }"
                                             @click="commands.paragraph"
@@ -299,7 +350,10 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" class="fill-current w-4 h-4 mr-2" viewBox="0 0 333 333"><path d="M294.769 0H127.752c-.457 0-.902.047-1.336.126A7.443 7.443 0 00125.08 0H95.685C59.869 0 30.731 29.139 30.731 64.954s29.138 64.954 64.954 64.954h24.567V325.5a7.5 7.5 0 007.5 7.5 7.5 7.5 0 007.5-7.5V15h10.386v310.5a7.5 7.5 0 007.5 7.5 7.5 7.5 0 007.5-7.5V15h94.564v310.5a7.5 7.5 0 007.5 7.5c4.143 0 7.5-3.357 7.5-7.5V15h24.566c4.142 0 7.5-3.357 7.5-7.5S298.911 0 294.769 0zM95.685 114.908c-27.545 0-49.954-22.409-49.954-49.954S68.14 15 95.685 15h24.567v99.908H95.685z"/></svg>
                                     </button>
 
-                                    <button type="button"
+                                    <button v-tooltip.top-center="{
+                                            content:buttons.H1,
+                                             placement: 'top-center',
+                                        }"type="button"
                                             class="menubar__button pr-2"
                                             :class="{ 'is-active': isActive.heading({ level: 1 }) }"
                                             @click="commands.heading({ level: 1 })"
@@ -307,7 +361,10 @@
                                         H1
                                     </button>
 
-                                    <button type="button"
+                                    <button v-tooltip.top-center="{
+                                            content:buttons.H2,
+                                             placement: 'top-center',
+                                        }"type="button"
                                             class="menubar__button pr-2"
                                             :class="{ 'is-active': isActive.heading({ level: 2 }) }"
                                             @click="commands.heading({ level: 2 })"
@@ -315,7 +372,10 @@
                                         H2
                                     </button>
 
-                                    <button type="button"
+                                    <button v-tooltip.top-center="{
+                                            content:buttons.H3,
+                                             placement: 'top-center',
+                                        }" type="button"
                                             class="menubar__button pr-2"
                                             :class="{ 'is-active': isActive.heading({ level: 3 }) }"
                                             @click="commands.heading({ level: 3 })"
@@ -323,7 +383,10 @@
                                         H3
                                     </button>
 
-                                    <button type="button"
+                                    <button v-tooltip.top-center="{
+                                            content:buttons.bullet_list,
+                                             placement: 'top-center',
+                                        }"type="button"
                                             class="menubar__button"
                                             :class="{ 'is-active': isActive.bullet_list() }"
                                             @click="commands.bullet_list"
@@ -331,7 +394,10 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" class="fill-current w-4 h-4 mr-2" viewBox="0 0 290.5 290.5"><path d="M74 66.001h209c4.143 0 7.5-3.358 7.5-7.5s-3.357-7.5-7.5-7.5H74a7.5 7.5 0 000 15zM283 138H74a7.5 7.5 0 000 15h209a7.5 7.5 0 007.5-7.5 7.5 7.5 0 00-7.5-7.5zM283 224.999H74a7.5 7.5 0 000 15h209c4.143 0 7.5-3.358 7.5-7.5s-3.357-7.5-7.5-7.5zM26 32.501c-14.336 0-26 11.664-26 26s11.664 26 26 26 26-11.664 26-26-11.664-26-26-26zm0 37c-6.075 0-11-4.925-11-11s4.925-11 11-11 11 4.925 11 11-4.925 11-11 11zM26 119.5c-14.336 0-26 11.664-26 26s11.664 26 26 26 26-11.664 26-26-11.664-26-26-26zm0 37c-6.075 0-11-4.925-11-11s4.925-11 11-11 11 4.925 11 11-4.925 11-11 11zM26 205.999c-14.336 0-26 11.664-26 26s11.664 26 26 26 26-11.664 26-26-11.664-26-26-26zm0 37c-6.075 0-11-4.925-11-11s4.925-11 11-11 11 4.925 11 11-4.925 11-11 11z"/></svg>
                                     </button>
 
-                                    <button type="button"
+                                    <button v-tooltip.top-center="{
+                                            content:buttons.order_list,
+                                             placement: 'top-center',
+                                        }"type="button"
                                             class="menubar__button"
                                             :class="{ 'is-active': isActive.ordered_list() }"
                                             @click="commands.ordered_list"
@@ -341,14 +407,20 @@
 
 
 
-                                    <button type="button"
+                                    <button v-tooltip.top-center="{
+                                            content:buttons.undo,
+                                             placement: 'top-center',
+                                        }"type="button"
                                             class="menubar__button"
                                             @click="commands.undo"
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" class="fill-current w-4 h-4 mr-2"  viewBox="0 0 332.114 332.114"><path d="M324.614 176.5h-26.506c-.272-73.383-60.049-133-133.494-133-73.612 0-133.5 59.888-133.5 133.5v86.007l-18.31-18.31a7.502 7.502 0 00-10.608 0 7.5 7.5 0 000 10.606l31.113 31.113.03.027c.166.165.339.321.52.47.084.069.173.129.26.194.109.082.217.167.331.243.103.069.208.128.313.19.106.064.208.129.316.188.107.057.218.105.328.158.111.053.222.109.337.156.107.044.217.081.326.12.121.044.241.09.366.128.109.033.221.058.332.085.126.032.251.067.379.092.129.026.26.041.389.06.112.016.223.038.336.049a7.623 7.623 0 001.48 0c.113-.011.224-.033.336-.049.129-.019.26-.034.389-.06.128-.025.253-.061.379-.092.111-.028.223-.052.332-.085.125-.038.245-.084.367-.128.108-.039.218-.075.325-.119.115-.048.226-.104.338-.157.109-.052.22-.1.327-.157.108-.058.211-.124.317-.188.105-.063.211-.122.313-.19.114-.076.222-.161.331-.243.087-.065.176-.125.26-.194.181-.148.354-.305.52-.47l.03-.027 31.113-31.113a7.5 7.5 0 00-10.607-10.606l-18.31 18.31V177c0-65.341 53.159-118.5 118.5-118.5 65.174 0 118.223 52.888 118.494 118h-26.494a7.5 7.5 0 00-7.5 7.5 7.5 7.5 0 007.5 7.5h68a7.5 7.5 0 007.5-7.5 7.497 7.497 0 00-7.498-7.5z"/></svg>
                                     </button>
 
-                                    <button type="button"
+                                    <button v-tooltip.top-center="{
+                                            content:buttons.redo,
+                                             placement: 'top-center',
+                                        }"type="button"
                                             class="menubar__button"
                                             @click="commands.redo"
                                     >
@@ -386,7 +458,10 @@
                             <editor-menu-bar :editor="tamil" v-slot="{ commands, isActive }">
                                 <div class="menubar">
 
-                                    <button type="button"
+                                    <button v-tooltip.top-center="{
+                                            content:buttons.bold,
+                                             placement: 'top-center',
+                                        }" type="button"
                                             class="menubar__button"
                                             :class="{ 'is-active': isActive.bold() }"
                                             @click="commands.bold"
@@ -394,16 +469,22 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" class="fill-current w-4 h-4 mr-2" viewBox="0 0 281.332 281.332"><path d="M198.102 134.449c15.233-11.431 28.497-29.829 28.497-59.239v-.753c0-18.694-6.274-34.93-18.649-48.258a8.073 8.073 0 00-.181-.189C191.021 8.994 165.96 0 135.294 0H49.656a9 9 0 00-9 9v263.332a9 9 0 009 9h90.331c29.385 0 54.297-7.214 72.043-20.863 18.741-14.414 28.647-35.157 28.647-59.988v-.753c0-29.502-14.634-51.788-42.575-65.279zm-57.393 102.175H86.813v-74.919h48.842c19.735 0 35.34 3.551 45.129 10.27 8.757 6.011 13.015 14.474 13.015 25.872v.752c0 34.32-37.128 38.025-53.09 38.025zM130.58 117.372H86.813V44.709h45.955c29.839 0 46.952 12.351 46.952 33.886v.752c-.001 33.085-30.788 38.025-49.14 38.025z"/></svg>
                                     </button>
 
-                                    <button type="button"
-                                            class="menubar__button"
-                                            :class="{ 'is-active': isActive.italic() }"
-                                            @click="commands.italic"
+                                    <button  v-tooltip.top-center="{
+                                            content:buttons.italic,
+                                             placement: 'top-center',
+                                        }" type="button"
+                                             class="menubar__button"
+                                             :class="{ 'is-active': isActive.italic() }"
+                                             @click="commands.italic"
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" class="fill-current w-4 h-4 mr-2" viewBox="0 0 306.001 306.001"><path d="M249.142 0H120.713a7.5 7.5 0 000 15h54.958l-58.527 276H56.859a7.5 7.5 0 000 15h66.339l.028.001.017-.001h62.044a7.5 7.5 0 000-15h-52.811l58.527-276h58.138a7.5 7.5 0 00.001-15z"/></svg>
 
                                     </button>
 
-                                    <button type="button"
+                                    <button v-tooltip.top-center="{
+                                            content:buttons.strike,
+                                             placement: 'top-center',
+                                        }"type="button"
                                             class="menubar__button"
                                             :class="{ 'is-active': isActive.strike() }"
                                             @click="commands.strike"
@@ -412,7 +493,10 @@
 
                                     </button>
 
-                                    <button type="button"
+                                    <button v-tooltip.top-center="{
+                                            content:buttons.underline,
+                                             placement: 'top-center',
+                                        }"type="button"
                                             class="menubar__button"
                                             :class="{ 'is-active': isActive.underline() }"
                                             @click="commands.underline"
@@ -421,7 +505,10 @@
                                     </button>
 
 
-                                    <button type="button"
+                                    <button v-tooltip.top-center="{
+                                            content:buttons.paragraph,
+                                             placement: 'top-center',
+                                        }"type="button"
                                             class="menubar__button"
                                             :class="{ 'is-active': isActive.paragraph() }"
                                             @click="commands.paragraph"
@@ -429,7 +516,10 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" class="fill-current w-4 h-4 mr-2" viewBox="0 0 333 333"><path d="M294.769 0H127.752c-.457 0-.902.047-1.336.126A7.443 7.443 0 00125.08 0H95.685C59.869 0 30.731 29.139 30.731 64.954s29.138 64.954 64.954 64.954h24.567V325.5a7.5 7.5 0 007.5 7.5 7.5 7.5 0 007.5-7.5V15h10.386v310.5a7.5 7.5 0 007.5 7.5 7.5 7.5 0 007.5-7.5V15h94.564v310.5a7.5 7.5 0 007.5 7.5c4.143 0 7.5-3.357 7.5-7.5V15h24.566c4.142 0 7.5-3.357 7.5-7.5S298.911 0 294.769 0zM95.685 114.908c-27.545 0-49.954-22.409-49.954-49.954S68.14 15 95.685 15h24.567v99.908H95.685z"/></svg>
                                     </button>
 
-                                    <button type="button"
+                                    <button v-tooltip.top-center="{
+                                            content:buttons.H1,
+                                             placement: 'top-center',
+                                        }"type="button"
                                             class="menubar__button pr-2"
                                             :class="{ 'is-active': isActive.heading({ level: 1 }) }"
                                             @click="commands.heading({ level: 1 })"
@@ -437,7 +527,10 @@
                                         H1
                                     </button>
 
-                                    <button type="button"
+                                    <button v-tooltip.top-center="{
+                                            content:buttons.H2,
+                                             placement: 'top-center',
+                                        }"type="button"
                                             class="menubar__button pr-2"
                                             :class="{ 'is-active': isActive.heading({ level: 2 }) }"
                                             @click="commands.heading({ level: 2 })"
@@ -445,7 +538,10 @@
                                         H2
                                     </button>
 
-                                    <button type="button"
+                                    <button v-tooltip.top-center="{
+                                            content:buttons.H3,
+                                             placement: 'top-center',
+                                        }" type="button"
                                             class="menubar__button pr-2"
                                             :class="{ 'is-active': isActive.heading({ level: 3 }) }"
                                             @click="commands.heading({ level: 3 })"
@@ -453,7 +549,10 @@
                                         H3
                                     </button>
 
-                                    <button type="button"
+                                    <button v-tooltip.top-center="{
+                                            content:buttons.bullet_list,
+                                             placement: 'top-center',
+                                        }"type="button"
                                             class="menubar__button"
                                             :class="{ 'is-active': isActive.bullet_list() }"
                                             @click="commands.bullet_list"
@@ -461,7 +560,10 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" class="fill-current w-4 h-4 mr-2" viewBox="0 0 290.5 290.5"><path d="M74 66.001h209c4.143 0 7.5-3.358 7.5-7.5s-3.357-7.5-7.5-7.5H74a7.5 7.5 0 000 15zM283 138H74a7.5 7.5 0 000 15h209a7.5 7.5 0 007.5-7.5 7.5 7.5 0 00-7.5-7.5zM283 224.999H74a7.5 7.5 0 000 15h209c4.143 0 7.5-3.358 7.5-7.5s-3.357-7.5-7.5-7.5zM26 32.501c-14.336 0-26 11.664-26 26s11.664 26 26 26 26-11.664 26-26-11.664-26-26-26zm0 37c-6.075 0-11-4.925-11-11s4.925-11 11-11 11 4.925 11 11-4.925 11-11 11zM26 119.5c-14.336 0-26 11.664-26 26s11.664 26 26 26 26-11.664 26-26-11.664-26-26-26zm0 37c-6.075 0-11-4.925-11-11s4.925-11 11-11 11 4.925 11 11-4.925 11-11 11zM26 205.999c-14.336 0-26 11.664-26 26s11.664 26 26 26 26-11.664 26-26-11.664-26-26-26zm0 37c-6.075 0-11-4.925-11-11s4.925-11 11-11 11 4.925 11 11-4.925 11-11 11z"/></svg>
                                     </button>
 
-                                    <button type="button"
+                                    <button v-tooltip.top-center="{
+                                            content:buttons.order_list,
+                                             placement: 'top-center',
+                                        }"type="button"
                                             class="menubar__button"
                                             :class="{ 'is-active': isActive.ordered_list() }"
                                             @click="commands.ordered_list"
@@ -471,14 +573,20 @@
 
 
 
-                                    <button type="button"
+                                    <button v-tooltip.top-center="{
+                                            content:buttons.undo,
+                                             placement: 'top-center',
+                                        }"type="button"
                                             class="menubar__button"
                                             @click="commands.undo"
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" class="fill-current w-4 h-4 mr-2"  viewBox="0 0 332.114 332.114"><path d="M324.614 176.5h-26.506c-.272-73.383-60.049-133-133.494-133-73.612 0-133.5 59.888-133.5 133.5v86.007l-18.31-18.31a7.502 7.502 0 00-10.608 0 7.5 7.5 0 000 10.606l31.113 31.113.03.027c.166.165.339.321.52.47.084.069.173.129.26.194.109.082.217.167.331.243.103.069.208.128.313.19.106.064.208.129.316.188.107.057.218.105.328.158.111.053.222.109.337.156.107.044.217.081.326.12.121.044.241.09.366.128.109.033.221.058.332.085.126.032.251.067.379.092.129.026.26.041.389.06.112.016.223.038.336.049a7.623 7.623 0 001.48 0c.113-.011.224-.033.336-.049.129-.019.26-.034.389-.06.128-.025.253-.061.379-.092.111-.028.223-.052.332-.085.125-.038.245-.084.367-.128.108-.039.218-.075.325-.119.115-.048.226-.104.338-.157.109-.052.22-.1.327-.157.108-.058.211-.124.317-.188.105-.063.211-.122.313-.19.114-.076.222-.161.331-.243.087-.065.176-.125.26-.194.181-.148.354-.305.52-.47l.03-.027 31.113-31.113a7.5 7.5 0 00-10.607-10.606l-18.31 18.31V177c0-65.341 53.159-118.5 118.5-118.5 65.174 0 118.223 52.888 118.494 118h-26.494a7.5 7.5 0 00-7.5 7.5 7.5 7.5 0 007.5 7.5h68a7.5 7.5 0 007.5-7.5 7.497 7.497 0 00-7.498-7.5z"/></svg>
                                     </button>
 
-                                    <button type="button"
+                                    <button v-tooltip.top-center="{
+                                            content:buttons.redo,
+                                             placement: 'top-center',
+                                        }"type="button"
                                             class="menubar__button"
                                             @click="commands.redo"
                                     >

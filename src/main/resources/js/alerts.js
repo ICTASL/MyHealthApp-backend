@@ -1,11 +1,11 @@
 import Vue from 'vue'
-import ElementUI from "element-ui";
-import { ElementTiptapPlugin } from "element-tiptap";
-import "element-tiptap/lib/index.css";
+import VTooltip from 'v-tooltip'
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 const axios = require('axios').default;
 import Vuelidate from 'vuelidate';
+
+Vue.use(VTooltip);
 Vue.use(Vuelidate);
 Vue.use(VueSweetalert2);
 import {required,maxLength} from 'vuelidate/lib/validators';
@@ -26,7 +26,7 @@ import {
     Strike,
     Underline,
     History,
-} from 'element-tiptap'
+} from 'tiptap-extensions'
 
 
 var app = new Vue({
@@ -56,7 +56,8 @@ var app = new Vue({
                     new History(),
                 ],
                 onUpdate: ({getJSON, getHTML}) => {
-                    this.message.english = getHTML()
+                    this.message.english =  getHTML();
+                    this.englishChar();
                 },
             }),
 
@@ -102,6 +103,22 @@ var app = new Vue({
                 },
             }),
 
+            buttons:{
+                "bold":"Bold",
+                "italic":"Italic",
+                "strike":"Strike",
+                "underline":"Underline",
+                "paragraph":"Paragraph",
+                "H1":"H1",
+                "H2":"H2",
+                "H3":"H3",
+                "order_list":"Order List",
+                "bullet_list":"Bullet List",
+                "redo":"Redo",
+                "undo":"UnDo",
+
+
+            },
             "source":'',
 
             title:{
@@ -114,6 +131,11 @@ var app = new Vue({
                 "english":"",
                 "sinhala":"",
                 "tamil":"",
+            },
+            charcount:{
+                "englishChar":0,
+                "sinhalaChar":0,
+                "TamilChar":0,
             }
 
         }
@@ -218,6 +240,21 @@ var app = new Vue({
             }
 
         },
+
+        sinhalaChar()
+        {
+            this.charcount.sinhalaChar = this.message.sinhala;
+        },
+        englishChar()
+        {
+            this.charcount.englishChar = this.message.english;
+        },
+
+        tamilChar()
+        {
+            this.charcount.tamilChar = this.message.tamil;
+        }
+
 
     },
 
