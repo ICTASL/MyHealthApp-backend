@@ -64,6 +64,24 @@ public class CovidRepository {
         return holder.getKey().intValue();
     }
 
+    public void updateAlertNotification(String alertId, AlertNotificationRequest notification) {
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement("UPDATE `notification` " +
+                            "SET source=?, title_en=?, title_si=?, title_ta=?, message_en=?, message_si=?, message_ta=? " +
+                            "WHERE id=?");
+            ps.setString(1, notification.getSource());
+            ps.setString(2, notification.getTitle().getEnglish());
+            ps.setString(3, notification.getTitle().getSinhala());
+            ps.setString(4, notification.getTitle().getTamil());
+            ps.setString(5, notification.getMessage().getEnglish());
+            ps.setString(6, notification.getMessage().getSinhala());
+            ps.setString(7, notification.getMessage().getTamil());
+            ps.setString(8, alertId);
+
+            return ps;
+        });
+    }
+
     public int addCaseNotification(CaseNotificationRequest request) {
 //        jdbcTemplate.update("INSERT INTO `epid_case` (`case_number`, `message_en`, `message_si`, `message_ta`) VALUES (?,?,?,?)",
 //               request.getCaseNumber(), request.getMessage_en(), request.getMessage_si(), request.getMessage_ta());
