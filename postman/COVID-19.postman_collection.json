@@ -224,6 +224,42 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Update Alert Notification",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic ZGV2OmRldg==",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"source\":\"HPB - Sri Lanka - 1\",\n   \"title\":{\n      \"english\":\"Welcome - 1\",\n      \"sinhala\":\"ආයුබෝවන් -1\", \n      \"tamil\":\" வணக்கம - 1\" \n   },\n   \"message\":{\n      \"english\":\"This is a test message - 1\",\n      \"sinhala\":\"මෙය \\\"පරීක්\\\"ෂණ පණිවිඩයකි - 1\",\n      \"tamil\":\"இது ஒரு சோதனை சய்தி - 1\"\n   }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/notification/alert/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"notification",
+						"alert",
+						"4"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}

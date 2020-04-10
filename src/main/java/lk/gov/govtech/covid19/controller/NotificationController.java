@@ -7,10 +7,7 @@ import lk.gov.govtech.covid19.util.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -24,6 +21,14 @@ public class NotificationController {
     public ResponseEntity addNewAlert(@RequestBody AlertNotificationRequest request){
         log.info("New alert added with title {}", request.getTitle().getEnglish());
         notificationService.addAlertNotificaiton(request);
+
+        return ResponseEntity.accepted().build();
+    }
+
+    @PutMapping(path = "/alert/{alertId}", consumes = "application/json")
+    public ResponseEntity addNewAlert(@PathVariable("alertId") String alertId, @RequestBody AlertNotificationRequest request){
+        log.info("Update alert with id:{} title:{}", alertId, request.getTitle().getEnglish());
+        notificationService.updateAlertNotification(alertId, request);
 
         return ResponseEntity.accepted().build();
     }
