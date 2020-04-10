@@ -27,10 +27,15 @@ public class NotificationController {
 
     @PutMapping(path = "/alert/{alertId}", consumes = "application/json")
     public ResponseEntity addNewAlert(@PathVariable("alertId") String alertId, @RequestBody AlertNotificationRequest request){
-        log.info("Update alert with id:{} title:{}", alertId, request.getTitle().getEnglish());
-        notificationService.updateAlertNotification(alertId, request);
+        boolean success = notificationService.updateAlertNotification(alertId, request);
+        if (success) {
+            log.info("Update alert with id:{} title:{}", alertId, request.getTitle().getEnglish());
+            return ResponseEntity.accepted().build();
+        } else {
+            log.info("Update alert not found id:{} title:{}", alertId, request.getTitle().getEnglish());
+            return ResponseEntity.notFound().build();
+        }
 
-        return ResponseEntity.accepted().build();
     }
 
     @PostMapping(path = "/case/add", consumes = "application/json", produces = "application/json")
