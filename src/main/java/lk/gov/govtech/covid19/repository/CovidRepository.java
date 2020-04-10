@@ -64,8 +64,8 @@ public class CovidRepository {
         return holder.getKey().intValue();
     }
 
-    public void updateAlertNotification(String alertId, AlertNotificationRequest notification) {
-        jdbcTemplate.update(connection -> {
+    public boolean updateAlertNotification(String alertId, AlertNotificationRequest notification) {
+        int i = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement("UPDATE `notification` " +
                             "SET source=?, title_en=?, title_si=?, title_ta=?, message_en=?, message_si=?, message_ta=? " +
                             "WHERE id=?");
@@ -80,6 +80,7 @@ public class CovidRepository {
 
             return ps;
         });
+        return i > 0;
     }
 
     public int addCaseNotification(CaseNotificationRequest request) {
