@@ -39,24 +39,10 @@ public class WebAuthConfiguration extends WebSecurityConfigurerAdapter {
         *
         * */
         http
-            .authorizeRequests()
-                .mvcMatchers( // to exclude auth for GETs
-                        APPLICATION_API_CONTEXT +"/**",
-                        DHIS_API_CONTEXT + "/**",
-                        DOCUMENTS_API_CONTEXT + "/**")
-                .permitAll()
-                .and()
-            .authorizeRequests()
-                .antMatchers(HttpMethod.POST, // to exclude auth for POSTs
-                        DHIS_API_CONTEXT + "/**")
-                .permitAll()
-                .and()
             .csrf().disable()
-
             .authorizeRequests()
-                .mvcMatchers(
-                        "/notification/alert/add",
-                        "/notification/case/add",
+                .antMatchers(
+                        NOTIFICATION_API_CONTEXT + "/**",
                         PORTAL_API_CONTEXT + "/**")
                 .hasRole("USER")
                 .and()
@@ -69,7 +55,6 @@ public class WebAuthConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
             .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher(PORTAL_API_CONTEXT + "/logout")) //logs out with a GET
-                .permitAll()
                 .logoutSuccessUrl(PORTAL_API_CONTEXT); //redirects once successful
     }
 
