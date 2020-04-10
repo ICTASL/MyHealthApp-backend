@@ -62,8 +62,8 @@ public class NotificationService {
 
     }
 
-    public void updateAlertNotification(String alertId, AlertNotificationRequest request) {
-        repository.updateAlertNotification(alertId, request);
+    public boolean updateAlertNotification(String alertId, AlertNotificationRequest request) {
+        return repository.updateAlertNotification(alertId, request);
     }
 
     public void addCaseNotification(CaseNotificationRequest request) {
