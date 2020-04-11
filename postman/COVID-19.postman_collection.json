@@ -124,7 +124,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Alert Notification by Id",
+			"name": "Get Alert by Id and Lang",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -143,6 +143,31 @@
 					]
 				},
 				"description": "http://localhost:8000/application/alert/<alertId>/<lang>\n\nlang should be one of:\n- en\n- si\n- ta"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Alert by Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8000/notification/alert/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"notification",
+						"alert",
+						"2"
+					]
+				}
 			},
 			"response": []
 		},
