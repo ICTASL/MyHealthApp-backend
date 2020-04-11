@@ -3,10 +3,12 @@ package lk.gov.govtech.covid19.dto;
 import lombok.Data;
 
 @Data
-public class AlertNotificationRequest {
+public class AlertNotification {
+    private String id;
     private String source;
     private Title title;
     private Message message;
+    private String createdTime;
 
     @Data
     public static class Title {

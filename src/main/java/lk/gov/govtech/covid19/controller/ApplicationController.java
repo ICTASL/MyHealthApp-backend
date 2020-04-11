@@ -1,6 +1,6 @@
 package lk.gov.govtech.covid19.controller;
 
-import lk.gov.govtech.covid19.dto.AlertNotificationResponse;
+import lk.gov.govtech.covid19.dto.AlertNotificationByLangResponse;
 import lk.gov.govtech.covid19.dto.CaseNotificationResponse;
 import lk.gov.govtech.covid19.dto.StatusResponse;
 import lk.gov.govtech.covid19.dto.UpdateStatusRequest;
@@ -25,7 +25,7 @@ public class ApplicationController {
     @GetMapping(path = "/alert/{messageId}/{lang}", produces = "application/json")
     public ResponseEntity getAlert(@PathVariable("messageId") String messageId, @PathVariable("lang") String lang) {
 
-        AlertNotificationResponse response = applicationService.getAlertNotification(messageId, lang);
+        AlertNotificationByLangResponse response = applicationService.getAlertNotification(messageId, lang);
 
         if (response == null) {
             log.error("Invalid alert id");
