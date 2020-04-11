@@ -1,11 +1,11 @@
 package lk.gov.govtech.covid19.service;
 
 import lk.gov.govtech.covid19.config.FirebaseConfiguration;
-import lk.gov.govtech.covid19.dto.AlertNotificationRequest;
+import lk.gov.govtech.covid19.dto.AlertNotification;
 import lk.gov.govtech.covid19.dto.CaseNotificationRequest;
 import lk.gov.govtech.covid19.dto.PushNotificationRequest;
+import lk.gov.govtech.covid19.model.AlertNotificationEntity;
 import lk.gov.govtech.covid19.repository.CovidRepository;
-import lk.gov.govtech.covid19.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +43,7 @@ public class NotificationService {
         executorService.shutdown();
     }
 
-    public void addAlertNotificaiton(AlertNotificationRequest request) {
+    public void addAlertNotificaiton(AlertNotification request) {
 
         int id = repository.addAlertNotification(request);
         Map<String, String> data = new HashMap<>();
@@ -62,8 +62,23 @@ public class NotificationService {
 
     }
 
-    public boolean updateAlertNotification(String alertId, AlertNotificationRequest request) {
+    public boolean updateAlertNotification(String alertId, AlertNotification request) {
         return repository.updateAlertNotification(alertId, request);
+    }
+
+    public AlertNotification getAlertNotification(String alertId) {
+        AlertNotificationEntity notification = repository.getAlertNotificationById(alertId);
+        AlertNotification response = null;
+
+        if (notification != null) {
+            response = new AlertNotification();
+            response.setId(notification.getId());
+            response.setSource(notification.getSource());
+            response.setCreatedTime(notification.getCreatedTime());
+            alertResponseSetTitle(response, notification);
+            alertResponseSetMessage(response, notification);
+        }
+        return response;
     }
 
     public void addCaseNotification(CaseNotificationRequest request) {
@@ -82,4 +97,35 @@ public class NotificationService {
         });
     }
 
+    private void alertResponseSetTitle(AlertNotification response, AlertNotificationEntity notification) {
+        AlertNotification.Title title = new AlertNotification.Title();
+        title.setEnglish(notification.getTitleEn());
+        if(notification.getTitleSi() != null) {
+            title.setSinhala(notification.getTitleSi());
+        } else {
+            title.setSinhala("");
+        }
+        if(notification.getTitleTa() != null) {
+            title.setTamil(notification.getTitleTa());
+        } else {
+            title.setTamil("");
+        }
+        response.setTitle(title);
+    }
+
+    private void alertResponseSetMessage(AlertNotification response, AlertNotificationEntity notification) {
+        AlertNotification.Message message = new AlertNotification.Message();
+        message.setEnglish(notification.getMessageEn());
+        if(notification.getMessageSi() != null) {
+            message.setSinhala(notification.getMessageSi());
+        } else {
+            message.setSinhala("");
+        }
+        if(notification.getMessageTa() != null) {
+            message.setTamil(notification.getMessageTa());
+        } else {
+            message.setTamil("");
+        }
+        response.setMessage(message);
+    }
 }

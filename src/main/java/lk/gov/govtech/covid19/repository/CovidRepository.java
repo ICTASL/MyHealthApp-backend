@@ -1,6 +1,6 @@
 package lk.gov.govtech.covid19.repository;
 
-import lk.gov.govtech.covid19.dto.AlertNotificationRequest;
+import lk.gov.govtech.covid19.dto.AlertNotification;
 import lk.gov.govtech.covid19.dto.CaseNotificationRequest;
 import lk.gov.govtech.covid19.dto.Location;
 import lk.gov.govtech.covid19.dto.UpdateStatusRequest;
@@ -45,7 +45,7 @@ public class CovidRepository {
         return idList.isEmpty() ? 0 : idList.get(0);
     }
 
-    public int addAlertNotification(AlertNotificationRequest notification) {
+    public int addAlertNotification(AlertNotification notification) {
         KeyHolder holder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO `notification` (`source`, `title_en`, `title_si`, `title_ta`, `message_en`, `message_si`, `message_ta`) VALUES (?,?,?,?,?,?,?)",
@@ -64,7 +64,7 @@ public class CovidRepository {
         return holder.getKey().intValue();
     }
 
-    public boolean updateAlertNotification(String alertId, AlertNotificationRequest notification) {
+    public boolean updateAlertNotification(String alertId, AlertNotification notification) {
         int i = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement("UPDATE `notification` " +
                             "SET source=?, title_en=?, title_si=?, title_ta=?, message_en=?, message_si=?, message_ta=? " +

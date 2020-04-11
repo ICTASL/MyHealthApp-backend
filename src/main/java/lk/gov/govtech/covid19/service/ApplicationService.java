@@ -1,6 +1,6 @@
 package lk.gov.govtech.covid19.service;
 
-import lk.gov.govtech.covid19.dto.AlertNotificationResponse;
+import lk.gov.govtech.covid19.dto.AlertNotificationByLangResponse;
 import lk.gov.govtech.covid19.dto.CaseNotificationResponse;
 import lk.gov.govtech.covid19.dto.StatusResponse;
 import lk.gov.govtech.covid19.dto.UpdateStatusRequest;
@@ -21,13 +21,13 @@ public class ApplicationService {
     CovidRepository repository;
 
     @Cacheable(value = "alerts")
-    public AlertNotificationResponse getAlertNotification(String messageId, String lang) {
+    public AlertNotificationByLangResponse getAlertNotification(String messageId, String lang) {
 
         AlertNotificationEntity notification = repository.getAlertNotificationById(messageId);
-        AlertNotificationResponse response = null;
+        AlertNotificationByLangResponse response = null;
 
         if (notification != null) {
-            response = new AlertNotificationResponse();
+            response = new AlertNotificationByLangResponse();
             //assumes that english is always set (default language)
             switch (lang) {
                 case "en":
@@ -131,17 +131,17 @@ public class ApplicationService {
     /*
      *  Set alert response title
      * */
-    private void alertResponseSetEnglishTitle(AlertNotificationResponse response, AlertNotificationEntity notification) {
+    private void alertResponseSetEnglishTitle(AlertNotificationByLangResponse response, AlertNotificationEntity notification) {
         response.setTitle(notification.getTitleEn());
     }
-    private void alertResponseSetSinhalaTitleOrElseEnglish(AlertNotificationResponse response, AlertNotificationEntity notification) {
+    private void alertResponseSetSinhalaTitleOrElseEnglish(AlertNotificationByLangResponse response, AlertNotificationEntity notification) {
         if (notification.getTitleSi() == null || notification.getTitleSi().isEmpty()) {
             alertResponseSetEnglishTitle(response, notification);
         } else {
             response.setTitle(notification.getTitleSi());
         }
     }
-    private void alertResponseSetTamilTitleOrElseEnglish(AlertNotificationResponse response, AlertNotificationEntity notification) {
+    private void alertResponseSetTamilTitleOrElseEnglish(AlertNotificationByLangResponse response, AlertNotificationEntity notification) {
         if (notification.getTitleTa() == null || notification.getTitleTa().isEmpty()) {
             alertResponseSetEnglishTitle(response, notification);
         } else {
@@ -152,17 +152,17 @@ public class ApplicationService {
     /*
     *  Set alert response message
     * */
-    private void alertResponseSetEnglishMessage(AlertNotificationResponse response, AlertNotificationEntity notification) {
+    private void alertResponseSetEnglishMessage(AlertNotificationByLangResponse response, AlertNotificationEntity notification) {
         response.setMessage(notification.getMessageEn());
     }
-    private void alertResponseSetSinhalaMessageOrElseEnglish(AlertNotificationResponse response, AlertNotificationEntity notification) {
+    private void alertResponseSetSinhalaMessageOrElseEnglish(AlertNotificationByLangResponse response, AlertNotificationEntity notification) {
         if (notification.getMessageSi() == null || notification.getMessageSi().isEmpty()) {
             alertResponseSetEnglishMessage(response, notification);
         } else {
             response.setMessage(notification.getMessageSi());
         }
     }
-    private void alertResponseSetTamilMessageOrElseEnglish(AlertNotificationResponse response, AlertNotificationEntity notification) {
+    private void alertResponseSetTamilMessageOrElseEnglish(AlertNotificationByLangResponse response, AlertNotificationEntity notification) {
         if (notification.getMessageTa() == null || notification.getMessageTa().isEmpty()) {
             alertResponseSetEnglishMessage(response, notification);
         } else {
