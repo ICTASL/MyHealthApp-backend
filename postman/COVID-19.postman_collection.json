@@ -52,6 +52,13 @@
 						"name": "Content-Type",
 						"value": "application/json",
 						"type": "text"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "a8aca1d9-0ef0-4f48-9017-90a1c77ad0a1",
+						"description": "else basic auth",
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"body": {
@@ -256,6 +263,47 @@
 						"notification",
 						"alert",
 						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Receive token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "dev",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "dev",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/auth",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"auth"
 					]
 				}
 			},
