@@ -18,4 +18,5 @@ java -jar backend.jar
     - second in admin-webapp/target
     - if non of them exist, backend will start without the webapp
 - For more info: `lk.gov.govtech.covid19.config.WebappConfiguration`
+- Content in the war will appear at localhost:8000/portal/
  
