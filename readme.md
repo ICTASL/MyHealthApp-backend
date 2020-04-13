@@ -18,6 +18,7 @@ Please keep the following in mind when submitting your valuable contributions ðŸ
  
 ### Using the Maven Plugin
 - replace the `covid-19-lk-dev-firebase-adminsdk.json` file in `/src/main/resources/credentials/` with the private key from Firebase Admin SDK
+- `cd backend`
 - run using: `mvn spring-boot:run`
 - change `firebase.topic` in `application.yml` accordingly. `mobile_message` is used for production and `mobile_message_test` is used for testing
 
@@ -25,14 +26,12 @@ Please keep the following in mind when submitting your valuable contributions ðŸ
 - build project using `mvn clean install`
 - copy `application.yml` to the folder where the jar is (`target` if it has not been moved)
 - Replace `/src/main/resources/credentials/covid-19-lk-dev-firebase-adminsdk.json` with a valid credential file.
-- go into the folder where the jar is (eg. `cd target`)
-- run `java -jar covid19-1.0.0-SNAPSHOT.jar`. Check if the jar version matches.
-- NOTE: access logs will get stored in the tomcat folder (tomcat/access/).
- These logs can be disabled from the application.yml
+- go into the folder where the jar is (eg. `cd backend/target`)
+- run `java -jar backend.jar`. 
  
 ### with Docker
 - build project using `mvn clean install`
-- unzip the `target/covid19-1.0.0-SNAPSHOT.zip` to `target/covid19-1.0.0-SNAPSHOT`
+- unzip the `assembly/target/covid19-1.0.0.zip`
 - modify the db url in the application.yml (replace localhose with container name) as below  (FIXME: automate with spring profiles)
 - `url: jdbc:mysql://db:3306/covid19_db?useUnicode=yes&characterEncoding=UTF-8`
 - run ` docker-compose up -d`  , make sure that ports 8000 and 3306 are not used in the local machine
@@ -159,10 +158,5 @@ PUT http://localhost:8000/application/dashboard/status
 -Now you can edit any html file inside the resource.
 
 - Hit Ctrl+C or just close the command line window to stop the server.
-
-#### Adding a New Web Page
-- Create a html file in `src/main/resources/templates/`
-- Create an endpoint in `WebPortalController` to serve the web page
-- The endpoint must return a string which is the name of the html file (eg. `login` for login.html)
 
 _Happy Contributing!_
