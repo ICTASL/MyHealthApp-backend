@@ -1,5 +1,5 @@
 {
-  "name": "COVID-19",
+  "name": "myhealth-server-admin-webapp",
   "version": "1.0.0",
   "description": "[![Build Status](https://travis-ci.org/azhamn/COVID-19.svg?branch=master)](https://travis-ci.org/azhamn/COVID-19) ---- # COVID-19 Backend Services",
   "main": "index.js",
@@ -32,13 +32,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/keshansandeepa/COVID-19.git"
+    "url": "git+https://github.com/ICTASL/MyHealthApp-backend.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "https://github.com/keshansandeepa",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/keshansandeepa/COVID-19/issues"
+    "url": "https://github.com/ICTASL/MyHealthApp-backend/issues"
   },
-  "homepage": "https://github.com/keshansandeepa/COVID-19#readme"
+  "homepage": "https://github.com/ICTASL/MyHealthApp-backend#readme"
 }

@@ -5,12 +5,12 @@
 
     <artifactId>backend</artifactId>
     <version>1.0.0</version>
-    <name>COVID-19 Backend</name>
+    <name>MyHealth Server Backend</name>
     <description>Backend services for MyHealth Sri Lanka Mobile app</description>
 
     <parent>
         <groupId>lk.gov.govtech</groupId>
-        <artifactId>covid19</artifactId>
+        <artifactId>myhealth-server</artifactId>
         <version>1.0.0</version>
     </parent>
 
@@ -35,6 +35,11 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <version>9.0.33</version>
+        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
