@@ -265,7 +265,7 @@
                             </div>
                             <div v-if="$v.message.english.$dirty">
                                 <p class="text-red-500 text-xs italic" v-if="!$v.message.english.required">English Alerts is required</p>
-                                <p class="text-red-500 text-xs italic" v-if="!$v.message.english.maxLength">English Alerts must have at most 1500 characters</p>
+                                <p class="text-red-500 text-xs italic" v-if="!$v.message.english.maxLength">English Alerts must have at most 2500 characters</p>
                             </div>
                         </div>
 
@@ -435,7 +435,7 @@
                                 <p class="text-base text-blue-400 text-right">{{ charcount.sinhalaChar }} characters</p>
                             </div>
                             <div v-if="$v.message.sinhala.$dirty">
-                                <p class="text-red-500 text-xs italic" v-if="!$v.message.sinhala.maxLength">Sinhala Alerts must have at most 1500 characters</p>
+                                <p class="text-red-500 text-xs italic" v-if="!$v.message.sinhala.maxLength">Sinhala Alerts must have at most 2500 characters</p>
                             </div>
                         </div>
 
@@ -604,7 +604,7 @@
                                 <p class="text-base text-blue-400 text-right">{{ charcount.tamilChar }} characters</p>
                             </div>
                             <div v-if="$v.message.tamil.$dirty">
-                                <p class="text-red-500 text-xs italic" v-if="!$v.message.tamil.maxLength">Tamil Alerts must have at most 1500 characters</p>
+                                <p class="text-red-500 text-xs italic" v-if="!$v.message.tamil.maxLength">Tamil Alerts must have at most 2500 characters</p>
                             </div>
                         </div>
                     </div>
