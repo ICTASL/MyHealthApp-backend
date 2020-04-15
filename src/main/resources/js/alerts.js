@@ -169,15 +169,15 @@ var app = new Vue({
 
             english:{
                 required,
-                maxLength: maxLength(1500)
+                maxLength: maxLength(2500)
             },
 
             sinhala:{
-                maxLength: maxLength(1500)
+                maxLength: maxLength(2500)
             },
 
             tamil:{
-                maxLength: maxLength(1500)
+                maxLength: maxLength(2500)
             },
         },
     },
