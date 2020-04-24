@@ -7,8 +7,8 @@ const axios = require('axios').default;
 Vue.use(VModal);
 Vue.use(VueSweetalert2);
 
-new Vue({
-    el: '#app',
+export default {
+    name: 'Dashboard',
     data(){
         return{
             'submitStatus':false,
@@ -131,23 +131,15 @@ new Vue({
                    });
 
                    this.fetchData();
-
-
-
-               }else if(response.status == 500){
-                   this.Update();
-                   Vue.swal({
-                       title: 'Something Went Wrong!',
-                       icon: 'error'
-                   });
-
                }
-           }).catch(e=>{
-               this.Update();
+           }).catch(error => {
                Vue.swal({
                    title: 'Something Went Wrong!',
                    icon: 'error'
                });
+               if (error.response) {
+                    console.log(error.response.status);
+               }
            })
        },
 
@@ -155,13 +147,10 @@ new Vue({
            evt = (evt) ? evt : window.event;
            var charCode = (evt.which) ? evt.which : evt.keyCode;
            if ((charCode > 31 && (charCode < 48 || charCode > 57))) {
-               evt.preventDefault();;
+               evt.preventDefault();
            } else {
                return true;
            }
        }
-
-
-
    }
-})
+}
