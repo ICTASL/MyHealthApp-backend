@@ -1,74 +1,4 @@
-<!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org" lang="en">
-<head lang="en">
-    <meta charset="UTF-8"/>
-    <title>MyHealth Sri Lanka Management Portal-Alerts</title>
-    <meta name="viewport" content="width=device-width">
-    <link rel="apple-touch-icon" sizes="57x57" th:href="@{/img/apple-icon-57x57.png}">
-    <link rel="apple-touch-icon" sizes="60x60" th:href="@{/img/apple-icon-60x60.png}">
-    <link rel="apple-touch-icon" sizes="72x72" th:href="@{/img/apple-icon-72x72.png}">
-    <link rel="apple-touch-icon" sizes="76x76" th:href="@{/img/apple-icon-76x76.png}">
-    <link rel="apple-touch-icon" sizes="114x114" th:href="@{/img/apple-icon-114x114.png}">
-    <link rel="apple-touch-icon" sizes="120x120" th:href="@{/img/apple-icon-120x120.png}">
-    <link rel="apple-touch-icon" sizes="144x144" th:href="@{/img/apple-icon-144x144.png}">
-    <link rel="apple-touch-icon" sizes="152x152" th:href="@{/img/apple-icon-152x152.png}">
-    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/img/apple-icon-180x180.png}">
-    <link rel="icon" type="image/png" sizes="192x192"  th:href="@{/img/android-icon-192x192.png}">
-    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/favicon-32x32.png}">
-    <link rel="icon" type="image/png" sizes="96x96" th:href="@{/img/favicon-96x96.png}">
-    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/img/favicon-16x16.png}">
-
-    <link th:href="@{/css/editor.css}" rel="stylesheet">
-    <link th:href="@{/css/app.css}" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.0.1/dist/alpine.js" defer></script>
-
-
-<body class="bg-gray-50">
-
-
-<!--Navigation Wrapper-->
-<nav x-data="{ open: true }" class="bg-gray-800">
-    <div class="max-w-6xl mx-auto px-2 sm:px-6 lg:px-8">
-        <div class="relative flex items-center justify-between h-16">
-            <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                <button @click="open = !open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': !open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-            <!--Desktop Wrapper-->
-            <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-                <h4 class="text-lg font-bold text-white">MyHealth Sri Lanka Management Portal</h4>
-                <div class="flex-shrink-0">
-
-<!--                    <img class="block lg:hidden h-8 w-auto" th:src="@{/Covid-19.png}" alt="Covid-19"  />-->
-<!--                    <img class="hidden lg:block h-8 w-auto" th:src="@{/Covid-19.png}"alt="Covid-19" />-->
-                </div>
-                <div class="hidden sm:block sm:ml-6">
-                    <div class="flex">
-                        <a href="/portal/dashboard" class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Dashboard</a>
-                        <a href="/portal/news" class="px-3 py-2 rounded-md text-sm font-medium leading-5 text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Send Alerts</a>
-                        <a href="/portal/cases" class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Send Case</a>
-                    </div>
-                </div>
-            </div>
-            <!--Mobile Wrapper-->
-            <div>
-                <a href="/portal/logout" class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Sign out</a>
-            </div>
-        </div>
-    </div>
-    <div :class="{'block': open, 'hidden': !open}" class="hidden sm:hidden">
-        <div class="px-2 pt-2 pb-3">
-            <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Send News</a>
-            <a href="#" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Send Case</a>
-        </div>
-    </div>
-</nav>
-
-
+<template>
 <!--Main Wrapper-->
 
 <div id="app" class="flex flex-col container max-w-6xl  mx-auto bg-gray-50 py-12 px-3 sm:px-6 lg:px-8">
@@ -109,7 +39,6 @@
                                 <p class="text-red-500 text-xs italic" v-if="!$v.title.english.maxLength">Title must have at most 100 characters</p>
 
                             </div>
-
                         </div>
                     </div>
                     <div class="mt-4">
@@ -434,9 +363,6 @@
                             <div class="my-3">
                                 <p class="text-base text-blue-400 text-right">{{ charcount.sinhalaChar }} characters</p>
                             </div>
-                            <div v-if="$v.message.sinhala.$dirty">
-                                <p class="text-red-500 text-xs italic" v-if="!$v.message.sinhala.maxLength">Sinhala Alerts must have at most 2500 characters</p>
-                            </div>
                         </div>
 
                     </div>
@@ -452,7 +378,6 @@
                                 <p class="text-red-500 text-xs italic" v-if="!$v.title.tamil.maxLength">Title must have at most 100 characters</p>
 
                             </div>
-
                         </div>
                     </div>
                     <div class="mt-4">
@@ -624,6 +549,5 @@
 </div>
 
 <!--Main Wrapper Ends Here-->
-</body>
-<script th:src="@{/js/alerts.js}"></script>
-</html>
+</template>
+<script src="./news.js"></script>
