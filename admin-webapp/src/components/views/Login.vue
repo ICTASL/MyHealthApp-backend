@@ -1,31 +1,5 @@
-<!doctype html>
-<html xmlns:th="https://www.thymeleaf.org">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="apple-touch-icon" sizes="57x57" th:href="@{/img/apple-icon-57x57.png}">
-    <link rel="apple-touch-icon" sizes="60x60" th:href="@{/img/apple-icon-60x60.png}">
-    <link rel="apple-touch-icon" sizes="72x72" th:href="@{/img/apple-icon-72x72.png}">
-    <link rel="apple-touch-icon" sizes="76x76" th:href="@{/img/apple-icon-76x76.png}">
-    <link rel="apple-touch-icon" sizes="114x114" th:href="@{/img/apple-icon-114x114.png}">
-    <link rel="apple-touch-icon" sizes="120x120" th:href="@{/img/apple-icon-120x120.png}">
-    <link rel="apple-touch-icon" sizes="144x144" th:href="@{/img/apple-icon-144x144.png}">
-    <link rel="apple-touch-icon" sizes="152x152" th:href="@{/img/apple-icon-152x152.png}">
-    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/img/apple-icon-180x180.png}">
-    <link rel="icon" type="image/png" sizes="192x192"  th:href="@{/img/android-icon-192x192.png}">
-    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/favicon-32x32.png}">
-    <link rel="icon" type="image/png" sizes="96x96" th:href="@{/img/favicon-96x96.png}">
-    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/img/favicon-16x16.png}">
-
-    <title>MyHealth Sri Lanka Management Portal-login</title>
-    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body>
-
-<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+<template>
+<div id="login" class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full">
 
         <div>
@@ -35,7 +9,7 @@
             </h2>
         </div>
 
-        <form class="mt-8" th:action="@{/auth}" method="POST">
+        <form class="mt-8" @submit.prevent="submitCredentials" action="/auth" method="POST">
             <input type="hidden" name="remember" value="false" />
             <div class="rounded-md shadow-sm">
             <!-- Email Input-->
@@ -81,7 +55,69 @@
 
         </form>
 <!--        form tag ends here-->
+        <div v-text="errorMsg" class="text-red-500 text-xs italic"></div>
     </div>
 </div>
-</body>
-</html>
+</template>
+
+<script>
+const axios = require('axios').default;
+
+export default {
+    name: 'Login',
+    data() {
+        return {
+            submitStatus: false,
+            username: '',
+            password: '',
+            errorMsg: ''
+        }
+    },
+    methods: {
+        submitCredentials() {
+            this.submitStatus = true;
+            const { username, password } = this
+            this.resetResponse()
+            axios.post('/auth',{
+                    'username' : username,
+                    'password' : password,
+                },{
+                    headers: { 'content-type': 'application/json' }
+                }
+            ).then(response => {
+                if(response.headers['X-Auth-Token'] != null){
+                    let token = 'X-Auth-Token ' + response.headers['X-Auth-Token'];
+                    if (localStorage) {
+                        localStorage.setItem('token', token);
+                    }
+                } 
+                if (localStorage.getItem('token') != null){
+                    if(this.$route.params.nextUrl != null){
+                        this.$router.push(this.$route.params.nextUrl);
+                    }
+                    else {
+                        this.$router.push('dashboard');
+                    }
+                } else {
+                    this.errorMsg = 3
+                    this.submitStatus = false;
+                }
+            }).catch(error => {
+                let errorStatus = error.response.status;
+                console.log(errorStatus);
+                if(errorStatus == 403) {
+                    this.errorMsg = 'Username/Password incorrect. Please try again.'
+                } else if (errorStatus == 404) {
+                    this.errorMsg = 'Server appears to be offline'
+                }else {
+                    this.errorMsg = "Error during login"
+                } 
+            })
+            this.submitStatus = false;
+        },
+        resetResponse() {
+            this.errorMsg = ''
+        }
+    }
+}
+</script>

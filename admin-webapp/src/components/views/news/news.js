@@ -1,28 +1,22 @@
 import Vue from 'vue'
-import VueSweetalert2 from 'vue-sweetalert2';
-import 'sweetalert2/dist/sweetalert2.min.css';
+import { required, maxLength } from 'vuelidate/lib/validators';
+
 const axios = require('axios').default;
-import Vuelidate from 'vuelidate'
 
-Vue.use(Vuelidate);
-Vue.use(VueSweetalert2);
-import {required,maxLength} from 'vuelidate/lib/validators';
-
-var app = new Vue({
-
-    el: '#app',
-    data: {
-        submitStatus: false,
-
-        alert:{
-            "title" : "",
-            "subtitle":"",
-            "source":"",
-            "messageEn":"",
-            "messageSi":"",
-            "messageTa":""
+export default {
+    name: 'News',
+    data(){
+        return{
+            submitStatus: false,
+            alert:{
+                "title" : "",
+                "subtitle":"",
+                "source":"",
+                "messageEn":"",
+                "messageSi":"",
+                "messageTa":""
+            }
         }
-
     },
 
     validations: {
@@ -34,32 +28,24 @@ var app = new Vue({
             subtitle: {
                 maxLength: maxLength(100)
             },
-
             source: {
                 required,
                 maxLength: maxLength(45)
             },
-
             messageEn: {
                 required,
                 maxLength: maxLength(1500)
             },
-
             messageSi: {
                 maxLength: maxLength(1500)
             },
-
             messageTa: {
                 maxLength: maxLength(1500)
             },
-
-
         }
     },
 
-
     methods:{
-
         saveAlerts(){
             this.$v.$touch();
             if (this.$v.$invalid){
@@ -85,27 +71,26 @@ var app = new Vue({
                             title: 'New Alert Was Created',
                             icon: 'success'
                         });
-
-                          this.alert.title ='',
-                            this.alert.subtitle='',
-                            this.alert.source='',
-                            this.alert.messageEn='',
-                            this.alert.messageSi='',
-                            this.alert.messageTa=''
+                        this.alert.title ='',
+                        this.alert.subtitle='',
+                        this.alert.source='',
+                        this.alert.messageEn='',
+                        this.alert.messageSi='',
+                        this.alert.messageTa=''
                         this.submitStatus = false;
                         this.$v.$reset()
                     }
-                }).catch(e=>{
+                }).catch(error =>{
                     Vue.swal({
                         title: 'Something Went Wrong!',
                         icon: 'error'
                     });
+                    if (error.response) {
+                        console.log(error.response.status);
+                    }
+                    this.submitStatus =false;
                 })
             }
-
         }
     }
-
-
-
-})
+}

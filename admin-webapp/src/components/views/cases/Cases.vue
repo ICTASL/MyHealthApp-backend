@@ -1,99 +1,11 @@
-<!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org" lang="en">
-<head lang="en">
-    <meta charset="UTF-8"/>
-
-    <!-- ===============================================-->
-    <!--    Document Title-->
-    <!-- ===============================================-->
-
-    <title>MyHealth Sri Lanka Management Portal-Cases Report</title>
-    <meta name="viewport" content="width=device-width">
-
-    <!-- ===============================================-->
-    <!--    CSS-->
-    <!-- ===============================================-->
-    <link rel="apple-touch-icon" sizes="57x57" th:href="@{/img/apple-icon-57x57.png}">
-    <link rel="apple-touch-icon" sizes="60x60" th:href="@{/img/apple-icon-60x60.png}">
-    <link rel="apple-touch-icon" sizes="72x72" th:href="@{/img/apple-icon-72x72.png}">
-    <link rel="apple-touch-icon" sizes="76x76" th:href="@{/img/apple-icon-76x76.png}">
-    <link rel="apple-touch-icon" sizes="114x114" th:href="@{/img/apple-icon-114x114.png}">
-    <link rel="apple-touch-icon" sizes="120x120" th:href="@{/img/apple-icon-120x120.png}">
-    <link rel="apple-touch-icon" sizes="144x144" th:href="@{/img/apple-icon-144x144.png}">
-    <link rel="apple-touch-icon" sizes="152x152" th:href="@{/img/apple-icon-152x152.png}">
-    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/img/apple-icon-180x180.png}">
-    <link rel="icon" type="image/png" sizes="192x192"  th:href="@{/img/android-icon-192x192.png}">
-    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/favicon-32x32.png}">
-    <link rel="icon" type="image/png" sizes="96x96" th:href="@{/img/favicon-96x96.png}">
-    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/img/favicon-16x16.png}">
-
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/vue-select@3.0.0/dist/vue-select.css">
-    <link th:href="@{/css/app.css}" rel="stylesheet">
-
-
-    <!-- ===============================================-->
-    <!--    JSS-->
-    <!-- ===============================================-->
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.0.1/dist/alpine.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr@4/dist/flatpickr.min.js"></script>
-</head>
-
-
-<body class="bg-gray-50">
-
-
-
-<!-- ===============================================-->
-<!--    Navigation-->
-<!-- ===============================================-->
-<nav x-data="{ open: true }" class="bg-gray-800">
-    <div class="max-w-6xl mx-auto px-2 sm:px-6 lg:px-8">
-        <div class="relative flex items-center justify-between h-16">
-            <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                <button @click="open = !open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': !open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-            <!--Desktop Wrapper-->
-            <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-                <h4 class="text-lg font-bold text-white">MyHealth Sri Lanka Management Portal</h4>
-                <div class="flex-shrink-0">
-                    <!--                    <img class="block lg:hidden h-8 w-auto" th:src="@{/Covid-19.png}" alt="Covid-19"  />-->
-                    <!--                    <img class="hidden lg:block h-8 w-auto" th:src="@{/Covid-19.png}"alt="Covid-19" />-->
-                </div>
-                <div class="hidden sm:block sm:ml-6">
-                    <div class="flex">
-                        <a href="/portal/dashboard" class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Dashboard</a>
-                        <a href="/portal/news" class="px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300  focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Send Alerts</a>
-                        <a href="/portal/cases" class="ml-4 px-3 py-2 rounded-md text-sm font-medium  text-white leading-5 bg-gray-900  hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Send Case</a>
-                    </div>
-                </div>
-            </div>
-            <!--Mobile Wrapper-->
-            <div>
-                <a href="/portal/logout" class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Sign out</a>
-            </div>
-        </div>
-    </div>
-    <div :class="{'block': open, 'hidden': !open}" class="hidden sm:hidden">
-        <div class="px-2 pt-2 pb-3">
-            <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Send News Alerts</a>
-            <a href="#" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Send Case</a>
-        </div>
-    </div>
-</nav>
-
+<template>
+<div class="bg-gray-50">
 
 <!-- ===============================================-->
 <!--    Main Wrapper-->
 <!-- ===============================================-->
 
-<div id="app" class="flex flex-col container max-w-6xl  mx-auto bg-gray-50 py-12 px-3 sm:px-6 lg:px-8">
+<div class="flex flex-col container max-w-6xl  mx-auto bg-gray-50 py-12 px-3 sm:px-6 lg:px-8">
     <!-- ===============================================-->
     <!--    Header-->
     <!-- ===============================================-->
@@ -125,7 +37,7 @@
                         <label class="px-4 text-base text-gray-700 w-full " for="caseNumber">Case Number(DHIS2)<span class="text-red-400">*</span></label>
                         <div class="px-4">
                             <input class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                   type="text" placeholder="Case Number" name="caseNumber" id="caseNumber"  v-model="$v.cases.caseNumber.$model" :class="{'border-red-500':$v.cases.caseNumber.$error}" required>
+                                   v-model="$v.cases.caseNumber.$model" type="text" placeholder="Case Number" name="caseNumber" id="caseNumber" :class="{'border-red-500':$v.cases.caseNumber.$error}">
                             <div v-if="$v.cases.caseNumber.$dirty">
                                 <p class="text-red-500 text-xs italic" v-if="!$v.cases.caseNumber.required">Case Number is required</p>
                                 <p class="text-red-500 text-xs italic" v-if="!$v.cases.caseNumber.maxLength">Case Number must have at most 100 characters</p>
@@ -138,7 +50,7 @@
                         <div class="w-1/2">
                             <label class="px-4 text-base text-gray-700 w-full" for="from">Origin<span class="text-red-400">*</span></label>
                             <div class="px-4">
-                                <select v-model="$v.cases.isLocal.$model" class="form-select block w-full mt-1" required>
+                                <select v-model="$v.cases.isLocal.$model" class="form-select block w-full mt-1">
                                     <option value="true" selected>Local </option>
                                     <option value="false">Foreigner</option>
                                 </select>
@@ -151,7 +63,7 @@
                         <div class="w-1/2">
                             <label class="px-4 text-base text-gray-700 w-full" for="to">Detected From<span class="text-red-400">*</span></label>
                             <div class="px-4">
-                                <select v-model="cases.detectedFrom" class="form-select block w-full mt-1" required>
+                                <select v-model="$v.cases.detectedFrom.$model" class="form-select block w-full mt-1">
                                     <option value="quarantine facility" selected>Quarantine Facility</option>
                                     <option value="home">Home</option>
                                 </select>
@@ -166,7 +78,7 @@
                         <label class="px-4 text-base text-gray-700 w-full" for="message_en">English Message<span class="text-red-400">*</span></label>
                         <div class="px-4">
                                     <textarea rows="2" class=" bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 mt-2 px-4 text-gray-700 leading-tight focus:outline-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                                              type="text" placeholder="Message in English" id="message_en" v-model="$v.cases.message_en.$model" :class="{'border-red-500':$v.cases.message_en.$error}" required></textarea>
+                                              v-model="$v.cases.message_en.$model" type="text" placeholder="Message in English" id="message_en"  :class="{'border-red-500':$v.cases.message_en.$error}"></textarea>
                             <div v-if="$v.cases.message_en.$dirty">
                                 <p class="text-red-500 text-xs italic" v-if="!$v.cases.message_en.required">English Message is required</p>
                                 <p class="text-red-500 text-xs italic" v-if="!$v.cases.message_en.maxLength">English Message must have at most 1500 characters</p>
@@ -278,7 +190,7 @@
                     Nice Job! You're almost done
                 </div>
                 <div>
-                    <button type="submit":disabled="submitStatus" :class="{'opacity-50':submitStatus}" class="bg-white hover:bg-gray-100 text-blue-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                    <button type="submit" :disabled="submitStatus" :class="{'opacity-50':submitStatus}" class="bg-white hover:bg-gray-100 text-blue-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
                         Add Case Report
                     </button>
                 </div>
@@ -295,6 +207,7 @@
 <!-- ===============================================-->
 <!--    End Main Wrapper-->
 <!-- ===============================================-->
-</body>
-<script th:src="@{/js/Case.js}"></script>
-</html>
+</div>
+</template>
+
+<script src="./cases.js"></script>
