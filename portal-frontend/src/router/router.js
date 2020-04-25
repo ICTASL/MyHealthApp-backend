@@ -18,9 +18,9 @@ export default new VueRouter({
     {
       path: "/", 
       component: Base,
-      // meta: {
-      //   requiresAuth: true
-      // },
+      meta: {
+        requiresAuth: true
+      },
       children: [
         { 
           path: "dashboard", 
