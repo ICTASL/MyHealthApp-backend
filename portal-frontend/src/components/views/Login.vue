@@ -9,18 +9,18 @@
             </h2>
         </div>
 
-        <form class="mt-8" @submit.prevent="submitCredentials" action="/auth" method="POST">
+        <form class="mt-8" @submit.prevent="submitCredentials">
             <input type="hidden" name="remember" value="false" />
             <div class="rounded-md shadow-sm">
             <!-- Email Input-->
                 <div>
-                    <input aria-label="Email address" name="username" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Email address"/>
+                    <input aria-label="Email address" v-model="username" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Email address"/>
                 </div>
 
             <!--Password Input-->
 
                 <div class="-mt-px">
-                    <input aria-label="Password" name="password" type="password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Password"/>
+                    <input aria-label="Password" v-model="password" type="password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Password"/>
                 </div>
 
             </div>
@@ -61,7 +61,7 @@
 </template>
 
 <script>
-const axios = require('axios').default;
+import api from '../../api'
 
 export default {
     name: 'Login',
@@ -78,15 +78,13 @@ export default {
             this.submitStatus = true;
             const { username, password } = this
             this.resetResponse()
-            axios.post('/auth',{
+            api.post('/auth',{
                     'username' : username,
                     'password' : password,
-                },{
-                    headers: { 'content-type': 'application/json' }
                 }
             ).then(response => {
-                if(response.headers['X-Auth-Token'] != null){
-                    let token = 'X-Auth-Token ' + response.headers['X-Auth-Token'];
+                if(response.headers['x-auth-token'] != null){
+                    let token = 'x-auth-token ' + response.headers['x-auth-token'];
                     if (localStorage) {
                         localStorage.setItem('token', token);
                     }
