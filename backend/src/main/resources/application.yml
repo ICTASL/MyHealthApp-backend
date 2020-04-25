@@ -1,5 +1,7 @@
 server:
     port: 8000
+    servlet:
+        context-path: /api
     tomcat:
         basedir: "tomcat"
         accesslog:
@@ -41,4 +43,4 @@ firebase:
 webapp:
     war:
         filename: admin-webapp.war
-        context: /portal
+        context: /
