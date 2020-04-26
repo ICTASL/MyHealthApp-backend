@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import { required, maxLength } from 'vuelidate/lib/validators';
 
-const axios = require('axios').default;
+import api from '../../../api'
 
 export default {
     name: 'News',
@@ -52,18 +52,13 @@ export default {
                 return
             }else{
                 this.submitStatus = true;
-                axios.post('/notification/alert/add',{
+                api.postJsonWithToken('/notification/alert/add',{
                         "title" : this.alert.title,
                         "subtitle":this.alert.subtitle,
                         "source":this.alert.source,
                         "messageEn":this.alert.messageEn,
                         "messageSi":this.alert.messageSi,
                         "messageTa":this.alert.messageTa,
-                    },{
-                        headers:
-                            {
-                                'content-type': 'application/json'
-                            }
                     }
                 ).then(response=>{
                     if(response.status == 202){

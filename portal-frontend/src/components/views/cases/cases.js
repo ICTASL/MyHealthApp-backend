@@ -4,8 +4,8 @@ import flatPickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
 import { required, maxLength } from 'vuelidate/lib/validators';
 
+import api from '../../../api'
 import cities from'./post_codes'
-const axios = require('axios').default;
 
 Vue.component('v-select', vSelect)
 
@@ -118,7 +118,7 @@ export default {
             }
             else {
                 this.submitStatus =true;
-                axios.post(url,{
+                api.postJsonWithToken(url,{
                         "caseNumber" : this.cases.caseNumber,
                         "isLocal" : this.cases.isLocal,
                         "detectedFrom" : this.cases.detectedFrom,
@@ -126,11 +126,6 @@ export default {
                         "message_si":this.cases.message_si,
                         "message_ta":this.cases.message_ta,
                         "locations": this.locations
-                    },{
-                        headers:
-                            {
-                                'content-type': 'application/json'
-                            }
                     }
                 ).then(response=>{
                     if(response.status == 202){
