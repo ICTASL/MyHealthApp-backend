@@ -61,6 +61,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import api from '../../api'
 
 export default {
@@ -73,23 +74,26 @@ export default {
             errorMsg: ''
         }
     },
+    computed: {
+        ...mapGetters({
+            getToken: 'user/getToken'
+        })
+    },
     methods: {
         submitCredentials() {
             this.submitStatus = true;
             const { username, password } = this
             this.resetResponse()
-            api.post('/auth',{
+            api.postUrlEncoded('/auth',{
                     'username' : username,
                     'password' : password,
                 }
             ).then(response => {
                 if(response.headers['x-auth-token'] != null){
-                    let token = 'x-auth-token ' + response.headers['x-auth-token'];
-                    if (localStorage) {
-                        localStorage.setItem('token', token);
-                    }
+                    let token = response.headers['x-auth-token'];
+                    this.$store.commit('user/saveToken', token);
                 } 
-                if (localStorage.getItem('token') != null){
+                if (this.getToken != null){
                     if(this.$route.params.nextUrl != null){
                         this.$router.push(this.$route.params.nextUrl);
                     }
@@ -97,19 +101,22 @@ export default {
                         this.$router.push('dashboard');
                     }
                 } else {
-                    this.errorMsg = 3
-                    this.submitStatus = false;
+                    this.errorMsg = "Error during login"
                 }
             }).catch(error => {
-                let errorStatus = error.response.status;
-                console.log(errorStatus);
-                if(errorStatus == 403) {
-                    this.errorMsg = 'Username/Password incorrect. Please try again.'
-                } else if (errorStatus == 404) {
-                    this.errorMsg = 'Server appears to be offline'
-                }else {
+                console.log(error);
+                if(error.response != null) {
+                    let errorStatus = error.response.status;
+                    if(errorStatus == 403) {
+                        this.errorMsg = 'Username/Password incorrect. Please try again.'
+                    } else if (errorStatus == 404) {
+                        this.errorMsg = 'Server appears to be offline'
+                    }else {
+                        this.errorMsg = "Error during login"
+                    } 
+                } else {
                     this.errorMsg = "Error during login"
-                } 
+                }
             })
             this.submitStatus = false;
         },
