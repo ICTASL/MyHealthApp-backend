@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 
 import Login from '@/components/views/Login'
 import Base from '@/components/views/Base'
+import NotFound from '@/components/views/NotFound'
 import Dashboard from '@/components/views/dashboard/Dashboard'
 import News from '@/components/views/news/News'
 import Cases from '@/components/views/cases/Cases'
@@ -39,10 +40,9 @@ export default new VueRouter({
         },
       ]
     },
-    // , {
-    //   // not found handler
-    //   path: '*',
-    //   component: NotFoundView
-    // }
+    {
+      path: '*',
+      component: NotFound
+    }
   ]
 });

@@ -28,7 +28,7 @@
             </div>
             <!--Mobile Wrapper-->
           <div>
-              <router-link to="/portal/logout" class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Sign out</router-link>
+              <span @click="logout" class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Sign out</span>
 
           </div>
         </div>
@@ -45,6 +45,12 @@
 
 <script>
 export default {
-  name: 'BaseHeader'
+    name: 'BaseHeader',
+    methods: {
+        logout() {
+            this.$store.commit('user/deleteToken');
+            this.$router.push('login');
+        }
+    }
 }
 </script>
