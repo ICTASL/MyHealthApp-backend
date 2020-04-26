@@ -1,9 +1,8 @@
 import Vue from 'vue';
 import VModal from 'vue-js-modal'
 import VueSweetalert2 from 'vue-sweetalert2';
+import api from '../../../api'
 
-
-const axios = require('axios').default;
 Vue.use(VModal);
 Vue.use(VueSweetalert2);
 
@@ -19,15 +18,12 @@ export default {
             'last_update_time':'',
         }
     },
-
-   mounted(){
-        this.fetchData()
-   },
-
-   methods:{
-
+    mounted(){
+            this.fetchData()
+    },
+    methods:{
        fetchData(){
-           axios.get('/application/dashboard/status')
+            api.get('/application/dashboard/status')
                .then(response => (
                  this.lk_total_case = response.data.lk_total_case,
                  this.lk_recovered_case = response.data.lk_recovered_case,
@@ -37,17 +33,13 @@ export default {
 
                ))
        },
-
-       currentDate()
-       {
+       currentDate(){
            const today = new Date();
            const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
            const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
            const dateTime = date +' '+ time;
            this.last_update_time = dateTime;
        },
-
-
        CCshow () {
            this.fetchData();
            this.$modal.show('confirmed-cases');
@@ -56,7 +48,6 @@ export default {
            this.$modal.hide('confirmed-cases');
            this.fetchData()
        },
-
        CCsubmit(){
            this.Update();
        },
@@ -69,11 +60,9 @@ export default {
            this.$modal.hide('suspected-cases');
            this.fetchData()
        },
-
        SSsubmit(){
            this.Update();
        },
-
 
        RRshow () {
            this.fetchData();
@@ -83,11 +72,9 @@ export default {
            this.$modal.hide('recover-cases');
            this.fetchData()
        },
-
        RRsubmit(){
            this.Update();
        },
-
 
        DDshow () {
            this.fetchData();
@@ -97,26 +84,19 @@ export default {
            this.$modal.hide('deaths-cases');
            this.fetchData()
        },
-
        DDsubmit(){
            this.Update();
        },
 
-
        Update(){
            let url= "/application/dashboard/status";
 
-           axios.put(url,{
+           api.putJsonWithToken(url,{
                    "lk_total_case" : this.lk_total_case,
                    "lk_recovered_case":this.lk_recovered_case,
                    "lk_total_deaths":this.lk_total_deaths,
                    "lk_total_suspect":this.lk_total_suspect,
                    "last_update_time": this.last_update_time
-               },{
-                   headers:
-                       {
-                           'content-type': 'application/json'
-                       }
                }
            ).then(response=>{
                if(response.status == 202){
@@ -129,7 +109,6 @@ export default {
                        title: 'Records Updated',
                        icon: 'success'
                    });
-
                    this.fetchData();
                }
            }).catch(error => {
@@ -138,7 +117,7 @@ export default {
                    icon: 'error'
                });
                if (error.response) {
-                    console.log(error.response.status);
+                    console.log(error.response.statusText);
                }
            })
        },

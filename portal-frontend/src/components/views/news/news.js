@@ -17,24 +17,10 @@ import {
     History,
 } from 'tiptap-extensions'
 
-const axios = require('axios').default;
+import api from '../../../api'
 
 export default {
     name: 'News',
-    data(){
-        return{
-            submitStatus: false,
-            alert:{
-                "title" : "",
-                "subtitle":"",
-                "source":"",
-                "messageEn":"",
-                "messageSi":"",
-                "messageTa":""
-            }
-        }
-    },
-    el: '#app',
     components: {
         EditorContent,
         EditorMenuBar,
@@ -180,7 +166,7 @@ export default {
                 return
             }else{
                 this.submitStatus = true;
-                axios.post('/notification/alert/add',{
+                api.postJsonWithToken('/notification/alert/add',{
                         "source":this.source,
                         title:{
                             "english":this.title.english,
@@ -192,11 +178,6 @@ export default {
                             "sinhala":this.message.sinhala,
                             "tamil":this.message.tamil,
                         }
-                    },{
-                        headers:
-                            {
-                                'content-type': 'application/json'
-                            }
                     }
                 ).then(response=>{
                     if(response.status == 202){
@@ -309,5 +290,5 @@ export default {
         {
             this.charcount.tamilChar = (this.message.tamil.length)-7;
         }
-    },
+    }
 }
