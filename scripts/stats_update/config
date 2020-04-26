@@ -1,0 +1,4 @@
+export PUT_USERNAME="USER"
+export PUT_PASSWORD="PASSWORD"
+export GET_URL = "https://www.hpb.health.gov.lk/api/get-current-statistical"
+export PUT_URL = "http://localhost:8000/application/dashboard/status"
