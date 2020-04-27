@@ -3,9 +3,8 @@ module.exports = {
         proxy: {
             '^/api': { 
                 target: 'http://localhost:8000', 
-                changeOrigin: true, 
+                changeOrigin: true, //to avoid cors errors when testing
                 secure:false, 
-                pathRewrite: {'^/api': '/api'}, 
                 logLevel: 'debug' 
             }
         }

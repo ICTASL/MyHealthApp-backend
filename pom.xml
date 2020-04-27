@@ -8,14 +8,14 @@
     <artifactId>myhealth-server</artifactId>
     <version>1.0.0</version>
     <name>MyHealth Server</name>
-    <description>Backend and administration frontend for MyHealth Sri Lanka Mobile app</description>
+    <description>Backend and Management Portal for MyHealth Sri Lanka Mobile app</description>
 
     <properties>
         <java.version>1.8</java.version>
     </properties>
 
     <modules>
-        <module>admin-webapp</module>
+        <module>portal-frontend</module>
         <module>backend</module>
         <module>assembly</module>
     </modules>
@@ -58,7 +58,7 @@
                                         <include>**</include>
                                     </includes>
                                     <excludes>
-                                        <exclude>admin-webapp.war</exclude>
+                                        <exclude>portal-frontend.war</exclude>
                                         <exclude>backend.jar</exclude>
                                         <exclude>covid19-1.0.0.zip</exclude>
                                     </excludes>
