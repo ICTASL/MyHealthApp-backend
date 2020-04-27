@@ -3,7 +3,7 @@
         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>admin-webapp</artifactId>
+    <artifactId>portal-frontend</artifactId>
     <packaging>war</packaging>
     <version>1.0.0</version>
     <name>MyHealth Server Admin Webapp</name>
@@ -16,7 +16,7 @@
     </parent>
 
     <build>
-        <finalName>admin-webapp</finalName>
+        <finalName>portal-frontend</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -27,6 +27,14 @@
                     <webResources>
                         <resource>
                             <directory>dist</directory>
+                        </resource>
+                        <resource>
+                            <directory>warRelated/META-INF</directory>
+                            <targetPath>META-INF</targetPath>
+                        </resource>
+                        <resource>
+                            <directory>warRelated/WEB-INF</directory>
+                            <targetPath>WEB-INF</targetPath>
                         </resource>
                     </webResources>
                 </configuration>
