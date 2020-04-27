@@ -42,5 +42,5 @@ firebase:
 
 webapp:
     war:
-        filename: admin-webapp.war
-        context: /
+        filename: portal-frontend.war
+        context: ''

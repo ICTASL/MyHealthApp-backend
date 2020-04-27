@@ -16,8 +16,7 @@
     "vue-select": "^3.10.1",
     "vue-sweetalert2": "^3.0.3",
     "vuelidate": "^0.7.5",
-    "vuex": "^3.3.0",
-    "vuex-router-sync": "^5.0.0"
+    "vuex": "^3.3.0"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^2.1.0",
