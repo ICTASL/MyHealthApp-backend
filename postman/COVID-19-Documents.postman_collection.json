@@ -6,13 +6,13 @@
 	},
 	"item": [
 		{
-			"name": "http://localhost:8000/documents/privacy-policy",
+			"name": "http://localhost:8000/api/documents/privacy-policy",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:8000/documents/privacy-policy",
+					"raw": "http://localhost:8000/api/documents/privacy-policy",
 					"host": [
 						"localhost"
 					],

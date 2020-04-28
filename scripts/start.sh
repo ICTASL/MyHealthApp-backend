@@ -1,6 +1,6 @@
 #!/bin/bash
 
-nohup java -jar ./covid19.jar&
+nohup java -jar ./myhealth-server.jar&
 
 if [ $? -eq 0 ]
 then
