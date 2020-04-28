@@ -37,7 +37,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8000/dhis/organization-units",
+					"raw": "http://localhost:8000/api/dhis/organization-units",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -68,7 +68,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8000/dhis/entity-attributes",
+					"raw": "http://localhost:8000/api/dhis/entity-attributes",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -99,7 +99,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8000/dhis/entity-types",
+					"raw": "http://localhost:8000/api/dhis/entity-types",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -130,7 +130,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8000/dhis/programmes",
+					"raw": "http://localhost:8000/api/dhis/programmes",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -161,7 +161,7 @@
 					"raw": "{\n\"trackedEntityType\":\"SXtGAk7eCxX\",\n\"orgUnit\":\"GYBZ1og9bk7\",\n\"attributes\":[\n{\"attribute\":\"DDleOZ1LGAq\",\"value\":\"Male\"},\n{\"attribute\":\"FqwsMUUHpMA\",\"value\":\"Afghanistan\"},\n{\"attribute\":\"LGm4k0JyEd9\",\"value\":\"asdf@asdf.cim\"},\n{\"attribute\":\"eEtOfZW9pnO\",\"value\":\"asdf2\"},\n{\"attribute\":\"gvP9uZqEtM5\",\"value\":\"Test2\"},\n{\"attribute\":\"ihz1qXLws99\",\"value\":\"asdf2\"},\n{\"attribute\":\"nvJtVaGKK4Q\",\"value\":\"2020-03-09\"},\n{\"attribute\":\"pNOTaJeFbPo\",\"value\":\"asdf2\"},\n{\"attribute\":\"pfebiO41tX5\",\"value\":\"1234\"},\n{\"attribute\":\"s1AxHKrRT19\",\"value\":\"asdf2\"},\n{\"attribute\":\"wX3FuQmiLGI\",\"value\":\"asdf2\"}\n],\n\"geometry\":{\"type\":\"Point\",\"coordinates\":[-12.364602903389118,8.727550887880374]}\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8000/dhis/entity-instances",
+					"raw": "http://localhost:8000/api/dhis/entity-instances",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -192,7 +192,7 @@
 					"raw": "{\n\"trackedEntityInstance\":\"aJFGViyDPFt\",\n\"program\":\"Cr6bmkKzQ5c\",\n\"status\":\"ACTIVE\",\n\"orgUnit\":\"GYBZ1og9bk7\",\n\"enrollmentDate\":\"2020-03-15\",\n\"incidentDate\":\"2020-03-15\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8000/dhis/enrollements",
+					"raw": "http://localhost:8000/api/dhis/enrollements",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -223,7 +223,7 @@
 					"raw": "{\n\"events\":[\n{\"trackedEntityInstance\":\"aJFGViyDPFt\",\n\"program\":\"Cr6bmkKzQ5c\",\n\"programStage\":\"ktw7Aj9CgAJ\",\n\"orgUnit\":\"GYBZ1og9bk7\",\n\"enrollment\":\"jt45zk8YdJD\",\n\"dueDate\":\"2020-03-15\",\n\"status\":\"SCHEDULE\"}]\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8000/dhis/events",
+					"raw": "http://localhost:8000/api/dhis/events",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -247,7 +247,7 @@
 					"raw": "[{\n\t\"recordSequence\": 0,\n\t\"submitedDate\": null,\n\t\"flightInformation\": {\n\t\t\"flightNumber\": \"UL100\",\n\t\t\"flightDateTime\": \"2020-05-01 05:01:02\",\n\t\t\"arriveFromPort\": \"SFO\",\n\t\t\"landedPort\": \"CMB\",\n\t\t\"carrierCode\": \"CC1\",\n\t\t\"arrivalPassengerCount\": 1,\n\t\t\"transitPassengerCount\": 1\n\t},\n\t\"passengerInformation\": {\n\t\t\"passportNumber\": \"P1\",\n\t\t\"nationality\": \"United States\",\n\t\t\"initials\": null,\n\t\t\"surname\": \"Stark\",\n\t\t\"middleName\": null,\n\t\t\"givenName\": \"Tony\",\n\t\t\"idCardNumber\": \"8611111111v\",\n\t\t\"dateOfBirth\": \"1986-01-01\",\n\t\t\"gender\": \"Male\",\n\t\t\"emailAddress\": \"tony@stark.com\",\n\t\t\"countryOfResidence\": \"Sri Lanka\",\n\t\t\"arriveFrom\": \"United States\",\n\t\t\"arrivalCardNumber\": \"AC1\",\n\t\t\"purposeOfVisit\": \"PV1\",\n\t\t\"requestedVisaDays\": 12,\n\t\t\"destinationCity\": \"Galle\",\n\t\t\"arrivalCardImage\": \"/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAATABQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9/KKKKACiiigAooooAKKKKAP/2Q==\",\n\t\t\"faceImage\": \"/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAATABQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9/KKKKACiiigAooooAKKKKAP/2Q==\",\n\t\t\"passportDataPage\": \"/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAATABQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9/KKKKACiiigAooooAKKKKAP/2Q==\"\n\t},\n\t\"addressInformation\": [{\n\t\t\"fullAddress\": \"\",\n\t\t\"addressLine1\": \"ADDR LINE A1\",\n\t\t\"addressLine2\": null,\n\t\t\"city\": \"Kolpetty\",\n\t\t\"postalCode\": \"00200\",\n\t\t\"stateProvince\": \"\",\n\t\t\"country\": \"Sri Lanka\"\n\t}, {\n\t\t\"fullAddress\": \"\",\n\t\t\"addressLine1\": \"ADDR LINE B1\",\n\t\t\"addressLine2\": \"ADDR LINE B2\",\n\t\t\"city\": \"Wellawatta\",\n\t\t\"postalCode\": \"00400\",\n\t\t\"stateProvince\": \"Western Province\",\n\t\t\"country\": \"Sri Lanka\"\n\t},{\n\t\t\"fullAddress\": \"My Full Address, L1, L2, 00700, Sri Lanka\",\n\t\t\"addressLine1\": null,\n\t\t\"addressLine2\": null,\n\t\t\"city\": null,\n\t\t\"postalCode\": null,\n\t\t\"stateProvince\": null,\n\t\t\"country\": null\n\t},{\n\t\t\"fullAddress\": null,\n\t\t\"addressLine1\": null,\n\t\t\"addressLine2\": null,\n\t\t\"city\": null,\n\t\t\"postalCode\": null,\n\t\t\"stateProvince\": null,\n\t\t\"country\": null\n\t}],\n\t\"contactNumbers\": [{\n\t\t\"contactNumber\": \"0771111111\"\n\t},{\n\t\t\"contactNumber\": \"+14081111111\"\n\t},{\n\t\t\"contactNumber\": \"+14081111112\"\n\t}],\n\t\"lastDepartureInformation\": {\n\t\t\"departureFlightNo\": \"UX155\",\n\t\t\"departureDate\": \"2020-01-01\",\n\t\t\"flightDestination\": \"LAX\",\n\t\t\"departureCardNo\": \"LDC1\"\n\t}\n}, {\n\t\"recordSequence\": 0,\n\t\"submitedDate\": null,\n\t\"flightInformation\": {\n\t\t\"flightNumber\": \"UL101\",\n\t\t\"flightDateTime\": \"2020-05-01 05:01:02\",\n\t\t\"arriveFromPort\": \"SFO\",\n\t\t\"landedPort\": \"CMB\",\n\t\t\"carrierCode\": \"CC1\",\n\t\t\"arrivalPassengerCount\": 1,\n\t\t\"transitPassengerCount\": 1\n\t},\n\t\"passengerInformation\": {\n\t\t\"passportNumber\": \"P2\",\n\t\t\"nationality\": \"United States\",\n\t\t\"initials\": null,\n\t\t\"surname\": \"Parker\",\n\t\t\"middleName\": null,\n\t\t\"givenName\": \"Peter\",\n\t\t\"idCardNumber\": \"8611111112v\",\n\t\t\"dateOfBirth\": \"1986-01-02\",\n\t\t\"gender\": \"Male\",\n\t\t\"emailAddress\": \"tony@stark.com\",\n\t\t\"countryOfResidence\": \"Sri Lanka\",\n\t\t\"arriveFrom\": \"United States\",\n\t\t\"arrivalCardNumber\": \"AC2\",\n\t\t\"purposeOfVisit\": \"PV2\",\n\t\t\"requestedVisaDays\": 15,\n\t\t\"destinationCity\": \"Galle\",\n\t\t\"arrivalCardImage\": \"/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAATABQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9/KKKKACiiigAooooAKKKKAP/2Q==\",\n\t\t\"faceImage\": \"/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAATABQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9/KKKKACiiigAooooAKKKKAP/2Q==\",\n\t\t\"passportDataPage\": \"/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAATABQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9/KKKKACiiigAooooAKKKKAP/2Q==\"\n\t},\n\t\"addressInformation\": [{\n\t\t\"fullAddress\": \"\",\n\t\t\"addressLine1\": \"ADDR LINE C1\",\n\t\t\"addressLine2\": null,\n\t\t\"city\": \"Kolpetty\",\n\t\t\"postalCode\": \"00200\",\n\t\t\"stateProvince\": \"\",\n\t\t\"country\": \"Sri Lanka\"\n\t}, {\n\t\t\"fullAddress\": \"\",\n\t\t\"addressLine1\": \"ADDR LINE D1\",\n\t\t\"addressLine2\": \"ADDR LINE D2\",\n\t\t\"city\": \"Wellawatta\",\n\t\t\"postalCode\": \"00400\",\n\t\t\"stateProvince\": \"Western Province\",\n\t\t\"country\": \"Sri Lanka\"\n\t},{\n\t\t\"fullAddress\": \"My Full Address 2, L1, L2, 00700, Sri Lanka\",\n\t\t\"addressLine1\": null,\n\t\t\"addressLine2\": null,\n\t\t\"city\": null,\n\t\t\"postalCode\": null,\n\t\t\"stateProvince\": null,\n\t\t\"country\": null\n\t},{\n\t\t\"fullAddress\": null,\n\t\t\"addressLine1\": null,\n\t\t\"addressLine2\": null,\n\t\t\"city\": null,\n\t\t\"postalCode\": null,\n\t\t\"stateProvince\": null,\n\t\t\"country\": null\n\t}],\n\t\"contactNumbers\": [{\n\t\t\"contactNumber\": \"0771111112\"\n\t},{\n\t\t\"contactNumber\": \"+14081111121\"\n\t},{\n\t\t\"contactNumber\": \"+14081111122\"\n\t}],\n\t\"lastDepartureInformation\": {\n\t\t\"departureFlightNo\": \"UX155\",\n\t\t\"departureDate\": \"2020-01-01\",\n\t\t\"flightDestination\": \"LAX\",\n\t\t\"departureCardNo\": \"LDC1\"\n\t}\n}]"
 				},
 				"url": {
-					"raw": "http://localhost:8000/dhis/passenger-information",
+					"raw": "http://localhost:8000/api/dhis/passenger-information",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -279,7 +279,7 @@
 					"raw": "{\n\t\"name\":\"demo3\",\n\t\"email\":\"demo3@gmail.com\",\n\t\"address\":\"Gemunu Mawatha Homagama\",\n\t\"longitude\":7.5545,\n\t\"lattitude\":69.4454,\n\t\"mobileImei\":\"5545454545545\",\n\t\"caseList\":[\"1111\"],\n    \"nic\":\"8982981921V\",\n    \"passport\":\"N612821\",\n    \"country\":\"Sri Lanka\",\n    \"age\":\"32\",\n    \"gender\":\"Male\"\n\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8000/dhis/patients",
+					"raw": "http://localhost:8000/api/dhis/patients",
 					"protocol": "http",
 					"host": [
 						"localhost"

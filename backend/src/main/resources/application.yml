@@ -7,6 +7,7 @@ server:
         accesslog:
             enabled: true
             directory: access
+        additional-tld-skip-patterns: "j2objc-annotations-1.1.jar, checker-compat-qual-2.5.2.jar, guava-26.0-android.jar, animal-sniffer-annotations-1.17.jar, jsr305-3.0.2.jar, error_prone_annotations-2.3.2.jar, opencensus-api-0.21.0.jar, opencensus-contrib-grpc-metrics-0.21.0.jar, perfmark-api-0.17.0.jar, annotations-4.1.1.4.jar, gson-2.7.jar, grpc-*.jar"
 
 spring:
     application:

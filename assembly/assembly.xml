@@ -6,7 +6,7 @@
 
     <id>dist</id>
 
-    <baseDirectory>/${project.artifactId}-${project.version}</baseDirectory>
+<!--    <baseDirectory>${project.artifactId}-${project.version}</baseDirectory>-->
 
     <formats>
         <format>zip</format>
@@ -20,7 +20,7 @@
                 <include>application.yml</include>
                 <include>logback.xml</include>
             </includes>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory/>
         </fileSet>
 
         <fileSet>
@@ -28,7 +28,7 @@
             <includes>
                 <include>covid-19-lk-dev-firebase-adminsdk.json</include>
             </includes>
-            <outputDirectory>/credentials</outputDirectory>
+            <outputDirectory>credentials</outputDirectory>
         </fileSet>
 
         <fileSet>
@@ -37,36 +37,17 @@
                 <include>start.sh</include>
                 <include>stop.sh</include>
             </includes>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory/>
         </fileSet>
     </fileSets>
 
     <files>
         <file>
             <source>${project.basedir}/../backend/target/backend.jar</source>
-            <outputDirectory>/</outputDirectory>
-            <destName>covid19.jar</destName>
+            <destName>myhealth-server.jar</destName>
         </file>
         <file>
-            <source>${project.basedir}/../admin-webapp/target/admin-webapp.war</source>
-            <outputDirectory>/</outputDirectory>
+            <source>${project.basedir}/../portal-frontend/target/portal-frontend.war</source>
         </file>
     </files>
-<!--    <moduleSets>-->
-<!--        <moduleSet>-->
-<!--            &lt;!&ndash; Enable access to all projects in the current multimodule build! &ndash;&gt;-->
-<!--            <useAllReactorProjects>true</useAllReactorProjects>-->
-
-<!--            &lt;!&ndash; Now, select which projects to include in this module-set. &ndash;&gt;-->
-<!--            <includes>-->
-<!--                <include>lk.gov.govtech:backend</include>-->
-<!--                <include>lk.gov.govtech:admin-webapp</include>-->
-<!--            </includes>-->
-<!--            <binaries>-->
-<!--                <outputDirectory>/</outputDirectory>-->
-<!--                <unpack>false</unpack>-->
-<!--            </binaries>-->
-<!--        </moduleSet>-->
-<!--    </moduleSets>-->
-
 </assembly>

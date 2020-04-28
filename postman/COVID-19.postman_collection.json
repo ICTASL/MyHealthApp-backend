@@ -34,7 +34,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/notification/alert/add",
+					"raw": "http://localhost:8000/api/notification/alert/add",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -71,7 +71,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/notification/case/add",
+					"raw": "http://localhost:8000/api/notification/case/add",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -92,7 +92,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8000/application/case/13/si",
+					"raw": "http://localhost:8000/api/application/case/13/si",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -105,7 +105,7 @@
 						"si"
 					]
 				},
-				"description": "GET http://localhost:8000/application/case/<caseId>/<lang>\n\nlang should be one of:\n- en\n- si\n- ta"
+				"description": "GET http://localhost:8000/api/application/case/<caseId>/<lang>\n\nlang should be one of:\n- en\n- si\n- ta"
 			},
 			"response": []
 		},
@@ -115,7 +115,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8000/application/case/latest",
+					"raw": "http://localhost:8000/api/application/case/latest",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -136,7 +136,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8000/application/alert/2/si",
+					"raw": "http://localhost:8000/api/application/alert/2/si",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -149,7 +149,7 @@
 						"si"
 					]
 				},
-				"description": "http://localhost:8000/application/alert/<alertId>/<lang>\n\nlang should be one of:\n- en\n- si\n- ta"
+				"description": "http://localhost:8000/api/application/alert/<alertId>/<lang>\n\nlang should be one of:\n- en\n- si\n- ta"
 			},
 			"response": []
 		},
@@ -159,7 +159,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8000/application/alert/latest",
+					"raw": "http://localhost:8000/api/application/alert/latest",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -180,7 +180,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8000/application/dashboard/status",
+					"raw": "http://localhost:8000/api/application/dashboard/status",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -217,7 +217,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/application/dashboard/status",
+					"raw": "http://localhost:8000/api/application/dashboard/status",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -260,7 +260,7 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:8000/auth",
+					"raw": "http://localhost:8000/api/auth",
 					"protocol": "http",
 					"host": [
 						"localhost"
