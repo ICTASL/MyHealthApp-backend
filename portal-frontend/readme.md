@@ -2,8 +2,40 @@
 
 ## Development Requirements
 - Node.js
+- NPM
 
-## Important
-- After editing files the final package to be deployed is expected in a folder `dist`
-    - `{myhealth-server base dir}/admin-webapp/dist`
-- To do the packaging via mvn we might have to use https://github.com/eirslett/frontend-maven-plugin/blob/master/README.md#installing-node-and-npm
+## Running Only the Frontend
+### Project setup
+```
+npm install
+```
+#### Compiles and hot-reloads for development
+```
+npm run serve
+```
+#### Compiles and minifies for production
+```
+npm run build
+```
+#### Lints and fixes files
+```
+npm run lint
+```
+
+## Running the Frontend Together with the Backend
+- **First** run the backend
+    - Open another terminal and,
+    ```
+    cd ../backend
+    mvn spring-boot:run
+    ```
+- Then run the frontend using the command `npm run serve`
+
+## Tips
+- To avoid login in every time when writing the UI, comment the section 
+```
+meta: {
+    requiresAuth: true
+},
+```
+in `src/router/index.js`
