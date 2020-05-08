@@ -3,10 +3,10 @@
         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>portal-frontend</artifactId>
+    <artifactId>portal</artifactId>
     <packaging>war</packaging>
     <version>1.0.0</version>
-    <name>MyHealth Server Admin Webapp</name>
+    <name>MyHealth Server Portal</name>
     <description>Management Portal Webapp for MyHealth Sri Lanka Mobile app</description>
 
     <parent>
@@ -16,7 +16,7 @@
     </parent>
 
     <build>
-        <finalName>portal-frontend</finalName>
+        <finalName>portal</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

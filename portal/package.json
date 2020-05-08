@@ -1,5 +1,5 @@
 {
-  "name": "myhealth-server-admin-webapp",
+  "name": "myhealth-server-portal",
   "version": "1.0.0",
   "description": "[![Build Status](https://travis-ci.org/azhamn/COVID-19.svg?branch=master)](https://travis-ci.org/azhamn/COVID-19) ---- # COVID-19 Backend Services",
   "main": "main.js",
