@@ -42,5 +42,5 @@ firebase:
 
 webapp:
     war:
-        filename: portal-frontend.war
+        filename: portal.war
         context: ''
