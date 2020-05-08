@@ -44,7 +44,7 @@ export default {
                     new Underline(),
                     new History(),
                 ],
-                onUpdate: ({getJSON, getHTML}) => {
+                onUpdate: ({getHTML}) => {
                     this.message.english =  getHTML();
                     this.englishChar();
                 },
@@ -66,7 +66,7 @@ export default {
                     new Underline(),
                     new History(),
                 ],
-                onUpdate: ({getJSON, getHTML}) => {
+                onUpdate: ({getHTML}) => {
                     this.message.sinhala = getHTML();
                     this.sinhalaChar();
                 },
@@ -88,7 +88,7 @@ export default {
                     new Underline(),
                     new History(),
                 ],
-                onUpdate: ({getJSON, getHTML}) => {
+                onUpdate: ({getHTML}) => {
                     this.message.tamil = getHTML();
                     this.tamilChar();
                 },
@@ -216,7 +216,7 @@ export default {
                                     new Underline(),
                                     new History(),
                                 ],
-                                onUpdate: ({getJSON, getHTML}) => {
+                                onUpdate: ({getHTML}) => {
                                     this.message.english =  getHTML();
                                     this.englishChar();
                                 },
@@ -237,7 +237,7 @@ export default {
                                     new Underline(),
                                     new History(),
                                 ],
-                                onUpdate: ({getJSON, getHTML}) => {
+                                onUpdate: ({getHTML}) => {
                                     this.message.english =  getHTML();
                                     this.englishChar();
                                 },
@@ -258,7 +258,7 @@ export default {
                                     new Underline(),
                                     new History(),
                                 ],
-                                onUpdate: ({getJSON, getHTML}) => {
+                                onUpdate: ({getHTML}) => {
                                     this.message.english =  getHTML();
                                     this.englishChar();
                                 },

@@ -75,7 +75,7 @@
                                         <button v-tooltip.top-center="{
                                             content:buttons.strike,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                                 class="menubar__button"
                                                 :class="{ 'is-active': isActive.strike() }"
                                                 @click="commands.strike"
@@ -87,7 +87,7 @@
                                         <button v-tooltip.top-center="{
                                             content:buttons.underline,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                                 class="menubar__button"
                                                 :class="{ 'is-active': isActive.underline() }"
                                                 @click="commands.underline"
@@ -99,7 +99,7 @@
                                         <button v-tooltip.top-center="{
                                             content:buttons.paragraph,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                                 class="menubar__button"
                                                 :class="{ 'is-active': isActive.paragraph() }"
                                                 @click="commands.paragraph"
@@ -110,7 +110,7 @@
                                         <button v-tooltip.top-center="{
                                             content:buttons.H1,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                                 class="menubar__button pr-2"
                                                 :class="{ 'is-active': isActive.heading({ level: 1 }) }"
                                                 @click="commands.heading({ level: 1 })"
@@ -121,7 +121,7 @@
                                         <button v-tooltip.top-center="{
                                             content:buttons.H2,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                                 class="menubar__button pr-2"
                                                 :class="{ 'is-active': isActive.heading({ level: 2 }) }"
                                                 @click="commands.heading({ level: 2 })"
@@ -143,7 +143,7 @@
                                         <button v-tooltip.top-center="{
                                             content:buttons.bullet_list,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                                 class="menubar__button"
                                                 :class="{ 'is-active': isActive.bullet_list() }"
                                                 @click="commands.bullet_list"
@@ -154,7 +154,7 @@
                                         <button v-tooltip.top-center="{
                                             content:buttons.order_list,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                                 class="menubar__button"
                                                 :class="{ 'is-active': isActive.ordered_list() }"
                                                 @click="commands.ordered_list"
@@ -167,7 +167,7 @@
                                         <button v-tooltip.top-center="{
                                             content:buttons.undo,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                                 class="menubar__button"
                                                 @click="commands.undo"
                                         >
@@ -177,7 +177,7 @@
                                         <button v-tooltip.top-center="{
                                             content:buttons.redo,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                                 class="menubar__button"
                                                 @click="commands.redo"
                                         >
@@ -247,7 +247,7 @@
                                     <button v-tooltip.top-center="{
                                             content:buttons.strike,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                             class="menubar__button"
                                             :class="{ 'is-active': isActive.strike() }"
                                             @click="commands.strike"
@@ -259,7 +259,7 @@
                                     <button v-tooltip.top-center="{
                                             content:buttons.underline,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                             class="menubar__button"
                                             :class="{ 'is-active': isActive.underline() }"
                                             @click="commands.underline"
@@ -271,7 +271,7 @@
                                     <button v-tooltip.top-center="{
                                             content:buttons.paragraph,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                             class="menubar__button"
                                             :class="{ 'is-active': isActive.paragraph() }"
                                             @click="commands.paragraph"
@@ -282,7 +282,7 @@
                                     <button v-tooltip.top-center="{
                                             content:buttons.H1,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                             class="menubar__button pr-2"
                                             :class="{ 'is-active': isActive.heading({ level: 1 }) }"
                                             @click="commands.heading({ level: 1 })"
@@ -293,7 +293,7 @@
                                     <button v-tooltip.top-center="{
                                             content:buttons.H2,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                             class="menubar__button pr-2"
                                             :class="{ 'is-active': isActive.heading({ level: 2 }) }"
                                             @click="commands.heading({ level: 2 })"
@@ -315,7 +315,7 @@
                                     <button v-tooltip.top-center="{
                                             content:buttons.bullet_list,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                             class="menubar__button"
                                             :class="{ 'is-active': isActive.bullet_list() }"
                                             @click="commands.bullet_list"
@@ -326,7 +326,7 @@
                                     <button v-tooltip.top-center="{
                                             content:buttons.order_list,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                             class="menubar__button"
                                             :class="{ 'is-active': isActive.ordered_list() }"
                                             @click="commands.ordered_list"
@@ -339,7 +339,7 @@
                                     <button v-tooltip.top-center="{
                                             content:buttons.undo,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                             class="menubar__button"
                                             @click="commands.undo"
                                     >
@@ -349,7 +349,7 @@
                                     <button v-tooltip.top-center="{
                                             content:buttons.redo,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                             class="menubar__button"
                                             @click="commands.redo"
                                     >
@@ -412,7 +412,7 @@
                                     <button v-tooltip.top-center="{
                                             content:buttons.strike,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                             class="menubar__button"
                                             :class="{ 'is-active': isActive.strike() }"
                                             @click="commands.strike"
@@ -424,7 +424,7 @@
                                     <button v-tooltip.top-center="{
                                             content:buttons.underline,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                             class="menubar__button"
                                             :class="{ 'is-active': isActive.underline() }"
                                             @click="commands.underline"
@@ -436,7 +436,7 @@
                                     <button v-tooltip.top-center="{
                                             content:buttons.paragraph,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                             class="menubar__button"
                                             :class="{ 'is-active': isActive.paragraph() }"
                                             @click="commands.paragraph"
@@ -447,7 +447,7 @@
                                     <button v-tooltip.top-center="{
                                             content:buttons.H1,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                             class="menubar__button pr-2"
                                             :class="{ 'is-active': isActive.heading({ level: 1 }) }"
                                             @click="commands.heading({ level: 1 })"
@@ -458,7 +458,7 @@
                                     <button v-tooltip.top-center="{
                                             content:buttons.H2,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                             class="menubar__button pr-2"
                                             :class="{ 'is-active': isActive.heading({ level: 2 }) }"
                                             @click="commands.heading({ level: 2 })"
@@ -480,7 +480,7 @@
                                     <button v-tooltip.top-center="{
                                             content:buttons.bullet_list,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                             class="menubar__button"
                                             :class="{ 'is-active': isActive.bullet_list() }"
                                             @click="commands.bullet_list"
@@ -491,7 +491,7 @@
                                     <button v-tooltip.top-center="{
                                             content:buttons.order_list,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                             class="menubar__button"
                                             :class="{ 'is-active': isActive.ordered_list() }"
                                             @click="commands.ordered_list"
@@ -504,7 +504,7 @@
                                     <button v-tooltip.top-center="{
                                             content:buttons.undo,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                             class="menubar__button"
                                             @click="commands.undo"
                                     >
@@ -514,7 +514,7 @@
                                     <button v-tooltip.top-center="{
                                             content:buttons.redo,
                                              placement: 'top-center',
-                                        }"type="button"
+                                        }" type="button"
                                             class="menubar__button"
                                             @click="commands.redo"
                                     >
