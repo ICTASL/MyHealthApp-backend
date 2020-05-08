@@ -1,17 +1,19 @@
 
 import Vue from 'vue'
-import Vuelidate from 'vuelidate';
-import VueSweetalert2 from 'vue-sweetalert2';
-import 'sweetalert2/dist/sweetalert2.min.css';
+import Vuelidate from 'vuelidate'
+import VueSweetalert2 from 'vue-sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css'
+import VTooltip from 'v-tooltip'
 
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import '@/assets/css/app.sass'
+import '@/assets/css/app.css'
 
 Vue.config.productionTip = false;
 Vue.use(Vuelidate);
 Vue.use(VueSweetalert2);
+Vue.use(VTooltip);
 
 router.beforeEach((to, from, next) => {
     if(to.matched.some(record => record.meta.requiresAuth)) {
