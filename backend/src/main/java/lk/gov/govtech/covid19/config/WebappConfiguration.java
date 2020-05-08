@@ -55,14 +55,17 @@ public class WebappConfiguration {
     }
 
     private String getWarPath(String filename){
+        String parallelToJarLocation = "webapps" + File.separator
+                + filename;
+
         String webappTargetLocation = ".." + File.separator
-                + "portal-frontend" + File.separator
+                + "portal" + File.separator
                 + "target" + File.separator
                 + filename;
 
-        if (new File(filename).exists()) {
+        if (new File(parallelToJarLocation).exists()) {
             //Useful when running the jar -> check within the folder where the jar is
-            return filename;
+            return parallelToJarLocation;
 
         } else if (new File(webappTargetLocation).exists()) {
             //Useful when running the mvn spring-boot:run command

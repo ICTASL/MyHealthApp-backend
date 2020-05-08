@@ -15,9 +15,9 @@
     </properties>
 
     <modules>
-        <module>portal-frontend</module>
+        <module>portal</module>
         <module>backend</module>
-        <module>assembly</module>
+        <module>distribution</module>
     </modules>
 
     <build>
@@ -58,7 +58,7 @@
                                         <include>**</include>
                                     </includes>
                                     <excludes>
-                                        <exclude>portal-frontend.war</exclude>
+                                        <exclude>portal.war</exclude>
                                         <exclude>node/**</exclude> <!-- to avoid installing node every time and to avoid the lengthy info log when deleting node_modules-->
                                         <exclude>backend.jar</exclude>
                                         <exclude>covid19-1.0.0.zip</exclude>
