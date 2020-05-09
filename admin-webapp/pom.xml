@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>admin-webapp</artifactId>
+    <packaging>war</packaging>
+    <version>1.0.0</version>
+    <name>MyHealth Server Admin Webapp</name>
+    <description>Management Portal Webapp for MyHealth Sri Lanka Mobile app</description>
+
+    <parent>
+        <groupId>lk.gov.govtech</groupId>
+        <artifactId>myhealth-server</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <build>
+        <finalName>admin-webapp</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.3</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <webResources>
+                        <resource>
+                            <directory>dist</directory>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
