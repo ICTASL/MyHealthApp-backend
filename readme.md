@@ -15,23 +15,26 @@ Please keep the following in mind when submitting your valuable contributions ðŸ
 ## How to run
 - install mysql server
 - execute `covid19.sql` on server (execute `covid19_test.sql` to add test data)
+
+### For Frontend Development
+- Open the folder portal-frontend directly from the IDE
+- Refer to the readme inside portal-frontend
  
-### Using the Maven Plugin
+### For Backend Development
 - replace the `covid-19-lk-dev-firebase-adminsdk.json` file in `/src/main/resources/credentials/` with the private key from Firebase Admin SDK
 - `cd backend`
 - run using: `mvn spring-boot:run`
 - change `firebase.topic` in `application.yml` accordingly. `mobile_message` is used for production and `mobile_message_test` is used for testing
-
-### As a Packaged Application
-- build project using `mvn clean install`
-- copy `application.yml` to the folder where the jar is (`target` if it has not been moved)
 - Replace `/src/main/resources/credentials/covid-19-lk-dev-firebase-adminsdk.json` with a valid credential file.
-- go into the folder where the jar is (eg. `cd backend/target`)
-- run `java -jar backend.jar`. 
- 
-### with Docker
+
+### Run as a Complete Package
 - build project using `mvn clean install`
-- unzip the `assembly/target/covid19-1.0.0.zip`
+- unzip the `assembly/target/myhealth-server-1.0.0.zip`
+- run `java -jar myhealth-server.jar`
+ 
+### Run with Docker
+- build project using `mvn clean install`
+- unzip the `assembly/target/myhealth-server-1.0.0.zip`
 - modify the db url in the application.yml (replace localhose with container name) as below  (FIXME: automate with spring profiles)
 - `url: jdbc:mysql://db:3306/covid19_db?useUnicode=yes&characterEncoding=UTF-8`
 - run ` docker-compose up -d`  , make sure that ports 8000 and 3306 are not used in the local machine
@@ -41,13 +44,13 @@ Please keep the following in mind when submitting your valuable contributions ðŸ
 ----
 #### Get Alert by Id
 
-GET ``http://localhost:8000/application/alert/<alertId>/<lang>``
+GET ``http://localhost:8000/api/application/alert/<alertId>/<lang>``
 
 options for lang: en, si, ta
 
 ----
 #### Get Latest Alert Id
-GET ``http://localhost:8000/application/alert/latest``
+GET ``http://localhost:8000/api/application/alert/latest``
 
 returns integer as response
 
@@ -55,7 +58,7 @@ returns integer as response
 #### Add New Alert
 
 ```
-POST http://localhost:8000/notification/alert/add 
+POST http://localhost:8000/api/notification/alert/add 
 
 {
    "title":"Test title",
@@ -70,20 +73,20 @@ POST http://localhost:8000/notification/alert/add
 ----
 #### Get Case By Id
 
-GET ``http://localhost:8000/application/case/<caseId>/<lang>``
+GET ``http://localhost:8000/api/application/case/<caseId>/<lang>``
 
 options for lang: en, si, ta
 
 ----
 #### Get Latest Case Id
-GET ``http://localhost:8000/application/case/latest``
+GET ``http://localhost:8000/api/application/case/latest``
 
 returns integer as response
 
 ----
 #### Add new Case
 ```
-POST http://localhost:8000/notification/case/add
+POST http://localhost:8000/api/notification/case/add
 
 {
    "caseNumber":"DHIS/WP/COL/1234",
@@ -114,7 +117,7 @@ POST http://localhost:8000/notification/case/add
 #### Get Status
 
 ```
-GET http://localhost:8000/application/dashboard/status
+GET http://localhost:8000/api/application/dashboard/status
 ```
 
 If succeeded you should receive following JSON response with code `200`:
@@ -131,7 +134,7 @@ If succeeded you should receive following JSON response with code `200`:
 ----
 #### Update Dashboard Status
 ```
-PUT http://localhost:8000/application/dashboard/status
+PUT http://localhost:8000/api/application/dashboard/status
 
 {
     "lk_total_case": 98,
@@ -140,18 +143,5 @@ PUT http://localhost:8000/application/dashboard/status
     "lk_total_suspect": 99
 }
 ```
-
-## Web Portal UI
-
-### Getting started
-
-#### Setting up Build system
-- In order to Setup You need to Run `npm install` to install all the dependencies.
-- Now Run `npm run watch`.
-- All of the following folders are monitored for changes, which will tell the browser to reload automatically after any changes are made:
-`Resources>Js`
--Now you can edit any html file inside the resource.
-
-- Hit Ctrl+C or just close the command line window to stop the server.
 
 _Happy Contributing!_

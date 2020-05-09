@@ -8,16 +8,16 @@
     <artifactId>myhealth-server</artifactId>
     <version>1.0.0</version>
     <name>MyHealth Server</name>
-    <description>Backend and administration frontend for MyHealth Sri Lanka Mobile app</description>
+    <description>Backend and Management Portal for MyHealth Sri Lanka Mobile app</description>
 
     <properties>
         <java.version>1.8</java.version>
     </properties>
 
     <modules>
-        <module>admin-webapp</module>
+        <module>portal</module>
         <module>backend</module>
-        <module>assembly</module>
+        <module>distribution</module>
     </modules>
 
     <build>
@@ -53,12 +53,13 @@
                             <excludeDefaultDirectories>true</excludeDefaultDirectories>
                             <filesets>
                                 <fileset>
-                                    <directory>target</directory>
+                                    <directory>${basedir}/target</directory>
                                     <includes>
                                         <include>**</include>
                                     </includes>
                                     <excludes>
-                                        <exclude>admin-webapp.war</exclude>
+                                        <exclude>portal.war</exclude>
+                                        <exclude>node/**</exclude> <!-- to avoid installing node every time and to avoid the lengthy info log when deleting node_modules-->
                                         <exclude>backend.jar</exclude>
                                         <exclude>covid19-1.0.0.zip</exclude>
                                     </excludes>

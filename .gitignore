@@ -5,6 +5,7 @@ HELP.md
 !**/src/main/**
 !**/src/test/**
 **/node_modules
+**/dist
 
 ### STS ###
 .apt_generated
