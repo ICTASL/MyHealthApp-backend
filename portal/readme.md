@@ -1,10 +1,10 @@
-# MyHealth - Management Portal Frontend - Vue.js
+# MyHealth - Management Portal - Vue.js
 
 ## Development Requirements
 - Node.js
 - NPM
 
-## Running Only the Frontend
+## To Run the Portal without the Backend
 ### Project setup
 ```
 npm install
@@ -22,7 +22,7 @@ npm run build
 npm run lint
 ```
 
-## Running the Frontend Together with the Backend
+## To Run the Frontend Together with the Backend
 - **First** run the backend
     - Open another terminal and,
     ```

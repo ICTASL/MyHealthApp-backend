@@ -13,28 +13,28 @@ Please keep the following in mind when submitting your valuable contributions ðŸ
 ----
 
 ## How to run
-- install mysql server
-- execute `covid19.sql` on server (execute `covid19_test.sql` to add test data)
+- Install mysql server
+- Execute `covid19.sql` on server (execute `covid19_test.sql` to add test data)
 
 ### For Frontend Development
-- Open the folder portal-frontend directly from the IDE
-- Refer to the readme inside portal-frontend
+- Open the folder `portal` directly from the IDE
+- Refer to the readme inside `portal`
  
 ### For Backend Development
-- replace the `covid-19-lk-dev-firebase-adminsdk.json` file in `/src/main/resources/credentials/` with the private key from Firebase Admin SDK
+- Change `firebase.topic` in `backend/src/main/resources/application.yml` accordingly. `mobile_message` is used for production and `mobile_message_test` is used for testing
+- Replace `backend/src/main/resources/credentials/covid-19-lk-dev-firebase-adminsdk.json` with a valid credential file - with the private key from Firebase Admin SDK.
 - `cd backend`
-- run using: `mvn spring-boot:run`
-- change `firebase.topic` in `application.yml` accordingly. `mobile_message` is used for production and `mobile_message_test` is used for testing
-- Replace `/src/main/resources/credentials/covid-19-lk-dev-firebase-adminsdk.json` with a valid credential file.
+- Run using: `mvn spring-boot:run`
 
 ### Run as a Complete Package
-- build project using `mvn clean install`
-- unzip the `assembly/target/myhealth-server-1.0.0.zip`
-- run `java -jar myhealth-server.jar`
+- Build project using `mvn clean install`
+- Unzip the `distribution/target/myhealth-server-1.0.0.zip`
+- Within `myhealth-server-1.0.0`, update the files `credentials/covid-19-lk-dev-firebase-adminsdk.json` and `application.yml`
+- Run `java -jar myhealth-server.jar`
  
 ### Run with Docker
 - build project using `mvn clean install`
-- unzip the `assembly/target/myhealth-server-1.0.0.zip`
+- unzip the `distribution/target/myhealth-server-1.0.0.zip`
 - modify the db url in the application.yml (replace localhose with container name) as below  (FIXME: automate with spring profiles)
 - `url: jdbc:mysql://db:3306/covid19_db?useUnicode=yes&characterEncoding=UTF-8`
 - run ` docker-compose up -d`  , make sure that ports 8000 and 3306 are not used in the local machine
