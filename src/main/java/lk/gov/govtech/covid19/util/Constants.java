@@ -6,7 +6,7 @@ public class Constants {
     public static final String TF_API_CONTEXT = "/taskforce";
     //context for all calls related to dhis service integration
     public static final String DHIS_API_CONTEXT = "/dhis";
-
+    public static final String IMAGE_API_CONTEXT = "/images";
     /*
     * context for all calls related to web portal UI used for notification publication
     * */
