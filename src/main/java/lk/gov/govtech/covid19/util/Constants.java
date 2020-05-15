@@ -10,7 +10,7 @@ public class Constants {
     public static final String APPLICATION_API_CONTEXT = "/application";
     public static final String NOTIFICATION_API_CONTEXT = "/notification";
     public static final String DOCUMENTS_API_CONTEXT = "/documents";
-
+    public static final String IMAGE_API_CONTEXT = "/images";
     public static final String NEWS_PATH = "/news";
     public static final String CASES_PATH = "/cases";
     public static final String DASHBOARD_PATH = "/dashboard";

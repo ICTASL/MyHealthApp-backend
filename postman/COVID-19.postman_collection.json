@@ -224,6 +224,64 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Upload Image",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "image/jpeg"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic ZGV2OmRldg==",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "form-data",
+					"key": "image",
+					"value": "attachment.jpg"
+				},
+				"url": {
+					"raw": "http://localhost:8000/images/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"images",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Image By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/images/image/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"images",
+						"image",
+						4
+					]
+				},
+				"description": "GET http://localhost:8000/images/image/<imageId>"
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}

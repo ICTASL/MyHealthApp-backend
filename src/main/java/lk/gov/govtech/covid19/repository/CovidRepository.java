@@ -1,16 +1,10 @@
 package lk.gov.govtech.covid19.repository;
 
-import lk.gov.govtech.covid19.dto.AlertNotificationRequest;
-import lk.gov.govtech.covid19.dto.CaseNotificationRequest;
-import lk.gov.govtech.covid19.dto.Location;
-import lk.gov.govtech.covid19.dto.UpdateStatusRequest;
+import lk.gov.govtech.covid19.dto.*;
 import lk.gov.govtech.covid19.model.AlertNotificationEntity;
 import lk.gov.govtech.covid19.model.CaseNotificationEntity;
 import lk.gov.govtech.covid19.model.StatusEntity;
-import lk.gov.govtech.covid19.model.mapper.AlertNotificationEntityRowMapper;
-import lk.gov.govtech.covid19.model.mapper.CaseNotificationEntityRowMapper;
-import lk.gov.govtech.covid19.model.mapper.CaseNotificationLocationMapper;
-import lk.gov.govtech.covid19.model.mapper.StatusEntityRowMapper;
+import lk.gov.govtech.covid19.model.mapper.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,6 +12,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
@@ -128,6 +124,24 @@ public class CovidRepository {
     public void updateStatus(UpdateStatusRequest request) {
         jdbcTemplate.update("update covid_status set lk_total_case=?, lk_recovered_case=?, lk_total_deaths=?, lk_total_suspect=? where id=?",
                 request.getLk_total_case() , request.getLk_recovered_case(), request.getLk_total_deaths(), request.getLk_total_suspect(), 1);
+    }
+
+    public int addImage(InputStream is, String name, long size) throws IOException {
+        KeyHolder holder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+                    PreparedStatement ps = connection.prepareStatement("insert into images(name, image) " + "values(?,?)",
+                            Statement.RETURN_GENERATED_KEYS);
+                    ps.setString(1,name);
+                    ps.setBinaryStream(2, (InputStream) is, (int)(size));
+                    return ps;
+                },holder
+        );
+        return holder.getKey().intValue();
+    }
+
+    public StoredImage getImage(int id){
+        String selectSQL = "SELECT * FROM images WHERE id=?";
+        return jdbcTemplate.query(selectSQL,new Object[]{id},new StoredImageMapper()).get(0);
     }
 
 }

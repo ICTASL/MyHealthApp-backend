@@ -52,4 +52,12 @@ CREATE TABLE `covid_status` (
   `lk_total_suspect` INT NOT NULL,
   `last_update_time` timestamp default current_timestamp NOT NULL on update current_timestamp);
 
+CREATE TABLE `images` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` mediumblob,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
 INSERT INTO `covid_status` (`id`,`lk_total_case`,`lk_recovered_case`,`lk_total_deaths`,`lk_total_suspect`,`last_update_time`) VALUES (1,99,99,99,99, NOW());
