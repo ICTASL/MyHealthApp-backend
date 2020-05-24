@@ -10,6 +10,7 @@ public class Constants {
     public static final String NOTIFICATION_API_CONTEXT = "/notification";
     public static final String DOCUMENTS_API_CONTEXT = "/documents";
     public static final String AUTH_API_CONTEXT = "/auth";
+    public static final String IMAGE_API_CONTEXT = "/images";
 
     public static final String PUSH_NOTIFICATION_MESSAGE_TYPE_ALERT = "alert";
     public static final String PUSH_NOTIFICATION_MESSAGE_TYPE_CASE = "case";
