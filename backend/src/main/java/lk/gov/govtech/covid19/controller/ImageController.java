@@ -1,6 +1,7 @@
 package lk.gov.govtech.covid19.controller;
 
 import lk.gov.govtech.covid19.dto.StoredImage;
+import lk.gov.govtech.covid19.dto.StoredImageResponse;
 import lk.gov.govtech.covid19.service.ImageService;
 import lk.gov.govtech.covid19.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +19,14 @@ public class ImageController {
 
     @PostMapping(path = "/add")
     public ResponseEntity uploadImage(@RequestParam("image") MultipartFile image){
+        StoredImageResponse response = null;
         if (image.isEmpty()){
             System.out.println("empty file");
         }else {
-            imageService.addImage(image);
-            System.out.println(image.getOriginalFilename());
-            System.out.println(image.getContentType());
+            response = imageService.addImage(image);
         }
         System.gc();
-        return ResponseEntity.accepted().build();
+        return ResponseEntity.ok().body(response);
     }
 
     @GetMapping(value = "/image/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)

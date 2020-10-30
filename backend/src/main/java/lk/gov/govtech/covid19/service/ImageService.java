@@ -1,6 +1,7 @@
 package lk.gov.govtech.covid19.service;
 
 import lk.gov.govtech.covid19.dto.StoredImage;
+import lk.gov.govtech.covid19.dto.StoredImageResponse;
 import lk.gov.govtech.covid19.repository.CovidRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,16 +21,22 @@ public class ImageService {
     @Autowired
     ImageCompressionService imageCompressionService;
 
-    public void addImage(MultipartFile file){
+    public StoredImageResponse addImage(MultipartFile file){
+        StoredImageResponse storedImageResponse = null;
+
         try {
             byte[] bArray = imageCompressionService.compressImage(file);
             InputStream is = new ByteArrayInputStream(bArray);
             int id = repository.addImage(is,file.getOriginalFilename(),file.getSize());
+            storedImageResponse = new StoredImageResponse(id,file.getOriginalFilename());
+            return storedImageResponse;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return storedImageResponse;
     }
 
     public StoredImage getImage(int id)
