@@ -15,6 +15,7 @@ import {
     Strike,
     Underline,
     History,
+    Image,
 } from 'tiptap-extensions'
 
 import api from '../../../api'
@@ -43,6 +44,7 @@ export default {
                     new Strike(),
                     new Underline(),
                     new History(),
+                    new Image(),
                 ],
                 onUpdate: ({getHTML}) => {
                     this.message.english =  getHTML();
@@ -65,6 +67,7 @@ export default {
                     new Strike(),
                     new Underline(),
                     new History(),
+                    new Image(),
                 ],
                 onUpdate: ({getHTML}) => {
                     this.message.sinhala = getHTML();
@@ -87,6 +90,7 @@ export default {
                     new Strike(),
                     new Underline(),
                     new History(),
+                    new Image(),
                 ],
                 onUpdate: ({getHTML}) => {
                     this.message.tamil = getHTML();
@@ -107,6 +111,7 @@ export default {
                 "bullet_list":"Bullet List",
                 "redo":"Redo",
                 "undo":"UnDo",
+                "image":"Image",
             },
             "source":'',
 
@@ -215,6 +220,7 @@ export default {
                                     new Strike(),
                                     new Underline(),
                                     new History(),
+                                    new Image(),
                                 ],
                                 onUpdate: ({getHTML}) => {
                                     this.message.english =  getHTML();
@@ -236,6 +242,7 @@ export default {
                                     new Strike(),
                                     new Underline(),
                                     new History(),
+                                    new Image(),
                                 ],
                                 onUpdate: ({getHTML}) => {
                                     this.message.english =  getHTML();
@@ -257,6 +264,7 @@ export default {
                                     new Strike(),
                                     new Underline(),
                                     new History(),
+                                    new Image(),
                                 ],
                                 onUpdate: ({getHTML}) => {
                                     this.message.english =  getHTML();
@@ -289,6 +297,26 @@ export default {
         tamilChar()
         {
             this.charcount.tamilChar = (this.message.tamil.length)-7;
-        }
+        },
+        showImagePrompt(commands) {   
+          let inputElement = document.createElement("input");
+            inputElement.setAttribute("type", "file");
+            inputElement.addEventListener('change', (e) => {
+                if (e.target.files && e.target.files[0]) {
+                    let anImage = e.target.files[0];  // file from input
+                    
+                    let formData = new FormData();
+                    formData.append("image", anImage, anImage.name);                                
+                    api.postMultipartFDWithToken('/images', formData)
+                          .then(response=>{
+                            if(response.status == 202 && response.data.url.length>0){                              
+                              const src = response.data.url;
+                              commands.image({ src });
+                            } 
+                          });
+                }
+            })
+            inputElement.click();        
+        },
     }
 }
