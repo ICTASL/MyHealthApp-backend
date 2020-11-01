@@ -31,6 +31,8 @@ public class SecurityConfiguration {
     /*
      * Endpoints with auth (either http basic auth or login based can be used)
      * - /notification
+     * - /application PUT
+     * - /images POST
      *
      * */
 
@@ -101,6 +103,8 @@ public class SecurityConfiguration {
                     .antMatchers(NOTIFICATION_API_CONTEXT + "/**")
                         .hasAuthority(AUTHORITY_NOTIFICATION)
                     .antMatchers(HttpMethod.PUT, APPLICATION_API_CONTEXT + "/dashboard/status")
+                        .hasAuthority(AUTHORITY_NOTIFICATION)
+                    .antMatchers(HttpMethod.POST, IMAGE_API_CONTEXT)
                         .hasAuthority(AUTHORITY_NOTIFICATION)
                     .and()
                 .addFilter(getPasswordFilter())

@@ -2,6 +2,10 @@ package lk.gov.govtech.covid19.util;
 
 public class Constants {
 
+    //although defined here, actually set at `server.servlet.context-path` in
+    //the application.yaml file. Refer to backend/readme for more info
+    public static final String BACKEND_CONTEXT = "/api";
+
     //context for all calls related to task force ap
     public static final String TF_API_CONTEXT = "/taskforce";
     //context for all calls related to dhis service integration
