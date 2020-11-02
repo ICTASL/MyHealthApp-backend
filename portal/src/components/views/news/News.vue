@@ -44,10 +44,10 @@
                     <div class="mt-4">
                         <label class="px-4 text-xl text-gray-800 w-full" for="english_description">English Alert<span class="text-red-400">*</span></label>
                         <div class="px-4">
-
-                            <div class="editor">
+                          <news-editor ref="englishEditor" v-bind:isEnglish=true></news-editor>
+                            <!-- <div class="editor">
                                 <editor-menu-bar class="mt-4 mb-4" :editor="english" v-slot="{ commands, isActive }">
-                                    <div class="menubar">
+                                    <div class="menubar flex-wrap">
 
                                         <button v-tooltip.top-center="{
                                             content:buttons.bold,
@@ -184,7 +184,7 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" class="fill-current w-4 h-4 mr-2" viewBox="0 0 332.113 332.113"><path d="M329.917 244.697a7.5 7.5 0 00-10.607 0L301 263.007V177c0-73.612-59.888-133.5-133.5-133.5-73.445 0-133.223 59.617-133.494 133H7.5a7.5 7.5 0 000 15h68a7.5 7.5 0 000-15H49.006c.271-65.112 53.319-118 118.494-118C232.841 58.5 286 111.659 286 177v86.007l-18.31-18.31a7.5 7.5 0 00-10.606 10.607l31.112 31.112c.175.176.36.342.552.499.083.068.171.127.256.191.11.083.219.168.334.245.103.069.211.129.317.193.104.062.205.128.311.184.11.059.223.109.335.162.11.052.217.106.33.153.11.046.223.083.335.123.119.043.236.088.357.125.112.034.227.059.34.087.124.031.246.066.372.091.131.026.263.042.394.061.111.016.219.037.331.048a7.623 7.623 0 001.48 0c.112-.011.221-.032.331-.048.132-.019.264-.035.395-.061.126-.025.248-.06.371-.09.114-.029.228-.054.341-.088.122-.037.239-.082.357-.125.112-.04.225-.077.335-.123.112-.046.22-.101.33-.153.112-.053.225-.103.335-.162.106-.057.207-.121.31-.183.107-.064.215-.125.319-.194.114-.077.222-.162.332-.244.085-.064.174-.124.257-.192a7.44 7.44 0 00.552-.499l31.112-31.112a7.5 7.5 0 000-10.607z"/></svg>
                                         </button>
 
-                                        <button v-tooltip.top-center="{
+                                        <button :disabled="imageBtnDisable" v-tooltip.top-center="{
                                             content:buttons.image,
                                              placement: 'top-center',
                                         }" type="button"
@@ -198,14 +198,7 @@
                                 </editor-menu-bar>
 
                                 <editor-content class="editor__content" :class="{'border-red-500':$v.message.english.$error}" :editor="english"></editor-content>
-                            </div>
-                            <div class="my-3">
-                                <p class="text-base text-blue-400 text-right">{{ charcount.englishChar }} characters</p>
-                            </div>
-                            <div v-if="$v.message.english.$dirty">
-                                <p class="text-red-500 text-xs italic" v-if="!$v.message.english.required">English Alerts is required</p>
-                                <p class="text-red-500 text-xs italic" v-if="!$v.message.english.maxLength">English Alerts must have at most 2500 characters</p>
-                            </div>
+                            </div> -->
                         </div>
 
                     </div>
@@ -229,7 +222,7 @@
                         <div class="px-4">
 
                             <editor-menu-bar :editor="sinhala" v-slot="{ commands, isActive }">
-                                <div class="menubar">
+                                <div class="menubar flex-wrap">
 
                                     <button v-tooltip.top-center="{
                                             content:buttons.bold,
@@ -366,12 +359,12 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" class="fill-current w-4 h-4 mr-2" viewBox="0 0 332.113 332.113"><path d="M329.917 244.697a7.5 7.5 0 00-10.607 0L301 263.007V177c0-73.612-59.888-133.5-133.5-133.5-73.445 0-133.223 59.617-133.494 133H7.5a7.5 7.5 0 000 15h68a7.5 7.5 0 000-15H49.006c.271-65.112 53.319-118 118.494-118C232.841 58.5 286 111.659 286 177v86.007l-18.31-18.31a7.5 7.5 0 00-10.606 10.607l31.112 31.112c.175.176.36.342.552.499.083.068.171.127.256.191.11.083.219.168.334.245.103.069.211.129.317.193.104.062.205.128.311.184.11.059.223.109.335.162.11.052.217.106.33.153.11.046.223.083.335.123.119.043.236.088.357.125.112.034.227.059.34.087.124.031.246.066.372.091.131.026.263.042.394.061.111.016.219.037.331.048a7.623 7.623 0 001.48 0c.112-.011.221-.032.331-.048.132-.019.264-.035.395-.061.126-.025.248-.06.371-.09.114-.029.228-.054.341-.088.122-.037.239-.082.357-.125.112-.04.225-.077.335-.123.112-.046.22-.101.33-.153.112-.053.225-.103.335-.162.106-.057.207-.121.31-.183.107-.064.215-.125.319-.194.114-.077.222-.162.332-.244.085-.064.174-.124.257-.192a7.44 7.44 0 00.552-.499l31.112-31.112a7.5 7.5 0 000-10.607z"/></svg>
                                     </button>
 
-                                    <button v-tooltip.top-center="{
+                                    <button :disabled="imageBtnDisable" v-tooltip.top-center="{
                                             content:buttons.image,
                                              placement: 'top-center',
                                         }" type="button"
                                             class="menubar__button"
-                                            @click="showImagePrompt(commands.image)"
+                                            @click="showImagePrompt(commands)"
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" class="fill-current w-4 h-4 mr-2" viewBox="0 0 332.113 332.113"><path d="M291 150V79c0-19-15-34-34-34H79c-19 0-34 15-34 34v42l67-44 81 72 56-29 42 30zm0 52l-43-30-56 30-81-67-66 39v23c0 19 15 34 34 34h178c17 0 31-13 34-29zM79 0h178c44 0 79 35 79 79v118c0 44-35 79-79 79H79c-44 0-79-35-79-79V79C0 35 35 0 79 0z"/></svg>
                                     </button>
@@ -403,7 +396,7 @@
                         <label class="px-4 text-xl text-gray-800 w-full" for="tamil_description">Tamil Alert</label>
                         <div class="px-4">
                             <editor-menu-bar :editor="tamil" v-slot="{ commands, isActive }">
-                                <div class="menubar">
+                                <div class="menubar flex-wrap">
 
                                     <button v-tooltip.top-center="{
                                             content:buttons.bold,
@@ -540,12 +533,12 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" class="fill-current w-4 h-4 mr-2" viewBox="0 0 332.113 332.113"><path d="M329.917 244.697a7.5 7.5 0 00-10.607 0L301 263.007V177c0-73.612-59.888-133.5-133.5-133.5-73.445 0-133.223 59.617-133.494 133H7.5a7.5 7.5 0 000 15h68a7.5 7.5 0 000-15H49.006c.271-65.112 53.319-118 118.494-118C232.841 58.5 286 111.659 286 177v86.007l-18.31-18.31a7.5 7.5 0 00-10.606 10.607l31.112 31.112c.175.176.36.342.552.499.083.068.171.127.256.191.11.083.219.168.334.245.103.069.211.129.317.193.104.062.205.128.311.184.11.059.223.109.335.162.11.052.217.106.33.153.11.046.223.083.335.123.119.043.236.088.357.125.112.034.227.059.34.087.124.031.246.066.372.091.131.026.263.042.394.061.111.016.219.037.331.048a7.623 7.623 0 001.48 0c.112-.011.221-.032.331-.048.132-.019.264-.035.395-.061.126-.025.248-.06.371-.09.114-.029.228-.054.341-.088.122-.037.239-.082.357-.125.112-.04.225-.077.335-.123.112-.046.22-.101.33-.153.112-.053.225-.103.335-.162.106-.057.207-.121.31-.183.107-.064.215-.125.319-.194.114-.077.222-.162.332-.244.085-.064.174-.124.257-.192a7.44 7.44 0 00.552-.499l31.112-31.112a7.5 7.5 0 000-10.607z"/></svg>
                                     </button>
 
-                                    <button v-tooltip.top-center="{
+                                    <button :disabled="imageBtnDisable" v-tooltip.top-center="{
                                             content:buttons.image,
                                              placement: 'top-center',
                                         }" type="button"
                                             class="menubar__button"
-                                            @click="showImagePrompt(commands.image)"
+                                            @click="showImagePrompt(commands)"
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" class="fill-current w-4 h-4 mr-2" viewBox="0 0 332.113 332.113"><path d="M291 150V79c0-19-15-34-34-34H79c-19 0-34 15-34 34v42l67-44 81 72 56-29 42 30zm0 52l-43-30-56 30-81-67-66 39v23c0 19 15 34 34 34h178c17 0 31-13 34-29zM79 0h178c44 0 79 35 79 79v118c0 44-35 79-79 79H79c-44 0-79-35-79-79V79C0 35 35 0 79 0z"/></svg>
                                     </button>
@@ -565,7 +558,7 @@
 
                     <div class="mt-8 flex justify-end px-4">
 
-                        <button type="submit" :disabled="submitStatus" :class="{'opacity-50':submitStatus}" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                        <button type="submit" :disabled="submitBtnDisable" :class="{'opacity-50':submitBtnDisable}" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
                             Add New Alerts
                         </button>
                     </div>

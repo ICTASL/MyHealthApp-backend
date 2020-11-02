@@ -1,6 +1,7 @@
 import Vue from 'vue'
+import NewsEditor from './NewsEditor'
 import { required, maxLength } from 'vuelidate/lib/validators';
-import { Editor, EditorContent ,EditorMenuBar } from 'tiptap';
+import { Editor, EditorContent, EditorMenuBar } from 'tiptap';
 import {
     Blockquote,
     HardBreak,
@@ -25,10 +26,12 @@ export default {
     components: {
         EditorContent,
         EditorMenuBar,
+        NewsEditor
     },
     data() {
         return {
-            submitStatus: false,
+            submitBtnDisable: false,
+            imageBtnDisable: false,
             english: new Editor({
                 extensions: [
                     new Blockquote(),
@@ -151,10 +154,10 @@ export default {
             },
         },
         message:{
-            english:{
-                required,
-                maxLength: maxLength(2500)
-            },
+            // english:{
+            //     required,
+            //     maxLength: maxLength(2500)
+            // },
             sinhala:{
                 maxLength: maxLength(2500)
             },
@@ -167,10 +170,10 @@ export default {
     methods:{
         saveAlerts(){
             this.$v.$touch();
-            if (this.$v.$invalid){
+            if (this.$v.$invalid || this.$refs.englishEditor.invalid()){
                 return
             }else{
-                this.submitStatus = true;
+                this.submitBtnDisable = true;
                 api.postJsonWithToken('/notification/alert/add',{
                         "source":this.source,
                         title:{
@@ -179,7 +182,7 @@ export default {
                             "tamil":this.title.tamil,
                         },
                         message:{
-                            "english":this.message.english,
+                            "english":this.$refs.englishEditor.message,
                             "sinhala":this.message.sinhala,
                             "tamil":this.message.tamil,
                         }
@@ -200,33 +203,10 @@ export default {
                             this.charcount.sinhalaChar =0;
                             this.charcount.englishChar =0;
                             this.charcount.tamilChar =0;
-                            this.submitStatus = false;
                             this.$v.$reset();
-                            this.english.destroy();
+                            this.$refs.englishEditor.clearContent();
                             this.sinhala.destroy();
                             this.tamil.destroy();
-                            this.english =new Editor({
-                                extensions: [
-                                    new Blockquote(),
-                                    new BulletList(),
-                                    new HardBreak(),
-                                    new Heading({levels: [1, 2, 3]}),
-                                    new HorizontalRule(),
-                                    new ListItem(),
-                                    new OrderedList(),
-                                    new Link(),
-                                    new Bold(),
-                                    new Italic(),
-                                    new Strike(),
-                                    new Underline(),
-                                    new History(),
-                                    new Image(),
-                                ],
-                                onUpdate: ({getHTML}) => {
-                                    this.message.english =  getHTML();
-                                    this.englishChar();
-                                },
-                            });
                             this.sinhala =new Editor({
                                 extensions: [
                                     new Blockquote(),
@@ -273,6 +253,7 @@ export default {
                             });
 
                     }
+                    this.submitBtnDisable = false;
                 }).catch(error =>{
                     Vue.swal({
                         title: 'Something Went Wrong!',
@@ -281,8 +262,8 @@ export default {
                     if (error.response) {
                         console.log(error.response.status);
                     }
-                    this.submitStatus =false;
-                })
+                    this.submitBtnDisable =false;
+                });
             }
 
         },
@@ -298,25 +279,40 @@ export default {
         {
             this.charcount.tamilChar = (this.message.tamil.length)-7;
         },
-        showImagePrompt(commands) {   
+        showImagePrompt(commands) {  
+          this.imageBtnDisable = true; 
           let inputElement = document.createElement("input");
-            inputElement.setAttribute("type", "file");
-            inputElement.addEventListener('change', (e) => {
-                if (e.target.files && e.target.files[0]) {
-                    let anImage = e.target.files[0];  // file from input
-                    
-                    let formData = new FormData();
-                    formData.append("image", anImage, anImage.name);                                
-                    api.postMultipartFDWithToken('/images', formData)
-                          .then(response=>{
-                            if(response.status == 202 && response.data.url.length>0){                              
-                              const src = response.data.url;
-                              commands.image({ src });
-                            } 
-                          });
-                }
-            })
-            inputElement.click();        
+          inputElement.setAttribute("type", "file");
+          inputElement.addEventListener('change', (e) => {
+            if (e.target.files && e.target.files[0]) {
+              let anImage = e.target.files[0];  // file from input
+              
+              let formData = new FormData();
+              formData.append("image", anImage, anImage.name);                                
+              api.postMultipartFDWithToken(
+                '/images', 
+                formData
+              ).then(response=>{
+                if(response.status == 202 && response.data.url.length>0){                              
+                  const src = response.data.url;
+                  commands.image({ src });
+                } 
+                this.imageBtnDisable = false;
+              }).catch(()=>{
+                Vue.swal.mixin({
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 2000
+                }).fire({
+                    title: 'Error uploading image',
+                    icon: 'error'
+                });
+                this.submitBtnDisable = false;
+              });       
+            }
+          })
+          inputElement.click();        
         },
     }
 }
