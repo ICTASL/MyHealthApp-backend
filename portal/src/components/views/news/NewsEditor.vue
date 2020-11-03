@@ -118,144 +118,17 @@
         </button>
       </div>
     </editor-menu-bar>
+
     <editor-content class="editor__content" :editor="newsEditor"></editor-content>
-    <div class="my-3">
-        <p class="text-base text-blue-400 text-right">{{ charcount }} html characters</p>
+    <div >
+        
     </div>
-    <div v-if="$v.message.$dirty">
-        <p class="text-red-500 text-xs italic" v-if="!$v.message.minLength">English Alerts is required</p>
-        <p class="text-red-500 text-xs italic" v-if="!$v.message.maxLength">English Alerts must have at most 2500 characters</p>
-    </div>                       
-  </div>
+    <div v-if="$v.message.$dirty" class="my-3 flex justify-between">
+        <p class="text-red-500 text-xs italic inline" v-if="!$v.message.required">{{ requiredErrorMessage }}</p>
+        <p class="text-red-500 text-xs italic inline" v-if="!$v.message.maxLength">{{ maxLengthErrorMessage }}</p>
+        <p class="text-base text-blue-400 text-right">{{ message.length }} html characters</p>
+    </div>                             
+    </div>                            
 </template>
 
-<script>
-import Vue from 'vue';
-import { minLength, maxLength } from 'vuelidate/lib/validators';
-import { Editor, EditorContent ,EditorMenuBar } from 'tiptap';
-import {
-    Blockquote,
-    HardBreak,
-    Heading,
-    HorizontalRule,
-    OrderedList,
-    BulletList,
-    ListItem,
-    Bold,
-    Italic,
-    Link,
-    Strike,
-    Underline,
-    History,
-    Image,
-} from 'tiptap-extensions'
-import api from '../../../api';
-
-export default {
-  name: 'NewsEditor',
-  components: {
-    EditorContent,
-    EditorMenuBar,
-  },
-  data() {
-    return {
-      isEnglish: false,
-      imageBtnDisable: false,
-      message: "",
-      charcount: 0,
-      newsEditor: new Editor({
-        extensions: [
-            new Blockquote(),
-            new BulletList(),
-            new HardBreak(),
-            new Heading({levels: [1, 2, 3]}),
-            new HorizontalRule(),
-            new ListItem(),
-            new OrderedList(),
-            new Link(),
-            new Bold(),
-            new Italic(),
-            new Strike(),
-            new Underline(),
-            new History(),
-            new Image(),
-        ],
-        onUpdate: ({getHTML}) => {
-            this.message =  getHTML();
-            this.$v.message.$touch();
-            this.charcount = this.message.length;
-        },
-      }),
-      buttons: {
-        bold: "Bold",
-        italic: "Italic",
-        strike: "Strike",
-        underline: "Underline",
-        paragraph: "Paragraph",
-        H1: "H1",
-        H2: "H2",
-        H3: "H3",
-        order_list: "Numbered List",
-        bullet_list: "Bullet List",
-        redo: "Redo",
-        undo: "UnDo",
-        image: "Image",
-      },
-    }
-  },
-  validations: {
-    message: {
-      minLength: minLength(8), // atleast one letter --- <p>a</p>
-      maxLength: maxLength(2500)
-    },
-  },
-  methods: {
-    clearContent() {
-      this.newsEditor.clearContent(true);
-      this.$v.$reset();
-    },
-    invalid() {
-      this.$v.$touch(); //sets $dirty in vualidate
-      return this.$v.$invalid;
-    },
-    showImagePrompt(commands) {  
-      this.imageBtnDisable = true; 
-      let inputElement = document.createElement("input");
-      inputElement.setAttribute("type", "file");
-      inputElement.addEventListener('change', (e) => {
-        if (e.target.files && e.target.files[0]) {
-          let anImage = e.target.files[0];  // file from input
-          
-          let formData = new FormData();
-          formData.append("image", anImage, anImage.name);                                
-          api.postMultipartFDWithToken(
-            '/images', 
-            formData
-          ).then(response=>{
-            if(response.status == 202 && response.data.url.length>0){                              
-              const src = response.data.url;
-              commands.image({ src });
-            } 
-            this.imageBtnDisable = false;
-          }).catch(()=>{
-            Vue.swal.mixin({
-              toast: true,
-              position: 'top-end',
-              showConfirmButton: false,
-              timer: 2000
-            }).fire({
-                title: 'Error uploading image',
-                icon: 'error'
-            });
-            this.submitBtnDisable = false;
-          });       
-        }
-      })
-      inputElement.click();        
-    }
-  },
-  beforeDestroy() {
-    this.editor.destroy()
-  },
-}
-</script>
+<script src="./newsEditor.js"></script>
