@@ -1,15 +1,16 @@
 package lk.gov.govtech.covid19.controller;
 
-import lk.gov.govtech.covid19.dto.AlertNotificationResponse;
-import lk.gov.govtech.covid19.dto.CaseNotificationResponse;
-import lk.gov.govtech.covid19.dto.StatusResponse;
-import lk.gov.govtech.covid19.dto.UpdateStatusRequest;
+import lk.gov.govtech.covid19.dto.*;
 import lk.gov.govtech.covid19.service.ApplicationService;
 import lk.gov.govtech.covid19.util.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * Controller class for all task force application related apis
@@ -81,16 +82,23 @@ public class ApplicationController {
 
     //Update Covid-19 Status
     @PutMapping(path = "/dashboard/status", consumes = "application/json", produces = "application/json")
-    public ResponseEntity updateStatus(@RequestBody UpdateStatusRequest request){
+    public ResponseEntity updateStatus(@RequestBody @Valid UpdateStatusRequest request){//,
+                                       //BindingResult bindingResult){
 
-        if(request==null){
-            log.error("Empty request found");
-            return ResponseEntity.noContent().build();
-        }else {
+//        if(bindingResult.hasErrors()){
+//            log.error("Error while updating dashboard status. {} validation error(s)",
+//                    bindingResult.getErrorCount());
+//
+//            ErrorResponse errorResponse = new ErrorResponse();
+//            errorResponse.setMessage("Invalid values provided");
+//            return ResponseEntity.badRequest()
+//                    .contentType(MediaType.APPLICATION_JSON)
+//                    .body(errorResponse);
+//        }else {
             log.info("Dashboard status updated");
             applicationService.updateStatus(request);
             return ResponseEntity.accepted().build();
-        }
+//        }
 
     }
 }
