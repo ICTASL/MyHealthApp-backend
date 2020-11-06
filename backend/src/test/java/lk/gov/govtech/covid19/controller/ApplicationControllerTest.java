@@ -14,10 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static lk.gov.govtech.covid19.util.Constants.APPLICATION_API_CONTEXT;
 import static lk.gov.govtech.covid19.util.Constants.AUTHORITY_NOTIFICATION;
-import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -40,8 +37,7 @@ public class ApplicationControllerTest {
         json.put("lk_total_deaths", 85);
         json.put("lk_total_suspect", 85);
 
-        UpdateStatusRequest dummy = new UpdateStatusRequest();
-        doNothing().when(applicationService).updateStatus(dummy);
+        doNothing().when(applicationService).updateStatus(new UpdateStatusRequest());
 
         this.mockMvc.perform(put(APPLICATION_API_CONTEXT + "/dashboard/status")
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -58,20 +54,18 @@ public class ApplicationControllerTest {
         json.put("lk_total_deaths", 85);
         json.put("lk_total_suspect", 85);
 
-        UpdateStatusRequest dummy = new UpdateStatusRequest();
-        doNothing().when(applicationService).updateStatus(dummy);
+        doNothing().when(applicationService).updateStatus(new UpdateStatusRequest());
 
         this.mockMvc.perform(put(APPLICATION_API_CONTEXT + "/dashboard/status")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json.toString()))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(json.toString()))
                 .andExpect(status().isForbidden());
     }
 
     @Test
     @WithMockUser(authorities = { AUTHORITY_NOTIFICATION })
     public void put_dashboardStatus_noContent() throws Exception {
-        UpdateStatusRequest dummy = new UpdateStatusRequest();
-        doNothing().when(applicationService).updateStatus(dummy);
+        doNothing().when(applicationService).updateStatus(new UpdateStatusRequest());
 
         this.mockMvc.perform(put(APPLICATION_API_CONTEXT + "/dashboard/status")
                             .contentType(MediaType.APPLICATION_JSON))
@@ -91,12 +85,29 @@ public class ApplicationControllerTest {
         json.put("lk_total_deaths", 85);
         json.put("lk_total_suspect", 85);
 
-        UpdateStatusRequest dummy = new UpdateStatusRequest();
-        doNothing().when(applicationService).updateStatus(dummy);
+        doNothing().when(applicationService).updateStatus(new UpdateStatusRequest());
 
         this.mockMvc.perform(put(APPLICATION_API_CONTEXT + "/dashboard/status")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json.toString()))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(json.toString()))
                 .andExpect(status().isBadRequest());
     }
+
+    @Test
+    @WithMockUser(authorities = { AUTHORITY_NOTIFICATION })
+    public void put_dashboardStatus_invalidField() throws Exception {
+        JSONObject json = new JSONObject();
+        json.put("lk_total_case", 1000000000);
+        json.put("lk_recovered_case", 85);
+        json.put("lk_total_deaths", 85);
+        json.put("lk_total_suspect", 85);
+
+        doNothing().when(applicationService).updateStatus(new UpdateStatusRequest());
+
+        this.mockMvc.perform(put(APPLICATION_API_CONTEXT + "/dashboard/status")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(json.toString()))
+                .andExpect(status().isBadRequest());
+    }
+
 }

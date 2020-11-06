@@ -82,23 +82,9 @@ public class ApplicationController {
 
     //Update Covid-19 Status
     @PutMapping(path = "/dashboard/status", consumes = "application/json", produces = "application/json")
-    public ResponseEntity updateStatus(@RequestBody @Valid UpdateStatusRequest request){//,
-                                       //BindingResult bindingResult){
-
-//        if(bindingResult.hasErrors()){
-//            log.error("Error while updating dashboard status. {} validation error(s)",
-//                    bindingResult.getErrorCount());
-//
-//            ErrorResponse errorResponse = new ErrorResponse();
-//            errorResponse.setMessage("Invalid values provided");
-//            return ResponseEntity.badRequest()
-//                    .contentType(MediaType.APPLICATION_JSON)
-//                    .body(errorResponse);
-//        }else {
-            log.info("Dashboard status updated");
-            applicationService.updateStatus(request);
-            return ResponseEntity.accepted().build();
-//        }
-
+    public ResponseEntity updateStatus(@RequestBody @Valid UpdateStatusRequest request){
+        log.info("Dashboard status updated");
+        applicationService.updateStatus(request);
+        return ResponseEntity.accepted().build();
     }
 }
