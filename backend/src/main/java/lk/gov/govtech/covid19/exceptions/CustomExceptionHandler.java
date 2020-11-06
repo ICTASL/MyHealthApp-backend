@@ -1,6 +1,7 @@
 package lk.gov.govtech.covid19.exceptions;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -22,7 +23,8 @@ public class CustomExceptionHandler {
     }
 
     @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Invalid request. Value missing or invalid.")
-    @ExceptionHandler(value = {MethodArgumentNotValidException.class, HttpMessageConversionException.class})
+    @ExceptionHandler(value = {MethodArgumentNotValidException.class, HttpMessageConversionException.class,
+                            DataIntegrityViolationException.class})
     public void handleValidationException(HttpServletRequest request, Exception e) {
         log.warn("Invalid request. Value missing or invalid.");
     }

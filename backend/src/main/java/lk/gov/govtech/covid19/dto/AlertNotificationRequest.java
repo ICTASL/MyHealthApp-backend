@@ -2,14 +2,16 @@ package lk.gov.govtech.covid19.dto;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 
 @Data
 public class AlertNotificationRequest {
     @NotBlank @Size(max=45)
     private String source;
+    @NotNull @Valid
     private Title title;
+    @NotNull @Valid
     private Message message;
 
     @Data
