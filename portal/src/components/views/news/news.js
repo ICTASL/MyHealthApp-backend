@@ -46,7 +46,6 @@ export default {
                     || this.$refs.englishEditor.isInvalid()
                     || this.$refs.sinhalaEditor.isInvalid()
                     || this.$refs.tamilEditor.isInvalid()) {
-                        if(this.$refs.sinhalaEditor.isInvalid()) console.log("sinhala");
                 return
             } else {
                 this.submitBtnDisable = true;

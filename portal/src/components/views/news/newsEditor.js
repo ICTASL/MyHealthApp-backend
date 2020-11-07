@@ -116,17 +116,28 @@ export default {
                             commands.image({ src });
                             this.imageBtnDisable = false;
                         }
-                    }).catch(() => {
-                        Vue.swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 2000,
-                        })
-                            .fire({
-                                title: "Error uploading image",
+                    }).catch(error => {
+                        if (error.response.status == 400) {
+                            Vue.swal.mixin({
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                showCancelButton:true,
+                            }).fire({
+                                title: "Invalid image type, size or name",
+                                text: "Image must be of type jpg. Image size must be smaller than 200KB. Image name can only contain letters, numbers, dashes, underscores and spaces",
                                 icon: "error",
                             });
+                        } else {
+                            Vue.swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 2000,
+                            }).fire({
+                                    title: "Error uploading image",
+                                    icon: "error",
+                            });
+                        }
                         this.submitBtnDisable = false;
                     });
                 }
