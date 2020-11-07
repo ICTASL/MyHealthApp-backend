@@ -106,6 +106,8 @@ public class SecurityConfiguration {
                         .hasAuthority(AUTHORITY_NOTIFICATION)
                     .antMatchers(HttpMethod.POST, IMAGE_API_CONTEXT)
                         .hasAuthority(AUTHORITY_NOTIFICATION)
+                    .antMatchers(DHIS_API_CONTEXT + "/**")
+                        .hasAuthority(AUTHORITY_NOTIFICATION)
                     .and()
                 .addFilter(getPasswordFilter())
                 .requestCache() // avoid saving anonymous requests in sessions
