@@ -145,7 +145,7 @@ export default {
             inputElement.click();
         },
         beforeDestroy() {
-            this.editor.destroy();
+            this.newsEditor.destroy();
         },
     }
 };
