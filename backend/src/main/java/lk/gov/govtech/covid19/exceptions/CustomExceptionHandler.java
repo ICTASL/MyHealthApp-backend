@@ -24,15 +24,27 @@ public class CustomExceptionHandler {
 
     @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Invalid request. Value missing or invalid.")
     @ExceptionHandler(value = {MethodArgumentNotValidException.class, HttpMessageConversionException.class,
-                            DataIntegrityViolationException.class})
+                            DataIntegrityViolationException.class, IllegalArgumentException.class})
     public void handleValidationException(HttpServletRequest request, Exception e) {
         log.warn("Invalid request. Value missing or invalid.");
+    }
+
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Error while processing image")
+    @ExceptionHandler(value = {ImageHandlingException.class})
+    public void handleValidationException(HttpServletRequest request, ImageHandlingException e) {
+        log.warn("Error while processing image");
+    }
+
+    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Resource not found")
+    @ExceptionHandler(value = {IndexOutOfBoundsException.class})
+    public void handleExceptionsLeadingToNotFound(HttpServletRequest request, IndexOutOfBoundsException e) {
+        log.warn("Resource not found");
     }
 
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Unknown error state of server")
     @ExceptionHandler(value = { Exception.class })
     public void defaultErrorHandler(HttpServletRequest request, Exception e) throws Exception {
-        log.error("Exception mapping failure" + e.getClass().getName()
-                + ", message: " + e.getMessage());
+        log.error("Exception mapping failure. Exception: {}, message: {}",
+                e.getClass().getName(), e.getMessage());
     }
 }

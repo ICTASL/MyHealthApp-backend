@@ -2,6 +2,7 @@ package lk.gov.govtech.covid19.controller;
 
 import lk.gov.govtech.covid19.dto.StoredImage;
 import lk.gov.govtech.covid19.dto.StoredImageResponse;
+import lk.gov.govtech.covid19.exceptions.ImageHandlingException;
 import lk.gov.govtech.covid19.service.ImageService;
 import lk.gov.govtech.covid19.util.Constants;
 import lk.gov.govtech.covid19.validation.AcceptableImage;
@@ -11,8 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.validation.Valid;
 
 @RestController
 @Slf4j
@@ -24,21 +23,17 @@ public class ImageController {
     private MultipartFile image;
 
     @PostMapping
-    public ResponseEntity uploadImage(@RequestParam("image") @AcceptableImage MultipartFile image){
-        StoredImageResponse response = null;
-        if (image.isEmpty()){
-            log.info("Request does not contain an image");
-        }else {
-            log.info("Image {} of size:{} being added", image.getOriginalFilename(), image.getSize());
-            response = imageService.addImage(image);
-        }
+    public ResponseEntity uploadImage(@RequestParam("image") @AcceptableImage MultipartFile image)
+            throws ImageHandlingException {
+        StoredImageResponse response = imageService.addImage(image);
+        log.info("Image {} of size:{} added", image.getOriginalFilename(), image.getSize());
         System.gc();
         return ResponseEntity.accepted().body(response);
     }
 
     @GetMapping(value = "/image/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
     public @ResponseBody byte[] getFiles(@PathVariable("imageId") int imageId){
-        StoredImage si = imageService.getImage(imageId);
-        return si.getImage();
+        StoredImage storedImage = imageService.getImage(imageId);
+        return storedImage.getImage();
     }
 }

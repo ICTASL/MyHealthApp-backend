@@ -28,9 +28,9 @@ public class AlertNotificationRequest {
     public static class Message {
         @NotBlank @Size(min=8, max=2500)
         private String english;
-        @Size(min=8, max=2500)
+        @Size(max=2500)
         private String sinhala;
-        @Size(min=8, max=2500)
+        @Size(max=2500)
         private String tamil;
     }
 }
