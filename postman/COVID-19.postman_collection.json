@@ -331,15 +331,15 @@
 					"value": "attachment.jpg"
 				},
 				"url": {
-					"raw": "http://localhost:8000/images/add",
+					"raw": "http://localhost:8000/api/images",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
-						"images",
-						"add"
+						"api",
+						"images"
 					]
 				}
 			},
@@ -351,22 +351,22 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8000/images/image/4",
+					"raw": "http://localhost:8000/api/images/image/4",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
+						"api",
 						"images",
 						"image",
-						4
+						"4"
 					]
 				},
-				"description": "GET http://localhost:8000/images/image/<imageId>"
+				"description": "GET http://localhost:8000/api/images/image/<imageId>"
 			},
 			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

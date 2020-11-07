@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Slf4j
 @RestController
 @RequestMapping(value = Constants.NOTIFICATION_API_CONTEXT)
@@ -18,7 +20,7 @@ public class NotificationController {
     NotificationService notificationService;
 
     @PostMapping(path = "/alert/add", consumes = "application/json", produces = "application/json")
-    public ResponseEntity addNewAlert(@RequestBody AlertNotificationRequest request){
+    public ResponseEntity addNewAlert(@RequestBody @Valid AlertNotificationRequest request){
         log.info("New alert added with title {}", request.getTitle().getEnglish());
         notificationService.addAlertNotificaiton(request);
 
@@ -26,7 +28,7 @@ public class NotificationController {
     }
 
     @PutMapping(path = "/alert/{alertId}", consumes = "application/json")
-    public ResponseEntity addNewAlert(@PathVariable("alertId") String alertId, @RequestBody AlertNotificationRequest request){
+    public ResponseEntity addNewAlert(@PathVariable("alertId") String alertId, @RequestBody @Valid AlertNotificationRequest request){
         boolean success = notificationService.updateAlertNotification(alertId, request);
         if (success) {
             log.info("Update alert with id:{} title:{}", alertId, request.getTitle().getEnglish());

@@ -12,7 +12,6 @@ public class StoredImageMapper implements RowMapper<StoredImage> {
     @Override
     public StoredImage mapRow(ResultSet resultSet, int i) throws SQLException {
         StoredImage si = new StoredImage();
-        System.out.println(resultSet.toString());
         si.setName(resultSet.getString("name"));
         Blob blob = resultSet.getBlob("image");
         si.setImage(blob.getBytes(1, (int) blob.length()));

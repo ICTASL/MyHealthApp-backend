@@ -44,4 +44,15 @@ export default {
             }
         })
     },
+    postMultipartFDWithToken(url, data) {
+        return axios({
+            method: 'post',
+            url: '/api' + url,
+            data: data,
+            headers: {
+                'content-type': 'multipart/form-data',
+                'x-auth-token': store.getters['user/getToken']
+            }
+        })
+    },
 }
