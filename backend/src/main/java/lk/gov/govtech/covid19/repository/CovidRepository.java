@@ -6,12 +6,14 @@ import lk.gov.govtech.covid19.model.CaseNotificationEntity;
 import lk.gov.govtech.covid19.model.StatusEntity;
 import lk.gov.govtech.covid19.model.mapper.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.PreparedStatement;
@@ -145,8 +147,9 @@ public class CovidRepository {
                 request.getLk_total_case() , request.getLk_recovered_case(), request.getLk_total_deaths(), request.getLk_total_suspect(), 1);
     }
 
-    public int addImage(InputStream is, String name, long size) throws IOException {
+    public int addImage(byte[] bArray, String name, long size) {
         KeyHolder holder = new GeneratedKeyHolder();
+        InputStream is = new ByteArrayInputStream(bArray);
         jdbcTemplate.update(connection -> {
                     PreparedStatement ps = connection.prepareStatement("insert into images(name, image) " + "values(?,?)",
                             Statement.RETURN_GENERATED_KEYS);
@@ -155,6 +158,7 @@ public class CovidRepository {
                     return ps;
                 },holder
         );
+        IOUtils.closeQuietly(is);
         return holder.getKey().intValue();
     }
 

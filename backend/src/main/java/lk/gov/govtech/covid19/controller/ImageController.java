@@ -4,12 +4,15 @@ import lk.gov.govtech.covid19.dto.StoredImage;
 import lk.gov.govtech.covid19.dto.StoredImageResponse;
 import lk.gov.govtech.covid19.service.ImageService;
 import lk.gov.govtech.covid19.util.Constants;
+import lk.gov.govtech.covid19.validation.AcceptableImage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
 
 @RestController
 @Slf4j
@@ -18,9 +21,10 @@ public class ImageController {
 
     @Autowired
     ImageService imageService;
+    private MultipartFile image;
 
     @PostMapping
-    public ResponseEntity uploadImage(@RequestParam("image") MultipartFile image){
+    public ResponseEntity uploadImage(@RequestParam("image") @AcceptableImage MultipartFile image){
         StoredImageResponse response = null;
         if (image.isEmpty()){
             log.info("Request does not contain an image");
