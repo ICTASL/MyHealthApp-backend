@@ -33,8 +33,9 @@ class CacheSchedulerTest {
 
     @Test
     void evictAllCaches() {
+        //FIXME this can be improved
         cacheScheduler.evictAllCaches();
-        Collection<String> cacheNames = cacheManager.getCacheNames();
-        Assert.assertTrue(cacheNames.isEmpty());
+        Collection<String> cacheNamesUpdated = cacheManager.getCacheNames();
+        Assert.assertTrue(cacheNamesUpdated.isEmpty());
     }
 }
