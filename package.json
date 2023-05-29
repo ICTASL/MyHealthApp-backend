@@ -1,5 +1,5 @@
 {
-  "name": "COVID-19",
+  "name": "COVID-19-1",
   "version": "1.0.0",
   "description": "[![Build Status](https://travis-ci.org/azhamn/COVID-19.svg?branch=master)](https://travis-ci.org/azhamn/COVID-19) ---- # COVID-19 Backend Services",
   "main": "index.js",
